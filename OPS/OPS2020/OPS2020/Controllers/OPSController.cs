@@ -33,9 +33,11 @@ namespace OPS2020.Controllers
         [HttpGet]
         public async Task<IActionResult> Quest(Etape0Model etape0, QuestionnaireModel questionnaireModel)
         {
-            //etape0 = HttpContext.Session.Get<Etape0Model>("etape0");
-            //questionnaireModel.CodeProduitFormation = etape0.CodeProduitFormation;
-
+            if (HttpContext.Session.Get<Etape0Model>("etape0")!=null)
+            {
+                etape0 = HttpContext.Session.Get<Etape0Model>("etape0");
+                questionnaireModel.CodeProduitFormation = etape0.CodeProduitFormation;
+            }
             return View("Quest", questionnaireModel);
         }
 
