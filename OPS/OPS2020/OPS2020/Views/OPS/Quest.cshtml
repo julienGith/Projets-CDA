@@ -1,0 +1,294 @@
+﻿@model OPS2020.Models.QuestionnaireModel
+
+@{
+    ViewData["Title"] = "Quest";
+}
+
+
+<style>
+    .rotate {
+        -moz-transition: all .2s linear;
+        -webkit-transition: all .2s linear;
+        transition: all .2s linear;
+    }
+
+        .rotate.down {
+            -ms-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+
+    ul {
+        list-style-type: none;
+    }
+
+    a.disabled {
+        pointer-events: none;
+        cursor: default;
+    }
+</style>
+<div class="col-sm">
+    <h1>@Model.CodeProduitFormation</h1>
+    <div class="card">
+        <div class="card-header">Création d'un questionnaire</div>
+        <div class="card-body">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-prop-tab" data-toggle="tab" href="#nav-prop" role="tab" aria-controls="nav-prop" aria-selected="true">Propriétés du questionnaire</a>
+                    <a class="nav-item nav-link" id="nav-questions-tab" data-toggle="tab" href="#nav-questions" role="tab" aria-controls="nav-questions" aria-selected="false">Questions du questionnaire</a>
+                    <a class="nav-item nav-link" id="nav-preview-tab" data-toggle="tab" href="#nav-preview" role="tab" aria-controls="nav-preview" aria-selected="false">Aperçu du questionnaire</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-prop" role="tabpanel" aria-labelledby="nav-prop-tab">
+                    <label for="titreTxtB">Titre du questionnaire</label>
+                    <input id="titreTxtB" type="text" class="form-control" placeholder="Titre">
+                    <label for="libelTxtB">Description du questionnaire</label>
+                    <textarea class="form-control" placeholder="Description" name="descriptionTxtA" rows="5" id="descriptionTxtA"></textarea>
+                    <input id="BtnValider" type="button" name="BtnValider" value="Créer" class="btn btn-primary right" />
+                </div>
+                <div class="tab-pane fade" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab">
+                    <div class="row">
+                        <div class="col-sm">
+                            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                <button class="navbar-toggler btn btn-light btn-block" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span>Type de question</span>&emsp;&emsp;&emsp;<span class="navbar-toggler-icon float-right"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+                                    <ul class="navbar-nav flex-md-column flex-fill">
+                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-sm nav-item" data-toggle="modal" data-target="#myModal">Evaluer selon une échelle de 1 à 10</li>
+                                        <li id="Btn4niv" name="Btn4niv" class="btn btn-light btn-lg btn-block btn-sm nav-item">Evaluer selon 4 niveaux de satisfaction</li>
+                                        <li class="nav-item"><div id="Btn1rep" name="Btn1rep" class="btn btn-light btn-lg btn-block btn-sm">Choisir une seule réponse au sein d'un groupe de choix</div></li>
+                                        <li class="nav-item"><div id="Btn1repListe" name="Btn1repListe" class="btn btn-light btn-lg btn-block btn-sm">Choisir une seule réponse au sein liste</div></li>
+                                        <li class="nav-item"><div id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm">Choisir entre oui et non</div></li>
+                                        <li class="nav-item"><div id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm">Choisir entre oui, non et Ne sais pas</div></li>
+                                        <li class="nav-item"><div id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm">Choisir plusieurs réponses au sein d'un groupe de choix</div></li>
+                                        <li class="nav-item"><div id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm">Répondre sous forme de texte court</div></li>
+                                        <li class="nav-item"><div id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm">Répondre sous forme de texte long</div></li>
+                                        <li class="nav-item"><div id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm">Répondre sous forme d'une valeur numérique</div></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="col-sm">
+                            <ul id="sortable" class="navbar-nav flex-md-column flex-fill">
+                                <li id="1">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-sm btn-sm">
+                                                    <div class="float-left" id="intitule12Div">Question n°1 intitulé quel est votre couleur préférée ? ?</div>
+                                                    <span class="float-right mt-1">
+                                                        <i class="fa fa-chevron-up float-left ml-2 rotate" data-toggle="collapse" data-target="#quest1Param" aria-expanded="false" aria-controls="collapseExample"></i>
+                                                        <i class="fas fa-arrows-alt float-left ml-2"></i>
+                                                        <i data-index-number="12314" class="fas fa-trash-alt float-left ml-2"></i>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="collapse" id="quest1Param">
+                                            <div class="card card-body">
+                                                <table>
+                                                    <tr>
+                                                        <td>Intitulé de la question :</td>
+                                                        <td><input class="form-control intituleTxtB" placeholder="Intitulé" type="text" id="intitule12TxtB" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Requis :</td>
+                                                        <td>
+                                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                                <label class="btn btn-secondary active">
+                                                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Oui
+                                                                </label>
+                                                                <label class="btn btn-secondary">
+                                                                    <input type="radio" name="options" id="option2" autocomplete="off"> Non
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="2">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-sm btn-sm">
+                                                    Question n°1 intitulé quel est votre couleur préférée ? ?
+                                                    <span class="float-right mt-1">
+                                                        <i class="fa fa-chevron-up float-left ml-2 rotate" data-toggle="collapse" data-target="#quest2Param" aria-expanded="false" aria-controls="collapseExample"></i>
+                                                        <i class="fas fa-arrows-alt float-left ml-2"></i>
+                                                        <i class="fas fa-trash-alt float-left ml-2"></i>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="collapse" id="quest2Param">
+                                            <div class="card card-body">
+                                                <label for="intituleTxtB2">Intitulé de la question :</label>
+                                                <input class="form-control" placeholder="Intitulé" type="text" id="intituleTxtB2" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                            <div id="ordre"><button id="ordreBtn"></button>   </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">fdtrdrdrtdrdrdd</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <label for="intituleTxtB">Intitulé de la question :</label>
+                <input class="form-control" placeholder="Intitulé" type="text" id="intituleModalTxtB" />
+            </div>
+            <div class="modal-footer">
+                <button id="modalBtn" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script>
+
+    $('#sortable').sortable();
+    $('.rotate').click(function () {
+        $(this).toggleClass("down");
+    });
+
+    $('.fa-trash-alt').click(function () {
+       
+    });
+    function ExtraireCodeQuestion(Id = '') {
+        
+        if (Id.match(/(\d+)/)) {
+            var code = '';
+            code = Id.match(/(\d+)/);
+            return code[0];
+        }
+        else {
+
+            return false;
+        }
+    }
+
+    $(document).ready(function () {
+        //$("#ordreBtn").click(function () {
+        //    alert($("#sortable").sortable('toArray', { attribute: 'id' }).toSource());
+        //    $("#ordre").text(productOrder);
+        //});
+        var nombreDeLi = $("#sortable").children().length;
+        var numQuestion = 0;
+        var codeQuestion = '';
+        var listQuestionObj = [''];
+        var questionObj = {
+            type: '',
+            sousType: '',
+            requis: '',
+            questionId: '',
+            intitule: '',
+            dataTarget: '',
+            TargetId: '',
+            intituleTxtBId: '',
+            intituleDivBId: '',
+            requisRadioId: '',
+            ddlId: '',
+            itemTxtBId: '',
+            ajouterBtnId: '',
+            supprBtnId: '',
+            trashBtnId: ''
+        }
+        $('.intituleTxtB').keyup(function () {
+            var intituleBtn = '';
+            var intitule = '';
+            var intituleBtn = "#" + $(this).attr("id");
+            codeQuestion = ExtraireCodeQuestion($(this).attr("id"))
+            var intituleDivB = "#intitule" + codeQuestion + "Div"
+            $(intituleDivB).html('');
+            intitule = $(intituleBtn).val();
+            $(intituleDivB).html(intitule);
+            questionObj = listQuestionObj.find(c => c.idQuestion === codeQuestion);
+            questionObj.intitule = intitule;
+            console.log(listQuestionObj);
+        });
+        $("#Btn1a10").click(function () {
+            questionObj.type = "1a10";
+            questionObj.requis = false;
+
+        });
+        $("#modalBtn").click(function () {
+            numQuestion += 1;
+            intitule = $("#intituleModalTxtB").val();
+            codeQuestion = String(numQuestion) + String(nombreDeLi) + String(Math.floor((Math.random() * 100) + 1));
+            questionObj.intitule = intitule;
+            questionObj.questionId = codeQuestion;
+            questionObj.dataTarget = "quest" + codeQuestion + "Param";
+            questionObj.TargetId = "quest" + codeQuestion + "Param";
+            questionObj.intituleTxtBId = "intitule" + codeQuestion + "TxtB";
+            questionObj.intituleDivBId = "intitule" + codeQuestion + "Div";
+            questionObj.requisRadioId = "req" + codeQuestion + "Radio";
+            questionObj.ddlId = "item" + codeQuestion + "Ddl";
+            questionObj.itemTxtBId = "item" + codeQuestion + "TxtB";
+            questionObj.ajouterBtnId = "ajouter" + codeQuestion + "Btn";
+            questionObj.supprBtnId = "suppr" + codeQuestion + "Btn";
+            questionObj.trashBtnId = "trash" + codeQuestion + "Btn";
+
+            
+            console.log(questionObj);
+            CreerQuestion(questionObj);
+        });
+        function CreerQuestion(questionObj=null) {
+            if (questionObj.requis = false) {
+
+
+            }
+            listQuestionObj.push(questionObj)
+            console.log(listQuestionObj);
+        };
+    });
+
+
+    //$(function () {
+    //    $('#sortable').sortable({
+    //        update: function (event, ui) {
+    //            var productOrder = $(this).sortable('toArray').toString();
+    //            $("#ordre").text(productOrder);
+    //        }
+    //    });
+    //});
+
+    //$('.drag').draggable({
+    //    containment: '#limitation',
+    //    snap: '.draggable',
+    //    revert: true
+    //});
+    //$('.drop').droppable();
+
+</script>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:LeLab.Views"
+             mc:Ignorable="d"
+             BackgroundColor="{d:StaticResource jeudunombre}"
+             x:Class="LeLab.Views.WelcomeJeuNombrePage">
+    <ContentPage.Content>
+        <StackLayout Spacing="0" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <views:StarsView></views:StarsView>
+            <Frame HasShadow="False" BackgroundColor="Transparent" VerticalOptions="FillAndExpand">
+                <StackLayout BackgroundColor="{d:StaticResource jeudunombre}" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label TextColor="White" Text="le nombre magique !" HorizontalOptions="Center" FontSize="30" >
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <OnPlatform.iOS>HelveticaNeue-Thin</OnPlatform.iOS>
+                                <OnPlatform.Android>HelveticaNeue-Thin.ttf#HelveticaNeue-Thin</OnPlatform.Android>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Button x:Name="JouerNombreButton" HorizontalOptions="Center" Margin="0,20" Text="Jouer" Clicked="JouerButton_Clicked"/>
+                </StackLayout>
+            </Frame>
+
+            <BoxView Margin="-20,0,-20,-35"
+                     HeightRequest="120"
+                     Rotation="-10"
+                     Color="{d:StaticResource Stars}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

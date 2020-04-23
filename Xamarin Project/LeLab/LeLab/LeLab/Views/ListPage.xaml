@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Title="Liste"
+             x:Class="LeLab.Views.ListPage">
+    <ContentPage.Content>
+        <ListView x:Name="articlesListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="15,0">
+                            <Label Text="{Binding Nom}" HorizontalOptions="FillAndExpand" TextColor="Black"/>
+                            <Label Text="{Binding Prix}" FontAttributes="Bold"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+            
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:LeLab.Views"
+             mc:Ignorable="d"
+             BackgroundColor="#518faa"
+             Title="Le nombre magique"
+             x:Class="LeLab.Views.JeuNombrePage">
+    <ContentPage.Content>
+        <StackLayout Spacing="0" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout Margin="0,0,0,20" BackgroundColor="#518faa" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                <views:StarsView></views:StarsView>
+            </StackLayout>
+            <StackLayout BackgroundColor="#518faa" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Label TextColor="White" Text="Devinez" HorizontalOptions="Center" FontSize="30" >
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <OnPlatform.iOS>HelveticaNeue-Thin</OnPlatform.iOS>
+                            <OnPlatform.Android>HelveticaNeue-Thin.ttf#HelveticaNeue-Thin</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+                <Label TextColor="White" Text="le nombre magique !" HorizontalOptions="Center" FontSize="30" >
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <OnPlatform.iOS>HelveticaNeue-Thin</OnPlatform.iOS>
+                            <OnPlatform.Android>HelveticaNeue-Thin.ttf#HelveticaNeue-Thin</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+                <Label FontAttributes="Italic" TextColor="White" Text="Entre 1 et 10" HorizontalOptions="Center" FontSize="12" >
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <OnPlatform.iOS>HelveticaNeue-Thin</OnPlatform.iOS>
+                            <OnPlatform.Android>HelveticaNeue-Thin.ttf#HelveticaNeue-Thin</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+                <Entry WidthRequest="60" IsReadOnly="True" Margin="0,50" Placeholder="?" Keyboard="Numeric" FontSize="36" HorizontalTextAlignment="Center" HorizontalOptions="Center" x:Name="entryNombre"></Entry>
+            </StackLayout>
+            <Image Source="lab_separator.png" Aspect="AspectFill"/>
+
+            <StackLayout BackgroundColor="White" Spacing="0" Orientation="Vertical" HorizontalOptions="Fill" VerticalOptions="Fill">
+                <FlexLayout Padding="0,0,0,0" Margin="0,30,0,0" Wrap="Wrap"  JustifyContent="Center"  AlignContent="Start" AlignItems="Start" x:Name="clavierNumGrid">
+
+                </FlexLayout>
+            </StackLayout>
+        </StackLayout> 
+    </ContentPage.Content>
+</ContentPage>

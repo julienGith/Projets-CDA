@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             BackgroundColor="{d:StaticResource jeudunombre}"
+             x:Class="LeLab.Views.WinPage">
+    <ContentPage.Content>
+        <StackLayout x:Name="mainLayout" Spacing="0">
+            <Image Source="win.png" VerticalOptions="Center" HorizontalOptions="Center" Aspect="AspectFill" Scale="0.6"></Image>
+            
+                <Label TextColor="White" FontSize="50" Text="Gagné"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+                <Label x:Name="nombreMagiqueLbl" TextColor="White" FontSize="20" 
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
