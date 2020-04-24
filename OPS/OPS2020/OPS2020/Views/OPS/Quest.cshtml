@@ -58,16 +58,16 @@
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent1">
                                     <ul class="navbar-nav flex-md-column flex-fill">
-                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-sm nav-item" data-toggle="modal" data-target="#myModal">Evaluer selon une échelle de 1 à 10</li>
-                                        <li id="Btn4niv" name="Btn4niv" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#myModal">Evaluer selon 4 niveaux de satisfaction</li>
-                                        <li id="Btn1rep" name="Btn1rep" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#myModal">Choisir une seule réponse au sein d'un groupe de choix</li>
-                                        <li id="Btn1repListe" name="Btn1repListe" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#myModal">Choisir une seule réponse au sein liste</li>
-                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#myModal">Choisir entre oui et non</></li>
-                                        <li id="BtnOuiNon" name="BtnOuiNon" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#myModal">Choisir entre oui, non et Ne sais pas</></li>
-                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#myModal">Choisir plusieurs réponses au sein d'un groupe de choix</li>
-                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#myModal">Répondre sous forme de texte court</li>
-                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#myModal">Répondre sous forme de texte long</li>
-                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#myModal">Répondre sous forme d'une valeur numérique</li>
+                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Evaluer selon une échelle de 1 à 10</li>
+                                        <li id="Btn4niv" name="Btn4niv" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Evaluer selon 4 niveaux de satisfaction</li>
+                                        <li id="Btn1rep" name="Btn1rep" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Choisir une seule réponse au sein d'un groupe de choix</li>
+                                        <li id="Btn1repListe" name="Btn1repListe" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Choisir une seule réponse au sein liste</li>
+                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Choisir entre oui et non</></li>
+                                        <li id="BtnOuiNon" name="BtnOuiNonNsp" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Choisir entre oui, non et Ne sais pas</></li>
+                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Choisir plusieurs réponses au sein d'un groupe de choix</li>
+                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Répondre sous forme de texte court</li>
+                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Répondre sous forme de texte long</li>
+                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Répondre sous forme d'une valeur numérique</li>
                                     </ul>
                                 </div>
                             </nav>
@@ -83,7 +83,7 @@
                                                     <div class="d-inline float-right">
                                                         <i class="fa fa-chevron-up ml-3 rotate" data-toggle="collapse" data-target="#quest1Param" aria-expanded="false" aria-controls="collapseExample"></i>
                                                         <i class="fas fa-arrows-alt ml-2"></i>
-                                                        <i id="trash12Icon" class="fas fa-trash-alt ml-2 trash"></i>
+                                                        <i id="trash12Icon" class="fas fa-trash-alt ml-2 trash" data-toggle="modal" data-target="#supprModal"></i>
                                                     </div>
                                                 </div>
 
@@ -201,17 +201,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">fdtrdrdrtdrdrdd</div>
+                <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
+                    <form class="form-horizontal">
+                        <fieldset>
+                            <legend id="formName">Form Name</legend>
+                            <div id="previewQuestions">
+
+                                
+                            </div>
+                        </fieldset>
+                    </form>
+
+                </div>
 
             </div>
         </div>
     </div>
 </div>
 
-<div id="myModal" class="modal fade" role="dialog">
+<div id="questionModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -222,10 +231,26 @@
                 <input class="form-control" placeholder="Intitulé" type="text" id="intituleModalTxtB" />
             </div>
             <div class="modal-footer">
-                <button id="modalBtn" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="modalIntituleBtn" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
+    </div>
+</div>
 
+<div id="supprModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Suppression de question</h4>
+            </div>
+            <div class="modal-body">
+                <label for="intituleTxtB">Voulez-vous supprimer la question ?</label>
+            </div>
+            <div class="modal-footer">
+                <button id="modalSupprBtn" type="button" class="btn btn-default" data-dismiss="modal">Supprimer</button>
+                <button id="modalAnnulBtn" type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -234,25 +259,15 @@
 <script>
 
     $('#sortable').sortable();
-    $('.rotate').click(function () {
-        $(this).toggleClass("down");
-    });
 
-    $('.fa-trash-alt').click(function () {
 
-    });
-    function ExtraireCodeQuestion(Id = '') {
+    $(document.body).on('click', '.element', function (e) { });
 
-        if (Id.match(/(\d+)/)) {
-            var code = '';
-            code = Id.match(/(\d+)/);
-            return code[0];
-        }
-        else {
+    $(document.body).on('click', '.element', function (e) { });
 
-            return false;
-        }
-    }
+
+
+    $(document.body).on('click', '.rotate', function () { $(this).toggleClass("down"); });
 
     $(document).ready(function () {
         //$("#ordreBtn").click(function () {
@@ -262,19 +277,23 @@
         var nombreDeLi = $("#sortable").children().length;
         var numQuestion = 0;
         var codeQuestion = '';
+        var idLiQuestion = '';
+        var questionPreviewId = '';
         var questionnaire = {
             formationId: '',
             questionnaireId: '',
             titre: '',
             description: '',
-            listQuestObj:['']
+            codeHtml: '',
+            listQuestObj: ['']
         }
         var item = {
-            itemId:'',
-            typeItem:'',
+            itemId: '',
+            typeItem: '',
             itemTxtBId: '',
             itemUlId: '',
             itemIntitule: '',
+            codeHtml: '',
             itemName: ''
         };
         var questionObj = {
@@ -296,60 +315,84 @@
             supprBtnId: '',
             trashBtnId: '',
             graphique: '',
-            listItems:['']
+            graphiqueLigneId: '',
+            graphiqueColId: '',
+            codeHtml: '',
+            listItems: ['']
         }
+
+        $("#modalSupprBtn").click(function () {
+            $(idLiQuestion).remove();
+            var qpreview = '';
+            qpreview = "#" + questionPreviewId;
+            $(qpreview).remove();
+            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            questionnaire.listQuestObj.pop(questionObj);
+        });
+        $(document.body).on('click', '.trash', function () {
+            codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
+            idLiQuestion = "#" + codeQuestion;
+        });
+
+        $(document.body).on('keyup', '.intituleTxtB', function () {
+            var intituleBtn = '';
+            var intitule = '';
+            var intituleBtn = "#" + $(this).attr("id");
+            console.log(intituleBtn);
+            codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
+            console.log(codeQuestion);
+            var intituleDivB = "#intitule" + codeQuestion + "Div";
+            $(intituleDivB).html('');
+            intitule = $(intituleBtn).val();
+            $(intituleDivB).html(intitule);
+            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            questionObj.intitule = '';
+            questionObj.intitule = intitule;
+        });
+        $(document.body).on('change', '.graphOption', function (e) {
+            console.log("HEY !")
+            codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
+            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            questionObj.graphique = $(this).val();
+            console.log($(this).val())
+            qpreview = "#" + questionPreviewId;
+            console.log(qpreview);
+            $(qpreview).remove();
+            CreerPreview(questionObj);
+        });
         $("#BtnValider").click(function () {
             var titre = '';
             var description = '';
             titre = $("#titreTxtB").val();
             description = $("#descriptionTxtA").val();
+            $("#formName").html(titre);
             questionnaire.titre = titre;
             questionnaire.description = description;
+            questionnaire.formationId= @Model.CodeProduitFormation;
             $("#titreDiv").html(titre);
-            alert("Questionnaire " + titre + " créé");
+            alert("Questionnaire " + titre + " créé.");
         });
-        $(".trash").click(function () {
-            var idUl = '';
-            codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
-            idUl = "#" + codeQuestion;
-            $(idUl).remove(this);
-            questionnaire.questionObj = questionnaire.listQuestObj.find(c => c.idQuestion === codeQuestion);
-            console.log(questionnaire.questionObj);
-            questionnaire.questionObj.remove();
-            console.log(questionnaire);
-        });
+
         $(".ajouter-item-radio").click(function () {
             var idUl = '';
             var itemID = '';
             itemID = String(codeQuestion) + String(Math.floor((Math.random() * 100) + 1));
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
             idUl = "#item" + codeQuestion + "Ul";
-            questionObj = questionnaire.listQuestObj.find(c => c.idQuestion === codeQuestion);
+            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
             item.itemId = itemID;
             item.typeItem = "radio";
             item.itemName = "item" + codeQuestion;
-            item.itemTxtBId = "item" + itemID ;
+            item.itemTxtBId = "item" + itemID;
             item.itemUlId = idUl;
             questionObj.listItems.push(item);
             console.log(questionObj.listItems);
             $(idUl).append($("<li class='list-inline-item form-inline justify-content-center mb-2'><div class='d-inline'><input type='radio' name='item' id='option1' class='ml-2'/></div><div class='d-inline'><input class='form - control' type='text' value='Oui'/></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li>"));
 
         });
-        $('.intituleTxtB').keyup(function () {
-            var intituleBtn = '';
-            var intitule = '';
-            var intituleBtn = "#" + $(this).attr("id");
-            codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
-            var intituleDivB = "#intitule" + codeQuestion + "Div";
-            $(intituleDivB).html('');
-            intitule = $(intituleBtn).val();
-            $(intituleDivB).html(intitule);
-            questionObj = questionnaire.listQuestObj.find(c => c.idQuestion === codeQuestion);
-            questionObj.intitule = intitule;
-            
-        });
-        $("#BtnOuiNon").click(function () {
-            questionObj.type = "OuiNon";
+
+        $("#BtnOuiNonNsp").click(function () {
+            questionObj.type = "OuiNonNsp";
             questionObj.choixRequis = false;
             questionObj.ajoutSupprChoix = false;
         });
@@ -358,13 +401,14 @@
             questionObj.choixRequis = false;
             questionObj.ajoutSupprChoix = false;
         });
-        $("#modalBtn").click(function () {
+        $("#modalIntituleBtn").click(function () {
             numQuestion += 1;
+            var intitule = '';
             intitule = $("#intituleModalTxtB").val();
             codeQuestion = String(numQuestion) + String(nombreDeLi) + String(Math.floor((Math.random() * 100) + 1));
             questionObj.intitule = intitule;
             questionObj.questionId = codeQuestion;
-            questionObj.dataTarget = "quest" + codeQuestion + "Param";
+            questionObj.dataTarget = "#quest" + codeQuestion + "Param";
             questionObj.TargetId = "quest" + codeQuestion + "Param";
             questionObj.intituleTxtBId = "intitule" + codeQuestion + "TxtB";
             questionObj.intituleDivBId = "intitule" + codeQuestion + "Div";
@@ -377,13 +421,49 @@
             questionObj.itemUlId = "item" + codeQuestion;
             questionObj.ajouterBtnId = "ajouter" + codeQuestion + "Btn";
             questionObj.supprBtnId = "suppr" + codeQuestion + "Btn";
-            questionObj.trashBtnId = "trash" + codeQuestion + "Btn";
+            questionObj.trashIconId = "trash" + codeQuestion + "Icon";
+            questionObj.graphiqueId = "graph" + codeQuestion + "select";
             questionObj.graphique = 1;
 
             console.log(questionObj);
             CreerQuestion(questionObj);
+            CreerPreview(questionObj);
         });
         function CreerQuestion(questionObj = null) {
+            if (questionObj.type = "OuiNon") {
+                $("#sortable").append("<li id=" + questionObj.questionId + "><div class='card'><div class='card-header'><div class='row'>" +
+                    "<div class='col-sm btn-sm justify-content-sm-center'>" +
+                    "<div class='d-inline float-left' id=" + questionObj.intituleDivBId + ">" + questionObj.intitule + "</div>" +
+                    "<div class='d-inline float-right'>" +
+                    "<i class='fa fa-chevron-up ml-3 rotate' data-toggle='collapse' data-target=" + questionObj.dataTarget + " aria-expanded='false' aria-controls='collapseExample'></i>" +
+                    "<i class='fas fa-arrows-alt ml-2'></i>" +
+                    "<i id=" + questionObj.trashIconId + " class='fas fa-trash-alt ml-2 trash' data-toggle='modal' data-target='#supprModal'></i></div></div></div></div>" +
+                    "<div class='collapse' id=" + questionObj.TargetId + ">" +
+                    "<div class='card card-body'>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Intitulé de la question :</div>" +
+                    "<div class='d-inline ml-2'><input class='form-control intituleTxtB' placeholder='Intitulé' type='text' id=" + questionObj.intituleTxtBId + " /></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Réponse obligatoire : </div>" +
+                    "<div class='d-inline ml-2'><div class='form-check-inline'><label>" +
+                    "<input class='form-check-input' type='radio' name='req' id=" + questionObj.requisOuiRadioId + " checked> Oui</label>" +
+                    "<label><input class='form-check-input ml-5' type='radio' name='req' id=" + questionObj.requisNonRadioId + " disabled> Non</label></div></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Type de graphique :</div>" +
+                    "<div class='d-inline ml-2'>" +
+                    "<select id=" + questionObj.graphiqueId +" class='btn-sm graphOption'>" +
+                    "<option selected value='1'>Colonne</option>" +
+                    "<option value='2'>Ligne</option></select></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Valeurs possibles :</div>" +
+                    "<div class='d-inline ml-2'>" +
+                    "<input type='button' value='Ajouter un item' class='btn-sm' disabled /></div></div>" +
+                    "<ul class='pl-0 mt-2' id=" + questionObj.itemUlId + ">" +
+                    "<li class='form-inline justify-content-center mb-2'><div class='d-inline'><input type='radio' name='item' id='option1' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control' type='text' value='Oui' disabled /></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li>" +
+                    "<li class='form-inline justify-content-center mb-2'><div class='d-inline'><input type='radio' name='item' id='option1' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control' type='text' value='Non' disabled /></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li>" +
+                    "<li class='form-inline justify-content-center mb-2'><div class='d-inline'><input type='radio' name='item' id='option1' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control' type='text' value='Ne sais pas' disabled /></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li></ul></div></div></div></li>");
+
+            }
             if (questionObj.requis = false) {
 
 
@@ -391,8 +471,91 @@
             questionnaire.listQuestObj.push(questionObj)
             console.log(questionnaire);
         };
-    });
+        function CreerPreview(questionObj = null) {
+            console.log("creer preview");
+            console.log(questionObj.graphique)
+            questionPreviewId = "questionPreview" + questionObj.questionId;
 
+            if (questionObj.type = "OuiNonNsp")
+            {
+                var itemOui = {};
+                var itemNeSaisPas = {};
+                var itemNon = {};
+
+                itemOui.itemID = "Oui" + codeQuestion;
+                itemOui.itemName = "radio" + codeQuestion;
+                questionObj.listItems.push({ itemOui });
+                
+                itemNon.itemID = "Non" + codeQuestion;
+                itemNon.itemName = "radio" + codeQuestion;
+                questionObj.listItems.push({ itemNon });
+                
+                itemNeSaisPas.itemID = "NeSaisPas" + codeQuestion;
+                itemNeSaisPas.itemName = "radio" + codeQuestion;
+                questionObj.listItems.push({ itemNeSaisPas });
+
+                if (questionObj.graphique == 2) {
+                    questionObj.codeHtml = "<div id=" + questionPreviewId + " class='form-group'>" +
+                        "<label class='col-md-4 control-label' for=" + itemOui.itemID + ">" + questionObj.intitule +'Ligne' +"</label>" +
+                        "<div class='col-md-4'>" +
+                        "<label class='radio-inline mr-2' for='radios-0'>" +
+                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.itemID + " value='1' checked='checked'>" +
+                        "Oui" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + itemNon.itemID + ">" +
+                        "<input type='radio' name=" + itemNon.itemName + " id=" + itemNon.itemID + " value='2'>" +
+                        "Non" +
+                        "</label>" +
+                        "<label class='radio-inline' for=" + itemNeSaisPas.itemID + ">" +
+                        "<input type='radio' name=" + itemNeSaisPas.itemName + " id=" + itemNeSaisPas.itemID + " value='2'>" +
+                        "Ne sais pas" +
+                        "</label>" +
+                        "</div>" +
+                        "</div>";
+                }
+                else if (questionObj.graphique == 1) {
+                    questionObj.codeHtml = "<div id=" + questionPreviewId + " class='form-group'>" +
+                        "<label class='col-md-4 control-label' for=" + itemOui.itemID + ">" + questionObj.intitule + "</label>" +
+                        "<div class='col-md-4'>" +
+                        "<div class='radio'>"+
+                        "<label for='radios-0'>" +
+                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.itemID + " value='1' checked='checked'>" +
+                        "Oui" +
+                        "</label>" +
+                        "</div>" +
+                        "<div class='radio'>" +
+                        "<label for=" + itemNon.itemID + ">" +
+                        "<input type='radio' name=" + itemNon.itemName + " id=" + itemNon.itemID + " value='2'>" +
+                        "Non" +
+                        "</label>" +
+                        "</div>" +
+                        "<div class='radio'>" +
+                        "<label for=" + itemNeSaisPas.itemID + ">" +
+                        "<input type='radio' name=" + itemNeSaisPas.itemName + " id=" + itemNeSaisPas.itemID + " value='2'>" +
+                        "Ne sais pas" +
+                        "</label>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>";
+                }
+
+                $("#previewQuestions").append(questionObj.codeHtml);
+                
+            }
+        };
+    });
+    function ExtraireCodeQuestion(Id = '') {
+
+        if (Id.match(/(\d+)/)) {
+            var code = '';
+            code = Id.match(/(\d+)/);
+            return code[0];
+        }
+        else {
+
+            return false;
+        }
+    }
 
     //$(function () {
     //    $('#sortable').sortable({

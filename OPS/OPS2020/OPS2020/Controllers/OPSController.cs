@@ -20,7 +20,6 @@ namespace OPS2020.Controllers
         [HttpGet]
         public async Task<IActionResult> Etape0(Etape0Model etape0)
         {
-            etape0.CodeProduitFormation = 127;
             return View("Etape0", etape0);
         }
             
