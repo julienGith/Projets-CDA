@@ -58,16 +58,16 @@
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent1">
                                     <ul class="navbar-nav flex-md-column flex-fill">
+                                        <li id="BtnOuiNon" name="Btn1a10" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Choisir entre oui et non</li>
+                                        <li id="BtnOuiNonNsp" name="BtnOuiNonNsp" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Choisir entre oui, non et Ne sais pas</li>
                                         <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Evaluer selon une échelle de 1 à 10</li>
-                                        <li id="Btn4niv" name="Btn4niv" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Evaluer selon 4 niveaux de satisfaction</li>
-                                        <li id="Btn1rep" name="Btn1rep" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Choisir une seule réponse au sein d'un groupe de choix</li>
-                                        <li id="Btn1repListe" name="Btn1repListe" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Choisir une seule réponse au sein liste</li>
-                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Choisir entre oui et non</></li>
-                                        <li id="BtnOuiNon" name="BtnOuiNonNsp" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Choisir entre oui, non et Ne sais pas</></li>
-                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Choisir plusieurs réponses au sein d'un groupe de choix</li>
-                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Répondre sous forme de texte court</li>
-                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Répondre sous forme de texte long</li>
-                                        <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-lg btn-block btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Répondre sous forme d'une valeur numérique</li>
+                                        <li id="Btn4niv" name="Btn4niv" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Evaluer selon 4 niveaux de satisfaction</li>
+                                        <li id="Btn1rep" name="Btn1rep" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Choisir une seule réponse au sein d'un groupe de choix</li>
+                                        <li id="Btn1repListe" name="Btn1repListe" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Choisir une seule réponse au sein liste</li>
+                                        <li id="BtnNrep" name="BtnNrep" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Choisir plusieurs réponses au sein d'un groupe de choix</li>
+                                        <li id="Btn1a10" name="BtnTxtC" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Répondre sous forme de texte court</li>
+                                        <li id="Btn1a10" name="BtnTxtL" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Répondre sous forme de texte long</li>
+                                        <li id="Btn1a10" name="BtnValNum" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Répondre sous forme d'une valeur numérique</li>
                                     </ul>
                                 </div>
                             </nav>
@@ -126,10 +126,31 @@
                                                 </div>
 
                                                 <ul class="pl-0 mt-2" id="item12Ul">
-                                                    <li class="form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" id="option1" class="d-inline ml-2" disabled /></div><div width="50" class="d-inline"><input class="form-control" type="text" value="Oui" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
-                                                    <li class="form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" id="option1" class="d-inline ml-2" disabled /></div><div width="50" class="d-inline"><input class="form-control" type="text" value="Non" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
-                                                    <li class="form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" id="option1" class="d-inline ml-2" disabled /></div><div width="50" class="d-inline"><input class="form-control" type="text" value="Ne sais pas" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
+                                                    <li class="form-inline justify-content-center w-75 mb-2"><input type="radio" name="item" id="option1" class="d-inline ml-2" disabled /><input class="form-control d-inline ml-2" type="text" value="Oui" disabled /><button class="d-inline ml-2" disabled><i href="#" class="fas fa-trash-alt"></i></button></li>
+                                                    <li class="form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" id="option1" class="d-inline ml-2" disabled /></div><div class="d-inline"><input class="form-control w-75" type="text" value="Non" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
+                                                    <li class="form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" id="option1" class="d-inline ml-2" disabled /></div><div class="d-inline"><input class="form-control w-75" type="text" value="Ne sais pas" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
                                                 </ul>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="radios">Multiple Radios</label>
+                                                    <div class="col-md-4">
+                                                        <div class="radio">
+                                                            <label class="radio-inline" for="radios-0">
+                                                                <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
+
+                                                            </label>
+                                                            <input class="form-control d-inline ml-2" type="text" value="Oui" disabled />
+                                                            <button class="d-inline ml-2" disabled><i href="#" class="fas fa-trash-alt"></i></button>
+                                                        </div>
+                                                        <div class="radio">
+                                                            <label for="radios-1">
+                                                                <input type="radio" name="radios" id="radios-1" value="2">
+                                                                Option two
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -181,7 +202,7 @@
                                                 <div class="row mt-2 justify-content-center">
                                                     <div class="d-inline">Valeurs possibles :</div>
                                                     <div class="d-inline ml-2">
-                                                        <input id="ajouter112Btn" type="button" value="Ajouter un item" class="btn-sm ajouter-item-radio"/>
+                                                        <input id="ajouter112Btn" type="button" value="Ajouter un item" class="btn-sm ajouter-item-radio" />
                                                     </div>
                                                 </div>
 
@@ -207,7 +228,7 @@
                             <legend id="formName">Form Name</legend>
                             <div id="previewQuestions">
 
-                                
+
                             </div>
                         </fieldset>
                     </form>
@@ -274,11 +295,15 @@
         //    alert($("#sortable").sortable('toArray', { attribute: 'id' }).toSource());
         //    $("#ordre").text(productOrder);
         //});
+        var C = console.log;
         var nombreDeLi = $("#sortable").children().length;
         var numQuestion = 0;
         var codeQuestion = '';
         var idLiQuestion = '';
         var questionPreviewId = '';
+        var type = '';
+        var choixRequis = true;
+        var ajoutSupprChoix = true;
         var questionnaire = {
             formationId: '',
             questionnaireId: '',
@@ -296,7 +321,7 @@
             codeHtml: '',
             itemName: ''
         };
-        var questionObj = {
+        var questionObjt = {
             type: '',
             sousType: '',
             choixRequis: '',
@@ -315,8 +340,7 @@
             supprBtnId: '',
             trashBtnId: '',
             graphique: '',
-            graphiqueLigneId: '',
-            graphiqueColId: '',
+            graphiqueId: '',
             codeHtml: '',
             listItems: ['']
         }
@@ -325,9 +349,11 @@
             $(idLiQuestion).remove();
             var qpreview = '';
             qpreview = "#" + questionPreviewId;
+            
             $(qpreview).remove();
-            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            questionObj == questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
             questionnaire.listQuestObj.pop(questionObj);
+            C(questionnaire.listQuestObj);
         });
         $(document.body).on('click', '.trash', function () {
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
@@ -345,19 +371,24 @@
             $(intituleDivB).html('');
             intitule = $(intituleBtn).val();
             $(intituleDivB).html(intitule);
-            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            questionObj == questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
             questionObj.intitule = '';
             questionObj.intitule = intitule;
+            qpreview = "#" + questionPreviewId;
+            $(qpreview).remove();
+            CreerPreview(questionObj);
         });
         $(document.body).on('change', '.graphOption', function (e) {
-            console.log("HEY !")
+            var objIndex = '';
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
-            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            questionObj == questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            console.log(questionObj);
             questionObj.graphique = $(this).val();
-            console.log($(this).val())
+            questionPreviewId = "questionPreview" + questionObj.questionId;
             qpreview = "#" + questionPreviewId;
-            console.log(qpreview);
+            C(questionPreviewId);
             $(qpreview).remove();
+
             CreerPreview(questionObj);
         });
         $("#BtnValider").click(function () {
@@ -379,7 +410,7 @@
             itemID = String(codeQuestion) + String(Math.floor((Math.random() * 100) + 1));
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
             idUl = "#item" + codeQuestion + "Ul";
-            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            questionObj == questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
             item.itemId = itemID;
             item.typeItem = "radio";
             item.itemName = "item" + codeQuestion;
@@ -392,22 +423,29 @@
         });
 
         $("#BtnOuiNonNsp").click(function () {
-            questionObj.type = "OuiNonNsp";
-            questionObj.choixRequis = false;
-            questionObj.ajoutSupprChoix = false;
+            type = "OuiNonNsp";
+            choixRequis = false;
+            ajoutSupprChoix = false;
+        });
+        $("#BtnOuiNon").click(function () {
+            type = "OuiNon";
+            choixRequis = false;
+            ajoutSupprChoix = false;
         });
         $("#Btn1a10").click(function () {
-            questionObj.type = "1a10";
-            questionObj.choixRequis = false;
-            questionObj.ajoutSupprChoix = false;
+            type  = "1a10";
+            choixRequis = false;
+            ajoutSupprChoix = false;
         });
         $("#modalIntituleBtn").click(function () {
+            C(type);
+            questionObj = new QuestionObj(type, choixRequis, ajoutSupprChoix);
             numQuestion += 1;
             var intitule = '';
             intitule = $("#intituleModalTxtB").val();
             codeQuestion = String(numQuestion) + String(nombreDeLi) + String(Math.floor((Math.random() * 100) + 1));
-            questionObj.intitule = intitule;
             questionObj.questionId = codeQuestion;
+            questionObj.intitule = intitule;
             questionObj.dataTarget = "#quest" + codeQuestion + "Param";
             questionObj.TargetId = "quest" + codeQuestion + "Param";
             questionObj.intituleTxtBId = "intitule" + codeQuestion + "TxtB";
@@ -424,13 +462,49 @@
             questionObj.trashIconId = "trash" + codeQuestion + "Icon";
             questionObj.graphiqueId = "graph" + codeQuestion + "select";
             questionObj.graphique = 1;
+            questionObj.listItems = [''];
 
-            console.log(questionObj);
+            questionnaire.listQuestObj.push({ questionObj });
+            $("#intituleModalTxtB").val('');
+            C(questionnaire);
             CreerQuestion(questionObj);
             CreerPreview(questionObj);
         });
+
         function CreerQuestion(questionObj = null) {
-            if (questionObj.type = "OuiNon") {
+            if (questionObj.type == "OuiNon") {
+                $("#sortable").append("<li id=" + questionObj.questionId + "><div class='card'><div class='card-header'><div class='row'>" +
+                    "<div class='col-sm btn-sm justify-content-sm-center'>" +
+                    "<div class='d-inline float-left' id=" + questionObj.intituleDivBId + ">" + questionObj.intitule + "</div>" +
+                    "<div class='d-inline float-right'>" +
+                    "<i class='fa fa-chevron-up ml-3 rotate' data-toggle='collapse' data-target=" + questionObj.dataTarget + " aria-expanded='false' aria-controls='collapseExample'></i>" +
+                    "<i class='fas fa-arrows-alt ml-2'></i>" +
+                    "<i id=" + questionObj.trashIconId + " class='fas fa-trash-alt ml-2 trash' data-toggle='modal' data-target='#supprModal'></i></div></div></div></div>" +
+                    "<div class='collapse' id=" + questionObj.TargetId + ">" +
+                    "<div class='card card-body'>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Intitulé de la question :</div>" +
+                    "<div class='d-inline ml-2'><input class='form-control intituleTxtB' placeholder='Intitulé' type='text' id=" + questionObj.intituleTxtBId + " /></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Réponse obligatoire : </div>" +
+                    "<div class='d-inline ml-2'><div class='form-check-inline'><label>" +
+                    "<input class='form-check-input' type='radio' name='req' id=" + questionObj.requisOuiRadioId + " checked> Oui</label>" +
+                    "<label><input class='form-check-input ml-5' type='radio' name='req' id=" + questionObj.requisNonRadioId + " disabled> Non</label></div></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Type de graphique :</div>" +
+                    "<div class='d-inline ml-2'>" +
+                    "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption'>" +
+                    "<option selected value='1'>Colonne</option>" +
+                    "<option value='2'>Ligne</option></select></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Valeurs possibles :</div>" +
+                    "<div class='d-inline ml-2'>" +
+                    "<input type='button' value='Ajouter un item' class='btn-sm' disabled /></div></div>" +
+                    "<ul class='pl-0 mt-2' id=" + questionObj.itemUlId + ">" +
+                    "<li class='form-inline justify-content-center mb-2'><div class='d-inline'><input type='radio' name='item' id='option1' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control' type='text' value='Oui' disabled /></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li>" +
+                    "<li class='form-inline justify-content-center mb-2'><div class='d-inline'><input type='radio' name='item' id='option1' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control' type='text' value='Non' disabled /></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li></ul></div></div></div></li>");
+            }
+            if (questionObj.type == "OuiNonNsp") {
                 $("#sortable").append("<li id=" + questionObj.questionId + "><div class='card'><div class='card-header'><div class='row'>" +
                     "<div class='col-sm btn-sm justify-content-sm-center'>" +
                     "<div class='d-inline float-left' id=" + questionObj.intituleDivBId + ">" + questionObj.intitule + "</div>" +
@@ -464,41 +538,162 @@
                     "<li class='form-inline justify-content-center mb-2'><div class='d-inline'><input type='radio' name='item' id='option1' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control' type='text' value='Ne sais pas' disabled /></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li></ul></div></div></div></li>");
 
             }
+            if (questionObj.type == "1a10") {
+                $("#sortable").append("<li id=" + questionObj.questionId + "><div class='card'><div class='card-header'><div class='row'>" +
+                    "<div class='col-sm btn-sm justify-content-sm-center'>" +
+                    "<div class='d-inline float-left' id=" + questionObj.intituleDivBId + ">" + questionObj.intitule + "</div>" +
+                    "<div class='d-inline float-right'>" +
+                    "<i class='fa fa-chevron-up ml-3 rotate' data-toggle='collapse' data-target=" + questionObj.dataTarget + " aria-expanded='false' aria-controls='collapseExample'></i>" +
+                    "<i class='fas fa-arrows-alt ml-2'></i>" +
+                    "<i id=" + questionObj.trashIconId + " class='fas fa-trash-alt ml-2 trash' data-toggle='modal' data-target='#supprModal'></i></div></div></div></div>" +
+                    "<div class='collapse' id=" + questionObj.TargetId + ">" +
+                    "<div class='card card-body'>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Intitulé de la question :</div>" +
+                    "<div class='d-inline ml-2'><input class='form-control intituleTxtB' placeholder='Intitulé' type='text' id=" + questionObj.intituleTxtBId + " /></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Réponse obligatoire : </div>" +
+                    "<div class='d-inline ml-2'><div class='form-check-inline'><label>" +
+                    "<input class='form-check-input' type='radio' name='req' id=" + questionObj.requisOuiRadioId + " checked> Oui</label>" +
+                    "<label><input class='form-check-input ml-5' type='radio' name='req' id=" + questionObj.requisNonRadioId + " disabled> Non</label></div></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Type de graphique :</div>" +
+                    "<div class='d-inline ml-2'>" +
+                    "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption' disabled>" +
+                    "<option value='1'>Colonne</option>" +
+                    "<option selected value='2'>Ligne</option></select></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Valeurs possibles :</div>" +
+                    "<div class='d-inline ml-2'>" +
+                    "<input type='button' value='Ajouter un item' class='btn-sm' disabled /></div></div>" +
+                    "<div class='row justify-content-center mt-2'>" +
+                    "<label class='radio-inline mr-2' for='radio'>" +
+                    "<input type='radio' id='radio' value='1' disabled>" +
+                    "1" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for='radio2'>" +
+                    "<input type='radio' id='radio2' value='1' disabled>" +
+                    "2" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for='radio3'>" +
+                    "<input type='radio' id='radio3' value='1' disabled>" +
+                    "3" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for='radio4'>" +
+                    "<input type='radio' id='radio4' value='1' disabled>" +
+                    "4" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for='radio5'>" +
+                    "<input type='radio' id='radio5' value='1' checked='checked' disabled>" +
+                    "5" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for='radio6'>" +
+                    "<input type='radio' id='radio6' value='1' disabled>" +
+                    "6" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for='radio7'>" +
+                    "<input type='radio' id='radio7' value='1' disabled>" +
+                    "7" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for='radio8'>" +
+                    "<input type='radio' id='radio8' value='1' disabled>" +
+                    "8" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for='radio9'>" +
+                    "<input type='radio' id='radio9' value='1' disabled>" +
+                    "9" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for='radio10'>" +
+                    "<input type='radio' id='radio10' value='1' disabled>" +
+                    "10" +
+                    "</label></div>");
+            }
             if (questionObj.requis = false) {
 
 
             }
-            questionnaire.listQuestObj.push(questionObj)
-            console.log(questionnaire);
         };
         function CreerPreview(questionObj = null) {
             console.log("creer preview");
             console.log(questionObj.graphique)
             questionPreviewId = "questionPreview" + questionObj.questionId;
+            var itemOui = new Item();
+            var itemNon = new Item();
+            var itemNeSaisPas = new Item();
+            var item1 = new Item();
+            var item2 = new Item();
+            var item3 = new Item();
+            var item4 = new Item();
+            var item5 = new Item();
+            var item6 = new Item();
+            var item7 = new Item();
+            var item8 = new Item();
+            var item9 = new Item();
+            var item10 = new Item();
 
-            if (questionObj.type = "OuiNonNsp")
-            {
-                var itemOui = {};
-                var itemNeSaisPas = {};
-                var itemNon = {};
-
+            if (questionObj.type == "OuiNon") {
+                C("hey");
+                C(questionObj.listItems);
                 itemOui.itemID = "Oui" + codeQuestion;
                 itemOui.itemName = "radio" + codeQuestion;
-                questionObj.listItems.push({ itemOui });
-                
                 itemNon.itemID = "Non" + codeQuestion;
                 itemNon.itemName = "radio" + codeQuestion;
-                questionObj.listItems.push({ itemNon });
-                
-                itemNeSaisPas.itemID = "NeSaisPas" + codeQuestion;
-                itemNeSaisPas.itemName = "radio" + codeQuestion;
-                questionObj.listItems.push({ itemNeSaisPas });
-
+                if (questionObj.listItems.length == 1) {
+                    questionObj.listItems.push({ itemNon });
+                    questionObj.listItems.push({ itemOui });
+                }
                 if (questionObj.graphique == 2) {
                     questionObj.codeHtml = "<div id=" + questionPreviewId + " class='form-group'>" +
-                        "<label class='col-md-4 control-label' for=" + itemOui.itemID + ">" + questionObj.intitule +'Ligne' +"</label>" +
+                        "<label class='col-md-4 control-label' for=" + itemOui.itemID + ">" + questionObj.intitule + "</label>" +
                         "<div class='col-md-4'>" +
-                        "<label class='radio-inline mr-2' for='radios-0'>" +
+                        "<label class='radio-inline mr-2' for=" + itemOui.itemID + ">" +
+                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.itemID + " value='1' checked='checked'>" +
+                        "Oui" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + itemNon.itemID + ">" +
+                        "<input type='radio' name=" + itemNon.itemName + " id=" + itemNon.itemID + " value='2'>" +
+                        "Non" +
+                        "</label>" +
+                        "</div>" +
+                        "</div>";
+                }
+                else if (questionObj.graphique == 1) {
+                    questionObj.codeHtml = "<div id=" + questionPreviewId + " class='form-group'>" +
+                        "<label class='col-md-4 control-label' for=" + itemOui.itemID + ">" + questionObj.intitule + "</label>" +
+                        "<div class='col-md-4'>" +
+                        "<div class='radio'>" +
+                        "<label for=" + itemOui.itemID + ">" +
+                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.itemID + " value='1' checked='checked'>" +
+                        "Oui" +
+                        "</label>" +
+                        "</div>" +
+                        "<div class='radio'>" +
+                        "<label for=" + itemNon.itemID + ">" +
+                        "<input type='radio' name=" + itemNon.itemName + " id=" + itemNon.itemID + " value='2'>" +
+                        "Non" +
+                        "</label>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>";
+                }
+            }
+            if (questionObj.type == "OuiNonNsp")
+            {
+                    itemOui.itemID = "Oui" + codeQuestion;
+                    itemOui.itemName = "radio" + codeQuestion;
+
+
+                    itemNon.itemID = "Non" + codeQuestion;
+                    itemNon.itemName = "radio" + codeQuestion;
+
+
+                    itemNeSaisPas.itemID = "NeSaisPas" + codeQuestion;
+                    itemNeSaisPas.itemName = "radio" + codeQuestion;
+                if (questionObj.graphique == 2) {
+                    questionObj.codeHtml = "<div id=" + questionPreviewId + " class='form-group'>" +
+                        "<label class='col-md-4 control-label' for=" + itemOui.itemID + ">" + questionObj.intitule +"</label>" +
+                        "<div class='col-md-4'>" +
+                        "<label class='radio-inline mr-2' for=" + itemOui.itemID + ">" +
                         "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.itemID + " value='1' checked='checked'>" +
                         "Oui" +
                         "</label>" +
@@ -518,7 +713,7 @@
                         "<label class='col-md-4 control-label' for=" + itemOui.itemID + ">" + questionObj.intitule + "</label>" +
                         "<div class='col-md-4'>" +
                         "<div class='radio'>"+
-                        "<label for='radios-0'>" +
+                        "<label for=" + itemOui.itemID + ">" +
                         "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.itemID + " value='1' checked='checked'>" +
                         "Oui" +
                         "</label>" +
@@ -538,11 +733,127 @@
                         "</div>" +
                         "</div>";
                 }
-
-                $("#previewQuestions").append(questionObj.codeHtml);
-                
             }
+            if (questionObj.type == "1a10")
+            {
+
+                if (questionObj.listItems.length == 1) {
+                    item1.itemID = "1" + codeQuestion;
+                    item1.itemName = "radios-1" + codeQuestion;
+                    questionObj.listItems.push({ item1 });
+                    item2.itemID = "2" + codeQuestion;
+                    item2.itemName = "radios-2" + codeQuestion;
+                    questionObj.listItems.push({ item2 });
+                    item3.itemID = "3" + codeQuestion;
+                    item3.itemName = "radios-3" + codeQuestion;
+                    questionObj.listItems.push({ item3 });
+                    item4.itemID = "4" + codeQuestion;
+                    item4.itemName = "radios-4" + codeQuestion;
+                    questionObj.listItems.push({ item4 });
+                    item5.itemID = "5" + codeQuestion;
+                    item5.itemName = "radios-5" + codeQuestion;
+                    questionObj.listItems.push({ item5 });
+                    item6.itemID = "6" + codeQuestion;
+                    item6.itemName = "radios-6" + codeQuestion;
+                    questionObj.listItems.push({ item6 });
+                    item7.itemID = "7" + codeQuestion;
+                    item7.itemName = "radios-7" + codeQuestion;
+                    questionObj.listItems.push({ item7 });
+                    item8.itemID = "8" + codeQuestion;
+                    item8.itemName = "radios-8" + codeQuestion;
+                    questionObj.listItems.push({ item8 });
+                    item9.itemID = "9" + codeQuestion;
+                    item9.itemName = "radios-9" + codeQuestion;
+                    questionObj.listItems.push({ item9 });
+                    item10.itemID = "10" + codeQuestion;
+                    item10.itemName = "radios-10" + codeQuestion;
+                    questionObj.listItems.push({ item10 });
+
+                }
+
+                    questionObj.codeHtml = "<div id=" + questionPreviewId + " class='form-group'>" +
+                        "<label class='col-md-4 control-label' for='radios'>" + questionObj.intitule + "</label>" +
+                        "<div class='col-md-4'>" +
+                        "<label class='radio-inline mr-2' for=" + item1.itemID + ">" +
+                        "<input type='radio' name=" + item1.itemName +" id=" + item1.itemID + " value='1' disabled>" +
+                        "1" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item2.itemID + ">" +
+                        "<input type='radio' name=" + item2.itemName + " id=" + item2.itemID + " value='1' disabled>" +
+                        "2" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item3.itemID + ">" +
+                        "<input type='radio' name=" + item3.itemName + " id=" + item3.itemID + " value='1' disabled>" +
+                        "3" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item4.itemID + ">" +
+                        "<input type='radio' name=" + item4.itemName + " id=" + item4.itemID + " value='1' disabled>" +
+                        "4" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item5.itemID + ">" +
+                        "<input type='radio' name=" + item5.itemName + " id=" + item5.itemID + " value='1' disabled>" +
+                        "5" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item6.itemID + ">" +
+                        "<input type='radio' name=" + item6.itemName + " id=" + item6.itemID + " value='1' disabled>" +
+                        "6" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item7.itemID + ">" +
+                        "<input type='radio' name=" + item7.itemName + " id=" + item7.itemID + " value='1' disabled>" +
+                        "7" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item8.itemID + ">" +
+                        "<input type='radio' name=" + item8.itemName + " id=" + item8.itemID + " value='1' disabled>" +
+                        "8" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item9.itemID + ">" +
+                        "<input type='radio' name=" + item9.itemName + " id=" + item9.itemID + " value='1' disabled>" +
+                        "9" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item10.itemID + ">" +
+                        "<input type='radio' name=" + item10.itemName + " id=" + item10.itemID + " value='1' disabled>" +
+                        "10" +
+                    "</label></div></div>";
+
+
+            }
+            $("#previewQuestions").append(questionObj.codeHtml);
         };
+        function QuestionObj(type, choixRequis, ajoutSupprChoix)
+        {
+            this.type = type;
+            sousType = '';
+            this.choixRequis = choixRequis;
+            questionId = '';
+            intitule = '';
+            dataTarget = '';
+            TargetId = '';
+            intituleTxtBId = '';
+            intituleDivBId = '';
+            requisOuiRadioId = '';
+            requisNonRadioId = '';
+            requisRadioName = '';
+            ddlId = '';
+            this.ajoutSupprChoix = ajoutSupprChoix;
+            ajouterBtnId = '';
+            supprBtnId = '';
+            trashBtnId = '';
+            graphique = '';
+            graphiqueLigneId = '';
+            graphiqueColId = '';
+            codeHtml = '';
+            listItems = [''];
+        }
+        function Item() {
+            itemId = '';
+            typeItem = '';
+            itemTxtBId = '';
+            itemUlId = '';
+            itemIntitule = '';
+            codeHtml = '';
+            itemName = '';
+        }
+
     });
     function ExtraireCodeQuestion(Id = '') {
 
