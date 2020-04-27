@@ -7,6 +7,8 @@ using OPS.BOL;
 using OPS.DAL;
 using Microsoft.EntityFrameworkCore;
 using OPS2020.Models;
+using Newtonsoft.Json;
+
 namespace OPS2020.Controllers
 {
     public class OPSController : Controller
@@ -39,6 +41,40 @@ namespace OPS2020.Controllers
             }
             return View("Quest", questionnaireModel);
         }
+        [HttpPost]
+        public void CreerQuestionnaire(QuestionnaireModel questionnaireModel)
+        {
+            HttpContext.Session.Set<QuestionnaireModel>("Quest", questionnaireModel);
+            
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetQuestionObj(string codeQuestion)
+        {
+            QuestionnaireModel questionnaire = new QuestionnaireModel();
+            QuestionOBJ questionOBJ = new QuestionOBJ();
+            questionnaire = HttpContext.Session.Get<QuestionnaireModel>("Quest");
+            questionOBJ = questionnaire.questionsObj.FirstOrDefault(q => q.questionId == codeQuestion);
+            return Json(new { Data = questionOBJ });
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddQuestionObj(string questionOBJson)
+        {
+            QuestionnaireModel questionnaire = new QuestionnaireModel();
+            QuestionOBJ questionOBJ = new QuestionOBJ();
+            questionnaire = HttpContext.Session.Get<QuestionnaireModel>("Quest");
+            questionOBJ = JsonConvert.DeserializeObject<QuestionOBJ>(questionOBJson);
+            questionnaire.questionsObj.Add(questionOBJ);
 
+            return Json(new { Data = questionOBJ });
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetQuestionnaire(string codeQuestion)
+        {
+            QuestionnaireModel questionnaire = new QuestionnaireModel();
+            QuestionOBJ questionOBJ = new QuestionOBJ();
+            questionnaire = HttpContext.Session.Get<QuestionnaireModel>("Quest");
+            questionOBJ = questionnaire.questionsObj.FirstOrDefault(q => q.questionId == codeQuestion);
+            return Json(new { Data = questionOBJ });
+        }
     }
 }
