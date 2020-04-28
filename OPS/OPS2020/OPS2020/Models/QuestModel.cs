@@ -28,12 +28,16 @@ namespace OPS2020.Models
         public string ajoutSupprChoix { get; set; }
         public string ajouterBtnId { get; set; }
         public string supprBtnId { get; set; }
-        public string trashBtnId { get; set; }
+        public string trashIconId { get; set; }
         public string graphique { get; set; }
+        public string graphiqueId { get; set; }
         public string graphiqueLigneId { get; set; }
         public string graphiqueColId { get; set; }
-        public string codeHtml { get; set; }
         public string questionPreviewId { get; set; }
+        public string divPosPrev { get; set; }
+        public string codeHtml { get; set; }
+        public string itemUlId { get; set; }
+        public string itemLiId { get; set; }
         List<Item> items = new List<Item>();
     }
     public class QuestionModel
@@ -46,13 +50,18 @@ namespace OPS2020.Models
     }
     public class QuestionnaireModel
     {
+        public QuestionnaireModel()
+        {
+            questions = new HashSet<QuestionModel>();
+            questionsObj = new HashSet<QuestionOBJ>();
+        }
         public int IdQuestionnaire { get; set; }
         public string TitreQuestionnaire { get; set; }
         public string Description { get; set; }
         public string DataJson { get; set; }
         public int CodeProduitFormation { get; set; }
         public int EtatQuestionnaire { get; set; }
-        public virtual List<QuestionModel> questions { get; set; }
-        public virtual List<QuestionOBJ> questionsObj { get; set; }
+        public ICollection<QuestionModel> questions { get; set; }
+        public ICollection<QuestionOBJ> questionsObj { get; set; }
     }
 }

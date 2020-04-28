@@ -14,6 +14,7 @@ namespace OPS2020.Controllers
     public class OPSController : Controller
     {
         private readonly OPSCtx _context;
+
         public OPSController(OPSCtx context)
         {
             _context = context;
@@ -42,10 +43,11 @@ namespace OPS2020.Controllers
             return View("Quest", questionnaireModel);
         }
         [HttpPost]
-        public void CreerQuestionnaire(QuestionnaireModel questionnaireModel)
+        public void CreerQuestionnaire(string query)
         {
-            HttpContext.Session.Set<QuestionnaireModel>("Quest", questionnaireModel);
-            
+            QuestionnaireModel questionnaire = new QuestionnaireModel();
+            questionnaire=JsonConvert.DeserializeObject<QuestionnaireModel>(query);
+            HttpContext.Session.Set<QuestionnaireModel>("Quest", questionnaire);
         }
         [HttpPost]
         public async Task<IActionResult> GetQuestionObj(string codeQuestion)
@@ -57,12 +59,13 @@ namespace OPS2020.Controllers
             return Json(new { Data = questionOBJ });
         }
         [HttpPost]
-        public async Task<IActionResult> AddQuestionObj(string questionOBJson)
+        public async Task<IActionResult> AddQuestionObj(string query)
         {
             QuestionnaireModel questionnaire = new QuestionnaireModel();
             QuestionOBJ questionOBJ = new QuestionOBJ();
+            
             questionnaire = HttpContext.Session.Get<QuestionnaireModel>("Quest");
-            questionOBJ = JsonConvert.DeserializeObject<QuestionOBJ>(questionOBJson);
+            questionOBJ = JsonConvert.DeserializeObject<QuestionOBJ>(query);
             questionnaire.questionsObj.Add(questionOBJ);
 
             return Json(new { Data = questionOBJ });
