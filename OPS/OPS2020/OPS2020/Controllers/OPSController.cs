@@ -8,11 +8,13 @@ using OPS.DAL;
 using Microsoft.EntityFrameworkCore;
 using OPS2020.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace OPS2020.Controllers
 {
     public class OPSController : Controller
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly OPSCtx _context;
 
         public OPSController(OPSCtx context)
@@ -47,6 +49,8 @@ namespace OPS2020.Controllers
         {
             QuestionnaireModel questionnaire = new QuestionnaireModel();
             questionnaire=JsonConvert.DeserializeObject<QuestionnaireModel>(query);
+            Response.Cookies.Append("Quest", questionnaire, option);
+            _httpContextAccessor.HttpContext.
             HttpContext.Session.Set<QuestionnaireModel>("Quest", questionnaire);
         }
         [HttpPost]
