@@ -47,11 +47,17 @@ namespace OPS2020.Controllers
         [HttpPost]
         public void CreerQuestionnaire(string query)
         {
-            QuestionnaireModel questionnaire = new QuestionnaireModel();
-            questionnaire=JsonConvert.DeserializeObject<QuestionnaireModel>(query);
-            Response.Cookies.Append("Quest", questionnaire, option);
-            _httpContextAccessor.HttpContext.
-            HttpContext.Session.Set<QuestionnaireModel>("Quest", questionnaire);
+            SetCookie("Questionnaire", query, 180);
+            QuestionnaireModel questionnaireModel = new QuestionnaireModel();
+            Questionnaire questionnaire = new Questionnaire();
+            questionnaireModel = JsonConvert.DeserializeObject<QuestionnaireModel>(query);
+            questionnaire.CodeProduitFormation = questionnaireModel.CodeProduitFormation;
+            questionnaire.DataJson = JsonConvert.SerializeObject(questionnaireModel.questionsObj);
+            questionnaire.Description = questionnaireModel.Description;
+            questionnaire.EtatQuestionnaire = questionnaireModel.EtatQuestionnaire;
+            questionnaire.IdQuestionnaire = questionnaireModel.IdQuestionnaire;
+            questionnaire.TitreQuestionnaire = questionnaireModel.TitreQuestionnaire;
+            _context.Questionnaire.Add(questionnaire);
         }
         [HttpPost]
         public async Task<IActionResult> GetQuestionObj(string codeQuestion)
@@ -82,6 +88,16 @@ namespace OPS2020.Controllers
             questionnaire = HttpContext.Session.Get<QuestionnaireModel>("Quest");
             questionOBJ = questionnaire.questionsObj.FirstOrDefault(q => q.questionId == codeQuestion);
             return Json(new { Data = questionOBJ });
+        }
+
+        public void SetCookie(string key, string value, int? expireTime)
+        {
+            CookieOptions option = new CookieOptions();
+            if (expireTime.HasValue)
+                option.Expires = DateTime.Now.AddMinutes(expireTime.Value);
+            else
+                option.Expires = DateTime.Now.AddMilliseconds(10);
+            Response.Cookies.Append(key, value, option);
         }
     }
 }

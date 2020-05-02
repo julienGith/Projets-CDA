@@ -83,67 +83,7 @@
                         </div>
                         <div class="col-sm">
                             <ul id="sortable" class="navbar-nav flex-md-column flex-fill">
-                                <li id="12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <div class="row">
-                                                <div class="col-sm btn-sm justify-content-sm-center">
-                                                    <div class="d-inline float-left" id="intitule12Div">Question n°1 intitulé quel est votre couleur préférée ? ?</div>
-                                                    <div class="d-inline float-right">
-                                                        <i class="fa fa-chevron-up ml-3 rotate" data-toggle="collapse" data-target="#quest1Param" aria-expanded="false" aria-controls="collapseExample"></i>
-                                                        <i class="fas fa-arrows-alt ml-2"></i>
-                                                        <i id="trash12Icon" class="fas fa-trash-alt ml-2 trash" data-toggle="modal" data-target="#supprModal"></i>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="collapse" id="quest1Param">
-                                            <div class="card card-body">
-
-                                                <div class="row mt-2 justify-content-center">
-                                                    <div class="d-inline">Intitulé de la question :</div>
-                                                    <div class="d-inline ml-2"><input class="form-control intituleTxtB" placeholder="Intitulé" type="text" id="intitule12TxtB" /></div>
-                                                </div>
-                                                <div class="row mt-2 justify-content-center">
-                                                    <div class="d-inline">Réponse obligatoire : </div>
-                                                    <div class="d-inline ml-2">
-                                                        <div class="form-check-inline">
-                                                            <label>
-                                                                <input class="form-check-input" type="radio" name="req" id="reqOui12Radio" checked> Oui
-                                                            </label>
-                                                            <label>
-                                                                <input class="form-check-input ml-5" type="radio" name="req" id="reqNon12Radio" disabled> Non
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row mt-2 justify-content-center">
-                                                    <div class="d-inline">Type de graphique :</div>
-                                                    <div class="d-inline ml-2">
-                                                        <select class="btn-sm">
-                                                            <option selected value="1">Colonne</option>
-                                                            <option value="2">Ligne</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row mt-2 justify-content-center">
-                                                    <div class="d-inline">Valeurs possibles :</div>
-                                                    <div class="d-inline ml-2">
-                                                        <input type="button" value="Ajouter un item" class="btn-sm" disabled />
-                                                    </div>
-                                                </div>
-
-                                                <ul class="pl-0 mt-2" id="item12Ul">
-                                                    <li class="form-inline justify-content-center w-75 mb-2"><input type="radio" name="item" id="option1" class="d-inline ml-2" disabled /><input class="form-control d-inline ml-2" type="text" value="Oui" disabled /><button class="d-inline ml-2" disabled><i href="#" class="fas fa-trash-alt"></i></button></li>
-                                                    <li class="form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" id="option1" class="d-inline ml-2" disabled /></div><div class="d-inline"><input class="form-control w-75" type="text" value="Non" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
-                                                    <li class="form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" id="option1" class="d-inline ml-2" disabled /></div><div class="d-inline"><input class="form-control w-75" type="text" value="Ne sais pas" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
-                                                </ul>
-                                                <textarea class="form-control" placeholder="Description" name="descriptionTxtA" rows="5" id="descriptionTxtA"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                
                                 <li id="2">
                                     <div class="card">
                                         <div class="card-header">
@@ -193,9 +133,9 @@
                                                 </div>
 
                                                 <ul class="list-inline pl-0 mt-2" id="item112Ul">
-                                                    <li class="list-inline-item form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" id="option1" class="ml-2" disabled /></div><div class="d-inline"><input class="form-control" type="text" value="Oui" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
-                                                    <li class="list-inline-item form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" id="option1" class="ml-2" disabled /></div><div class="d-inline"><input class="form-control" type="text" value="Non" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
-                                                    <li class="list-inline-item form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" id="option1" class="ml-2" disabled /></div><div class="d-inline"><input class="form-control" type="text" value="Ne sais pas" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
+                                                    <li class="list-inline-item form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" class="ml-2" disabled /></div><div class="d-inline"><input class="form-control" type="text" value="Oui" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
+                                                    <li class="list-inline-item form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" class="ml-2" disabled /></div><div class="d-inline"><input class="form-control" type="text" value="Non" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
+                                                    <li class="list-inline-item form-inline justify-content-center mb-2"><div class="d-inline"><input type="radio" name="item" class="ml-2" disabled /></div><div class="d-inline"><input class="form-control" type="text" value="Ne sais pas" disabled /></div><div class="d-inline ml-2"><button disabled><i href="#" class="fas fa-trash-alt"></i></button></div></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -333,6 +273,7 @@
             TitreQuestionnaire: '',
             Description: '',
             DataJson: '',
+            EtatQuestionnaire:'',
             listQuestObj: ['']
         }
         $(document.body).on('click', '.ajout-radio', function () {
@@ -340,14 +281,20 @@
             let questionObj = new QuestionObj();
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
             let userItem = new UserItem(codeQuestion)
-            userItem.codeHtml = "<li class='form-inline justify-content-center mb-2'><div class='d-inline'><input type='radio' name='item' id='option1' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control item-txtb' id=" + userItem.Id + " type='text'/></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li>";
+            userItem.codeHtml = "<li class='list-inline-item form-inline justify-content-center mb-2'>" +
+                "<div class='d-inline'><input type='radio' name='item' class='ml-2' disabled/></div>" +
+                "<div class='d-inline'><input class='form-control' type='text'/></div > <div class='d-inline ml-2'>" +
+                "<button><i href='#' class='fas fa-trash-alt'></i></button></div ></li> ";
             questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            questionObj.modifUser = true;
             let idUl = "#" + questionObj.itemUlId;
             $(".exemple").fadeOut(400, function () { $(this).remove(); });
             $(idUl).fadeIn(300, function () {
                 $(this).append(userItem.codeHtml);
             });
-
+            let item = new Item(questionObj.questionId);
+            item.Id = userItem.IdPreview;
+            userItem.itemPrev = item;
             CreerItemPreview(questionObj, userItem);
         })
         $(document.body).on('keyup', '.item-txtb', function () {
@@ -429,9 +376,16 @@
             questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
             value = $(this).val();
             questionObj.graphique = value;
+            if (questionObj.listItems > 0) {
+                if (questionObj.modifUser == true) {
+
+                }
+                CreerPreview(questionObj);
+            }
+
             C("obj graph =", questionObj.graphique, "valeur du control =", value);
             C("objet transmis",questionObj);
-            CreerPreview(questionObj);
+
         })
         $("#BtnValider").click(function () {
             ////OBJET Quest
@@ -444,24 +398,29 @@
             questionnaire.Description = description;
             questionnaire.CodeProduitFormation= @Model.CodeProduitFormation;
             $("#titreDiv").html(titre);
-            CreerQuestionnaire(questionnaire);
+            //CreerQuestionnaire(questionnaire);
             alert("Questionnaire " + titre + " créé.");
         })
+
         $(".ajouter-item-radio").click(function () {
+            
             let idUl = '';
             let itemID = '';
             itemID = String(codeQuestion) + String(Math.floor((Math.random() * 100) + 1));
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
-            idUl = "#item" + codeQuestion + "Ul";
-            //questionObj == questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
-            item.itemId = itemID;
-            item.typeItem = "radio";
+            let userItem = new UserItem(codeQuestion);
+            questionObj == questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            userItem.type = "radio";
             item.itemName = "item" + codeQuestion;
-            item.itemTxtBId = "item" + itemID;
-            item.itemUlId = idUl;
-            questionObj.listItems.push(item);
+            userItem.TxtBId = "item" + itemID;
+            userItem.UlId = idUl;
+            userItem.itemPrev = item; 
             console.log(questionObj.listItems);
-            $(idUl).append($("<li class='list-inline-item form-inline justify-content-center mb-2'><div class='d-inline'><input type='radio' name='item' id='option1' class='ml-2'/></div><div class='d-inline'><input class='form - control' type='text' value='Oui'/></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li>"));
+            $(idUl).append($("<li class='list-inline-item form-inline justify-content-center mb-2'>" +
+                "<div class='d-inline'><input type='radio' name='item' class='ml-2' disabled/></div>" + 
+                "<div class='d-inline'><input class='form-control' type='text'/></div > <div class='d-inline ml-2'>" +
+                "<button><i href='#' class='fas fa-trash-alt'></i></button></div ></li > "));
+            CreerItemPreview(questionObj, userItem)
 
         })
 
@@ -521,17 +480,15 @@
         })
         function CreerItemPreview(questionObj, userItem) {
             C("CreerPreviewItem");
-            let item = new Item(questionObj.questionId);
+            let item = userItem.itemPrev;
             if (questionObj.type == "1rep")
             {
                 C("CreerPreviewItem 1Rep");
                 item.Id = userItem.IdPreview;
                 item.Lbl = "Lbl" + userItem.IdPreview;
                 C(item.Lbl);
-                $("#listItemRadio").append(item.codeHtml);
-
-                userItem.itemPrev = item;
-                C(userItem);
+                C(item.Lbl);
+                C(questionObj.graphique);
                 if (questionObj.graphique == 1) {
                     item.codeHtml = "<div class='radio-inline mr-2'>" +
                         "<input type='radio' name=" + item.groupName + " id=" + item.Id + " class='mr-1'>" +
@@ -542,6 +499,8 @@
                         "<input type='radio' name=" + item.groupName + " id=" + item.Id + " class='mr-1'>" +
                         "<label id=" + item.Lbl + " for=" + item.Id + "></label></div></div> ";
                 }
+                $("#listItemRadio").append(item.codeHtml);
+                userItem.itemPrev = item;
                     //if (questionObj.requis == "false") {
 
                     //}
@@ -660,8 +619,8 @@
                     "<div class='d-inline ml-2'>" +
                     "<input type='button' value='Ajouter un item' class='btn-sm ajout-radio' id=" + questionObj.ajouterBtnId + " /></div></div>" +
                     "<ul class='pl-0 mt-2' id=" + questionObj.itemUlId + ">" +
-                    "<li class='form-inline justify-content-center mb-2 exemple'><div class='d-inline'><input type='radio' name='item' id='option1' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control' type='text' value='item1' disabled/></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li>" +
-                    "<li class='form-inline justify-content-center mb-2 exemple'><div class='d-inline'><input type='radio' name='item' id='option1' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control' type='text' value='item2' disabled/></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li></ul></div></div></div></li>");
+                    "<li class='form-inline justify-content-center mb-2 exemple'><div class='d-inline'><input type='radio' name='item' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control' type='text' value='item1' disabled/></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li>" +
+                    "<li class='form-inline justify-content-center mb-2 exemple'><div class='d-inline'><input type='radio' name='item' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control' type='text' value='item2' disabled/></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li></ul></div></div></div></li>");
 
             }
             if (questionObj.type == "TxtL") {
@@ -870,6 +829,59 @@
             $(qPreview).remove();
             C("Div q preview", qPreview);
             var groupName;
+            if (questionObj.type == "4niv")
+            {
+                var item1 = new Item(questionObj.questionId);
+                var item2 = new Item(questionObj.questionId);
+                var item3 = new Item(questionObj.questionId);
+                var item4 = new Item(questionObj.questionId);
+                questionObj.listItems = [''];
+                questionObj.listItems.push(item1, item2, item3, item4);
+                if (questionObj.requis == "false") {
+                    "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
+                        "<label class='col-md-4 control-label' for=" + item1.groupName + ">" + questionObj.intitule + "</label>" +
+                        "<div class='col-md-4'>" +
+                        "<label class='radio-inline mr-2' for=" + item1.Id + ">" +
+                        "<input type='radio' name=" + item1.groupName + " id=" + item1.Id + " value='1'>" +
+                        "peu satisfait" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item2.itemId + ">" +
+                        "<input type='radio' name=" + item2.groupName + " id=" + item2.Id + " value='2'>" +
+                        "moyennement satisfait" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item3.itemId + ">" +
+                        "<input type='radio' name=" + item3.groupName + " id=" + item3.Id + " value='3'>" +
+                        "satisfait" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item4.itemId + ">" +
+                        "<input type='radio' name=" + item4.groupName + " id=" + item4.Id + " value='4'>" +
+                        "très satisfait" +
+                        "</label></div></fieldset></div>"
+                }
+                else {
+                    "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
+                        "<label class='col-md-4 control-label' for=" + item1.groupName + ">" + questionObj.intitule + "</label>" +
+                        "<div class='col-md-4'>" +
+                        "<label class='radio-inline mr-2' for=" + item1.Id + ">" +
+                        "<input type='radio' name=" + item1.groupName + " id=" + item1.Id + " value='1' required>" +
+                        "peu satisfait" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item2.itemId + ">" +
+                        "<input type='radio' name=" + item2.groupName + " id=" + item2.Id + " value='2'>" +
+                        "moyennement satisfait" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item3.itemId + ">" +
+                        "<input type='radio' name=" + item3.groupName + " id=" + item3.Id + " value='3'>" +
+                        "satisfait" +
+                        "</label>" +
+                        "<label class='radio-inline mr-2' for=" + item4.itemId + ">" +
+                        "<input type='radio' name=" + item4.groupName + " id=" + item4.Id + " value='4'>" +
+                        "très satisfait" +
+                        "</label></div></fieldset></div>"
+
+                }
+
+            }
             if (questionObj.type == "ValNum") {
                 var itemTxtC = new Item();
                 itemTxtC.Id = "TxtC" + codeQuestion;
@@ -891,8 +903,10 @@
                 groupName = "radios" + questionObj.questionId;
                 var itemExemple1 = new Item(questionObj.questionId);
                 var itemExemple2 = new Item(questionObj.questionId);
+                C("ID", itemExemple2.Id, itemExemple1.Id)
+                C("Graphique", questionObj.graphique);
                 if (questionObj.graphique == 2) {
-                    C("Graphique", questionObj.graphique)
+                    
                     if (questionObj.requis == "false") {
                         questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'>" +
                             "<form class='form-horizontal'>"+
@@ -901,11 +915,11 @@
                             "<div class='col-md-4' id='listItemRadio'>" +
                             "<div class='exemple'>" +
                             "<label class='radio-inline mr-2' for=" + itemExemple1.itemId + ">" +
-                            "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + " value='1'>" +
+                            "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + ">" +
                             "choix 1" +
                             "</label>" +
                             "<label class='radio-inline mr-2' for=" + itemExemple2.itemId + ">" +
-                            "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + " value='1'>" +
+                            "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + ">" +
                             "choix 2" +
                             "</label>" +
                             "</div></label></fieldset></form><div>";
@@ -918,11 +932,11 @@
                             "<div class='col-md-4' id='listItemRadio'>" +
                             "<div class='exemple'>" +
                             "<label class='radio-inline mr-2' for=" + itemExemple1.itemId + ">" +
-                            "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + " value='1' required>" +
+                            "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + "required>" +
                             "choix 1" +
                             "</label>" +
                             "<label class='radio-inline mr-2' for=" + itemExemple2.itemId + ">" +
-                            "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + " value='1'>" +
+                            "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + ">" +
                             "choix 2" +
                             "</label>" +
                             "</div></label></fieldset></form><div>";
@@ -937,12 +951,12 @@
                             "<div class='exemple'>" +
                             "<div class='radio' id='listItemRadio'>" +
                             "<label class='radio mr-2' for=" + itemExemple1.Id + ">" +
-                            "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + " value='1'>" +
-                            "1" +
+                            "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + ">" +
+                            "choix 1" +
                             "</label></div>" +
                             "<div class='radio'>" +
                             "<label class='radio mr-2' for=" + itemExemple2.Id + ">" +
-                            "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + " value='1'>" +
+                            "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + ">" +
                             "choix 2" +
                             "</label></div>" +
                             "</div></div></fieldset>";
@@ -954,12 +968,12 @@
                             "<div class='exemple'>" +
                             "<div class='radio' id='listItemRadio'>" +
                             "<label class='radio mr-2' for=" + itemExemple1.Id + ">" +
-                            "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + " value='1'>" +
-                            "1" +
+                            "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + ">" +
+                            "choix 1" +
                             "</label></div>" +
                             "<div class='radio'>" +
                             "<label class='radio mr-2' for=" + itemExemple2.Id + ">" +
-                            "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + " value='1'>" +
+                            "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + ">" +
                             "choix 2" +
                             "</label></div>" +
                             "</div></div></fieldset>";
@@ -972,14 +986,14 @@
                 itemTxtL.Id = "TxtL" + codeQuestion;
                 if (questionObj.requis == "false") {
                     questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                        "<label class= control-label' for=" + itemTxtL.itemId + ">" + questionObj.intitule +
+                        "<label class= control-label col-md-4' for=" + itemTxtL.itemId + ">" + questionObj.intitule +
                         "<textarea  id =" + itemTxtL.Id + " rows='3' class='form-control'></textarea>" +
                         "</label >" +
                         "</div >"
                 }
                 else {
                     questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                        "<label class=' control-label' for=" + itemTxtL.Id + ">" + questionObj.intitule +
+                        "<label class=' control-label col-md-4' for=" + itemTxtL.Id + ">" + questionObj.intitule +
                         "<textarea id =" + itemTxtL.Id + " rows='3' class='form-control' required></textarea>" +
                         "</label ></div >"
                 }
@@ -1362,11 +1376,12 @@
             this.divPosPrev = "posPrev" + codeQuestion;
             this.itemUlId = "item" + codeQuestion + "Ul";
             this.itemLiId = "item" + codeQuestion;
+            this.modifUser = false;
             this.listItems = [''];
             this.listUserItems = [''];
         }
         function Item(codeQuestion) {
-            this.Id = codeQuestion + "item" + String(Math.floor((Math.random() * 100) + 1));
+            this.Id = codeQuestion + "Item" + String(Math.floor((Math.random() * 100) + 1));
             this.Lbl = '';
             this.Name = '';
             this.Intitule = '';
@@ -1381,7 +1396,7 @@
             this.UlId = '';
             this.Intitule = '';
             this.codeHtml = '';
-            this.itemName = '';
+            this.Name = '';
             this.itemPrev = {};
         }
         function ExtraireCodeQuestion(Id = '') {
