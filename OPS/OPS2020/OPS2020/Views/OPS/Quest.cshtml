@@ -83,7 +83,7 @@
                         </div>
                         <div class="col-sm">
                             <ul id="sortable" class="navbar-nav flex-md-column flex-fill">
-                                
+
                                 <li id="2">
                                     <div class="card">
                                         <div class="card-header">
@@ -203,13 +203,13 @@
 <div class="form-group">
     <label class="col-md-4 control-label" for="radios">Multiple Radios</label>
     <div class="col-md-4">
-        <div class="radio">
+        <div class="d-inline">
             <label for="radios-0">
                 <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
                 Option one
             </label>
         </div>
-        <div class="radio">
+        <div class="d-inline">
             <label for="radios-1">
                 <input type="radio" name="radios" id="radios-1" value="2">
                 Option two
@@ -217,24 +217,24 @@
         </div>
     </div>
 </div>
-<form class="form-horizontal">
-    <fieldset>
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="radios">Inline Radios</label>
-            <div class="col-md-4">
-                <label class="radio-inline" for="radios-0">
-                    <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
-                    1
-                </label>
-                <label class="radio-inline" for="radios-1">
-                    <input type="radio" name="radios" id="radios-1" value="2">
-                    2
-                </label>
-            </div>
-        </div>
 
-    </fieldset>
-</form>
+<fieldset>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="radios">Inline Radios</label>
+        <div class="col-md-4">
+            <label class="radio" for="radios-0" id="toggle1">
+                <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
+                1
+            </label>
+            <label for="radios-1" id="toggle2">
+                <input type="radio" name="radios" id="radios-1" value="2">
+                2
+            </label>
+        </div>
+    </div>
+
+</fieldset>
+
 
 
 
@@ -243,7 +243,7 @@
     $('#sortable').sortable();
 
 
-    $(document.body).on('click', '.element', function (e) { });
+
     $(document.body).on('click', '.element', function (e) { });
 
 
@@ -256,8 +256,12 @@
 
        // "use strict";
         $(document.body).on('click', '#ordreBtn', function () {
-            alert($("#sortable").sortable('toArray'));
-            C(productOrder);
+            //alert($("#sortable").sortable('toArray'));
+            //C(productOrder);
+            C("Test Toggle");
+
+            $("#toggle1").wrap("<div class='radio'></div>");
+            $("#toggle2").wrap("<div class='radio'></div>");
         })
 
         var C = console.log;
@@ -276,6 +280,25 @@
             EtatQuestionnaire:'',
             listQuestObj: ['']
         }
+        $(document.body).on('keyup', '.item-text', function () {
+
+            let questionObj = new QuestionObj();
+            codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
+            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            C(questionObj);
+            let idTxtB = $(this).attr("id")
+            let userItem = new UserItem();
+            userItem = questionObj.listUserItems.find(u => u.TxtBId === idTxtB);
+            C("idtxt", idTxtB, "userItem",userItem);
+            let item = new Item();
+            item = userItem.itemPrev;
+            let lblPrev = "#" + item.lblId;
+            let userTxtB = "#" + idTxtB;
+            lblPrev.html(userTxtB.val());
+
+            
+
+        });
         $(document.body).on('click', '.ajout-radio', function () {
 
             let questionObj = new QuestionObj();
@@ -283,7 +306,7 @@
             let userItem = new UserItem(codeQuestion)
             userItem.codeHtml = "<li class='list-inline-item form-inline justify-content-center mb-2'>" +
                 "<div class='d-inline'><input type='radio' name='item' class='ml-2' disabled/></div>" +
-                "<div class='d-inline'><input class='form-control' type='text'/></div > <div class='d-inline ml-2'>" +
+                "<div class='d-inline'><input class='form-control item-text' type='text' id="+ userItem.TxtBId+"/></div > <div class='d-inline ml-2'>" +
                 "<button><i href='#' class='fas fa-trash-alt'></i></button></div ></li> ";
             questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
             questionObj.modifUser = true;
@@ -295,6 +318,7 @@
             let item = new Item(questionObj.questionId);
             item.Id = userItem.IdPreview;
             userItem.itemPrev = item;
+            C(userItem);
             CreerItemPreview(questionObj, userItem);
         })
         $(document.body).on('keyup', '.item-txtb', function () {
@@ -347,7 +371,15 @@
             }
             questionObj.requis = $(this).val() ;
             C("objet transmis", questionObj);
-            CreerPreview(questionObj);
+            if (questionObj.modifUser == true)
+            {
+                    CreerItemPreview(questionObj);
+            }
+            else {
+                CreerPreview(questionObj);
+            }
+
+
         })
         $(document.body).on('keyup', '.intituleTxtB', function () {
             let qpreview = '';
@@ -376,10 +408,10 @@
             questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
             value = $(this).val();
             questionObj.graphique = value;
-            if (questionObj.listItems > 0) {
-                if (questionObj.modifUser == true) {
-
-                }
+            if (questionObj.modifUser == true) {
+                CreerItemPreview(questionObj);
+            }
+            else {
                 CreerPreview(questionObj);
             }
 
@@ -401,29 +433,6 @@
             //CreerQuestionnaire(questionnaire);
             alert("Questionnaire " + titre + " créé.");
         })
-
-        $(".ajouter-item-radio").click(function () {
-            
-            let idUl = '';
-            let itemID = '';
-            itemID = String(codeQuestion) + String(Math.floor((Math.random() * 100) + 1));
-            codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
-            let userItem = new UserItem(codeQuestion);
-            questionObj == questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
-            userItem.type = "radio";
-            item.itemName = "item" + codeQuestion;
-            userItem.TxtBId = "item" + itemID;
-            userItem.UlId = idUl;
-            userItem.itemPrev = item; 
-            console.log(questionObj.listItems);
-            $(idUl).append($("<li class='list-inline-item form-inline justify-content-center mb-2'>" +
-                "<div class='d-inline'><input type='radio' name='item' class='ml-2' disabled/></div>" + 
-                "<div class='d-inline'><input class='form-control' type='text'/></div > <div class='d-inline ml-2'>" +
-                "<button><i href='#' class='fas fa-trash-alt'></i></button></div ></li > "));
-            CreerItemPreview(questionObj, userItem)
-
-        })
-
         $("#Btn4niv").click(function () {
             type = "4niv";
             choixRequis = true;
@@ -480,37 +489,70 @@
         })
         function CreerItemPreview(questionObj, userItem) {
             C("CreerPreviewItem");
-            let item = userItem.itemPrev;
+
+
             if (questionObj.type == "1rep")
             {
+                if (userItem != null)
+                {
+                    let item = userItem.itemPrev;
+
                 C("CreerPreviewItem 1Rep");
                 item.Id = userItem.IdPreview;
                 item.Lbl = "Lbl" + userItem.IdPreview;
-                C(item.Lbl);
+                var idLabel = "#" + item.Lbl;
                 C(item.Lbl);
                 C(questionObj.graphique);
+                item.codeHtml = "<div class='radio'>" +
+                    "<input type='radio' name=" + item.groupName + " id=" + item.Id + " class='mr-1'>" +
+                    "<label id=" + item.Lbl + " for=" + item.Id + "></label></div> ";
                 if (questionObj.graphique == 1) {
-                    item.codeHtml = "<div class='radio-inline mr-2'>" +
-                        "<input type='radio' name=" + item.groupName + " id=" + item.Id + " class='mr-1'>" +
-                        "<label id=" + item.Lbl + " for=" + item.Id + "></label></div > ";
+                    $(idLabel).parent().toggleClass("d-inline", false);
+                    $(idLabel).parent().toggleClass("radio", true);
+                }
+                if (questionObj.graphique == 2) {
+                    $(idLabel1).parent().toggleClass("radio", false);
+                    $(idLabel1).parent().toggleClass("d-inline mr-2", true);
+                }
+                if (questionObj.requis == "false") {
+                    $(idLabel1).children().prop('required', false);
+                }
+                if (questionObj.requis == "true") {
+                    $(idLabel1).children().prop('required', true);
+                    }
+                    $("#listItemRadio").append(item.codeHtml);
+                    userItem.itemPrev = item;
+                    questionObj.listUserItems.push(userItem);
                 }
                 else {
-                    item.codeHtml = "<div class='col-md-4'><div class='radio'>" +
-                        "<input type='radio' name=" + item.groupName + " id=" + item.Id + " class='mr-1'>" +
-                        "<label id=" + item.Lbl + " for=" + item.Id + "></label></div></div> ";
+                    C("Liste UserItems",questionObj.listUserItems);
+                    for (var i = 1; i < questionObj.listUserItems.length; i++) {
+                        var userItem = new UserItem();
+                        var item = new Item();
+                        userItem = questionObj.listUserItems[i];
+                        item = userItem.itemPrev;
+                        C(item);
+                        var idLabel = "#" + item.Lbl;
+                        if (questionObj.graphique == 1) {
+                            $(idLabel).parent().toggleClass("d-inline", false);
+                            $(idLabel).parent().toggleClass("radio", true);
+                        }
+                        if (questionObj.graphique == 2) {
+                            $(idLabel).parent().toggleClass("radio", false);
+                            $(idLabel).parent().toggleClass("d-inline mr-2", true);
+                        }
+                        if (questionObj.requis == "false") {
+                            $(idLabel).children().prop('required', false);
+                        }
+                        if (questionObj.requis == "true") {
+                            $(idLabel).children().prop('required', true);
+                        }
+                    }
+                   
                 }
-                $("#listItemRadio").append(item.codeHtml);
-                userItem.itemPrev = item;
-                    //if (questionObj.requis == "false") {
 
-                    //}
-                    //else {
-                    //    item.codeHtml = "<div class='radio-inline mr-2'><input type='radio' name=" + item.groupName + " id=" + item.Id + " class='mr-1' required>" +
-                    //        "<label id=" + item.Lbl + " for=" + item.Id + "></label></div > ";
-                    //}
             }
-            questionObj.listUserItems.push(userItem);
-            $("#listItemRadio").append(item.codeHtml);
+
         }
         function CreerQuestion(questionObj) {
             C("objet reçu", questionObj);
@@ -821,16 +863,12 @@
         function CreerPreview(questionObj=null) {
             C("objet recup pour preview", questionObj);
             console.log("creer preview");
-            C("questionPreviewId = ", questionObj.questionPreviewId);
-            C("question Type = ", questionObj.type);
-            C("question graphique = ", questionObj.graphique);
-            C("question requis = ", questionObj.requis);
             var qPreview = "#" + questionObj.questionPreviewId;
-            $(qPreview).remove();
             C("Div q preview", qPreview);
             var groupName;
             if (questionObj.type == "4niv")
             {
+                $(qPreview).remove();
                 var item1 = new Item(questionObj.questionId);
                 var item2 = new Item(questionObj.questionId);
                 var item3 = new Item(questionObj.questionId);
@@ -880,9 +918,10 @@
                         "</label></div></fieldset></div>"
 
                 }
-
+                AppendPrev(questionObj);
             }
             if (questionObj.type == "ValNum") {
+                $(qPreview).remove();
                 var itemTxtC = new Item();
                 itemTxtC.Id = "TxtC" + codeQuestion;
                 if (questionObj.requis == "false") {
@@ -897,91 +936,77 @@
                         "<input id =" + itemTxtC.Id + " type ='number' class='form-control input-md' required>" +
                         "</label ></div >"
                 }
-
+                AppendPrev(questionObj);
             }
             if (questionObj.type == "1rep") {
                 groupName = "radios" + questionObj.questionId;
-                var itemExemple1 = new Item(questionObj.questionId);
-                var itemExemple2 = new Item(questionObj.questionId);
-                C("ID", itemExemple2.Id, itemExemple1.Id)
                 C("Graphique", questionObj.graphique);
-                if (questionObj.graphique == 2) {
-                    
-                    if (questionObj.requis == "false") {
-                        questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                            "<form class='form-horizontal'>"+
-                            "<fieldset id=" + groupName + ">" +
-                            "<label class='col-md-4 control-label' for=" + itemExemple1.groupName + ">" + questionObj.intitule + "</label>" +
-                            "<div class='col-md-4' id='listItemRadio'>" +
-                            "<div class='exemple'>" +
-                            "<label class='radio-inline mr-2' for=" + itemExemple1.itemId + ">" +
-                            "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + ">" +
-                            "choix 1" +
-                            "</label>" +
-                            "<label class='radio-inline mr-2' for=" + itemExemple2.itemId + ">" +
-                            "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + ">" +
-                            "choix 2" +
-                            "</label>" +
-                            "</div></label></fieldset></form><div>";
-                    }
-                    else {
-                        questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                            "<form class='form-horizontal'>" +
-                            "<fieldset id=" + groupName + ">" +
-                            "<label class='col-md-4 control-label' for=" + itemExemple1.groupName + ">" + questionObj.intitule + "</label>" +
-                            "<div class='col-md-4' id='listItemRadio'>" +
-                            "<div class='exemple'>" +
-                            "<label class='radio-inline mr-2' for=" + itemExemple1.itemId + ">" +
-                            "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + "required>" +
-                            "choix 1" +
-                            "</label>" +
-                            "<label class='radio-inline mr-2' for=" + itemExemple2.itemId + ">" +
-                            "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + ">" +
-                            "choix 2" +
-                            "</label>" +
-                            "</div></label></fieldset></form><div>";
-                    }
+                if (questionObj.codeHtml == '') {
+                    var itemExemple1 = new Item(questionObj.questionId);
+                    var itemExemple2 = new Item(questionObj.questionId);
+                    C("ID itemExemple", itemExemple2.Id, itemExemple1.Id)
+                    questionObj.listItems.push(itemExemple1, itemExemple2);
+                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
+                        "<label class='col-md-4 control-label' for=" + itemExemple1.groupName + ">" + questionObj.intitule + "</label>" +
+                        "<div class='col-md-4'>" +
+                        "<div id='listItemRadio'>" +
+                        "<div class='exemple'>" +
+                        "<div class='radio'>" +
+                        "<label class='radio' id=" + itemExemple1.lblId +" for=" + itemExemple1.Id + ">" +
+                        "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + " required>" +
+                        "choix 1" +
+                        "</label></div>" +
+                        "<div class='radio'>" +
+                        "<label class='radio' id=" + itemExemple2.lblId +" for=" + itemExemple2.Id + ">" +
+                        "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + ">" +
+                        "choix 2" +
+                        "</label></div>" +
+                        "</div></div></fieldset>";
+                    AppendPrev(questionObj);
                 }
-                if (questionObj.graphique == 1) {
-                    C("Graphique", questionObj.graphique)
-                    if (questionObj.requis == "false") {
-                        questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
-                            "<label class='col-md-4 control-label' for=" + itemExemple1.groupName + ">" + questionObj.intitule + "</label>" +
-                            "<div class='col-md-4'>" +
-                            "<div class='exemple'>" +
-                            "<div class='radio' id='listItemRadio'>" +
-                            "<label class='radio mr-2' for=" + itemExemple1.Id + ">" +
-                            "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + ">" +
-                            "choix 1" +
-                            "</label></div>" +
-                            "<div class='radio'>" +
-                            "<label class='radio mr-2' for=" + itemExemple2.Id + ">" +
-                            "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + ">" +
-                            "choix 2" +
-                            "</label></div>" +
-                            "</div></div></fieldset>";
-                    }
-                    else {
-                        questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
-                            "<label class='col-md-4 control-label' for=" + itemExemple1.groupName + ">" + questionObj.intitule + "</label>" +
-                            "<div class='col-md-4'>" +
-                            "<div class='exemple'>" +
-                            "<div class='radio' id='listItemRadio'>" +
-                            "<label class='radio mr-2' for=" + itemExemple1.Id + ">" +
-                            "<input type='radio' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + ">" +
-                            "choix 1" +
-                            "</label></div>" +
-                            "<div class='radio'>" +
-                            "<label class='radio mr-2' for=" + itemExemple2.Id + ">" +
-                            "<input type='radio' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + ">" +
-                            "choix 2" +
-                            "</label></div>" +
-                            "</div></div></fieldset>";
-                    }
-                }
+                else {
+                    $(document.body).ready(function () {
+                        itemExemple1 = questionObj.listItems[1];
+                        itemExemple2 = questionObj.listItems[2];
+                        var idLabel1 = "#" + itemExemple1.lblId;
+                        var idLabel2 = "#" + itemExemple2.lblId;
+                        if (questionObj.graphique == 2) {
+                            C("ENTREE GRAPH 2");
+                            C(itemExemple2.lblId);
+                            $(idLabel1).parent().toggleClass("radio", false);
+                            $(idLabel1).parent().toggleClass("d-inline mr-2", true);
+                            $(idLabel2).parent().toggleClass("radio", false);
+                            $(idLabel2).parent().toggleClass("d-inline mr-2", true);
 
+                            if (questionObj.requis == "false") {
+
+                                $(idLabel1).children().prop('required', false);
+                            }
+                            else {
+                                $(idLabel1).children().prop('required', true);
+                            }
+                        }
+                        if (questionObj.graphique == 1) {
+                            C("Graphique", questionObj.graphique);
+                            $(idLabel1).parent().toggleClass("d-inline", false);
+                            $(idLabel1).parent().toggleClass("radio", true);
+                            $(idLabel2).parent().toggleClass("d-inline", false);
+                            $(idLabel2).parent().toggleClass("radio", true);
+
+                            if (questionObj.requis == "false") {
+                                $(idLabel1).children().prop('required', false);
+                            }
+                            else {
+                                $(idLabel1).children().prop('required', true);
+                            }
+                        }
+
+                    });
+
+                }
             }
             if (questionObj.type == "TxtL") {
+                $(qPreview).remove();
                 var itemTxtL = new Item();
                 itemTxtL.Id = "TxtL" + codeQuestion;
                 if (questionObj.requis == "false") {
@@ -997,8 +1022,10 @@
                         "<textarea id =" + itemTxtL.Id + " rows='3' class='form-control' required></textarea>" +
                         "</label ></div >"
                 }
+                AppendPrev(questionObj);
             }
             if (questionObj.type == "TxtC") {
+                $(qPreview).remove();
                 var itemTxtC = new Item();
                 itemTxtC.Id = "TxtC" + codeQuestion;
                 if (questionObj.requis == "false") {
@@ -1013,9 +1040,10 @@
                         "<input id =" + itemTxtC.Id + " type ='text' class='form-control input-md' required>" +
                         "</label ></div >"
                 }
-
+                AppendPrev(questionObj);
             }
             if (questionObj.type == "OuiNon") {
+                $(qPreview).remove();
                 let itemOui = new Item(questionObj.questionId);
                 let itemNon = new Item(questionObj.questionId);
                 C("if ouiNon preview");
@@ -1063,9 +1091,11 @@
                         "</div>" +
                         "</div>";
                 }
+                AppendPrev(questionObj);
             }
             if (questionObj.type == "OuiNonNsp")
             {
+                $(qPreview).remove();
                 let itemOui = new Item(questionObj.questionId);
                 let itemNon = new Item(questionObj.questionId);
                 var itemNeSaisPas = new Item(questionObj.questionId);
@@ -1119,9 +1149,11 @@
                         "</div>" +
                         "</div>";
                 }
+                AppendPrev(questionObj);
             }
             if (questionObj.type == "1a10")
             {
+                $(qPreview).remove();
                 var item1 = new Item(questionObj.questionId);
                 var item2 = new Item(questionObj.questionId);
                 var item3 = new Item(questionObj.questionId);
@@ -1231,21 +1263,21 @@
 
 
                 }
+                AppendPrev(questionObj);
             }
-            C("avant append")
+        }
+        function AppendPrev(questionObj) {
             var divPosPrevId = "#" + questionObj.divPosPrev;
+            C("avant append")
             C("Id de la balise de position", divPosPrevId);
             C($(divPosPrevId).children().length);
             C($(divPosPrevId));
             $(document.body).ready(function () {
-                C("dans le test!");
-                C($(divPosPrevId));
-                if ($(divPosPrevId).length==0) {
+                if ($(divPosPrevId).length == 0) {
                     C("la balise de position n'existe pas.");
                     let code = "<div id=" + questionObj.divPosPrev + ">" + questionObj.codeHtml + "</div>";
                     C(code);
                     $("#previewQuestions").append(code);
-
                     return;
                 }
                 else if ($(divPosPrevId).length != 0) {
@@ -1253,8 +1285,8 @@
                     $(divPosPrevId).append(questionObj.codeHtml);
                 }
             });
-
         }
+
         function CreerQuestionnaire(questionnaire) {
             let questionnaireJson = JSON.stringify(questionnaire);
             C(questionnaireJson);
@@ -1383,6 +1415,7 @@
         function Item(codeQuestion) {
             this.Id = codeQuestion + "Item" + String(Math.floor((Math.random() * 100) + 1));
             this.Lbl = '';
+            this.lblId = codeQuestion + "Item" + String(Math.floor((Math.random() * 100) + 1))
             this.Name = '';
             this.Intitule = '';
             this.groupName = "radios" + codeQuestion;
@@ -1392,7 +1425,7 @@
             this.Id = codeQuestion + "userItem" +  String(Math.floor((Math.random() * 100) + 1));
             this.IdPreview = "itemPrev"+ codeQuestion  + String(Math.floor((Math.random() * 100) + 1));
             this.type = '';
-            this.TxtBId = '';
+            this.TxtBId = "intituleItem" + codeQuestion + "TxtB" + String(Math.floor((Math.random() * 100) + 1));
             this.UlId = '';
             this.Intitule = '';
             this.codeHtml = '';
