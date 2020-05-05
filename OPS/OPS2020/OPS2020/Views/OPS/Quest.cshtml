@@ -75,8 +75,8 @@
                                         <li id="Btn4niv" name="Btn4niv" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Evaluer selon 4 niveaux de satisfaction</li>
                                         <li id="Btn1a10" name="Btn1a10" class="btn btn-light btn-sm nav-item" data-toggle="modal" data-target="#questionModal">Evaluer selon une échelle de 1 à 10</li>
                                         <li id="Btn1rep" name="Btn1rep" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Choisir une seule réponse au sein d'un groupe de choix</li>
-                                        <li id="Btn1repListe" name="Btn1repListe" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Choisir une seule réponse au sein liste</li>
                                         <li id="BtnNrep" name="BtnNrep" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Choisir plusieurs réponses au sein d'un groupe de choix</li>
+                                        <li id="Btn1repListe" name="Btn1repListe" class="btn btn-light btn-sm btn-block nav-item" data-toggle="modal" data-target="#questionModal">Choisir une seule réponse au sein liste</li>
                                     </ul>
                                 </div>
                             </nav>
@@ -200,43 +200,6 @@
         </div>
     </div>
 </div>
-<div class="form-group">
-    <label class="col-md-4 control-label" for="radios">Multiple Radios</label>
-    <div class="col-md-4">
-        <div class="d-inline">
-            <label for="radios-0">
-                <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
-                Option one
-            </label>
-        </div>
-        <div class="d-inline">
-            <label for="radios-1">
-                <input type="radio" name="radios" id="radios-1" value="2">
-                Option two
-            </label>
-        </div>
-    </div>
-</div>
-
-<fieldset>
-    <div class="form-group">
-        <label class="col-md-4 control-label" for="radios">Inline Radios</label>
-        <div class="col-md-4">
-            <label class="radio" for="radios-0" id="toggle1">
-                <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
-                1
-            </label>
-            <label for="radios-1" id="toggle2">
-                <input type="radio" name="radios" id="radios-1" value="2">
-                2
-            </label>
-        </div>
-    </div>
-
-</fieldset>
-
-
-
 
 <script>
 
@@ -246,7 +209,7 @@
 
     $(document.body).on('click', '.element', function (e) { });
 
-
+    $(document.body).on('click', '.element', function (e) { });
 
 
     $(document.body).on('click', '.rotate', function () { $(this).toggleClass("down"); });
@@ -280,64 +243,112 @@
             EtatQuestionnaire:'',
             listQuestObj: ['']
         }
+        $(document.body).on('click', '.suppr-item', function (e) {
+            let questionObj = new QuestionObj();
+            codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
+            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            C(questionObj.listUserItems);
+            let userItemId = $(this).attr("id");
+            let userItem = new UserItem();
+            userItem = questionObj.listUserItems.find(u => u.Id === userItemId);
+            let item = new Item();
+            item = userItem.itemPrev;
+            let userItemIdS = "#" + $(this).attr("id");
+            var idLabel = "#" + item.Lbl;
+            if (questionObj.type == "1rep") {
+                $(idLabel).parent().remove();
+            }
+            if (questionObj.type == "Nrep") {
+
+                $(idLabel).parent().remove();
+            }
+            if (questionObj.type == "1repListe") {
+                C("avant remove", idLabel)
+                $(idLabel).remove();
+            }
+            $(userItemIdS).parent().parent().parent('li').remove();
+            C(userItemId);
+            questionObj.listUserItems.pop(userItem);
+            C(questionObj.listUserItems);
+        });
         $(document.body).on('keyup', '.item-text', function () {
 
             let questionObj = new QuestionObj();
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
             questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
             C(questionObj);
-            let idTxtB = $(this).attr("id")
+            C(questionObj.listUserItems);
+            let idTxtB = $(this).attr("id");
+
+            //for (var i = 0; i < questionObj.listUserItems.length; i++) {
+            //    C(questionObj.listUserItems[i]);
+            //    if (questionObj.listUserItems[i].TxtBId) {
+
+            //    }
+            //}
+
             let userItem = new UserItem();
             userItem = questionObj.listUserItems.find(u => u.TxtBId === idTxtB);
-            C("idtxt", idTxtB, "userItem",userItem);
+            C("idtxt", idTxtB);
+            C("userItem noFake", userItem);
+            //userItem = questionObj.listUserItems.find(u => u.fakeId === 1);
+            //C("userItem fake id", userItem);
             let item = new Item();
             item = userItem.itemPrev;
-            let lblPrev = "#" + item.lblId;
+            let lblPrev = "#" + item.Lbl;
             let userTxtB = "#" + idTxtB;
-            lblPrev.html(userTxtB.val());
+            let itemText = $(userTxtB).val();
+            C(lblPrev);
+            $(lblPrev).empty();
+            $(lblPrev).append(itemText);
 
-            
+
 
         });
         $(document.body).on('click', '.ajout-radio', function () {
 
             let questionObj = new QuestionObj();
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
-            let userItem = new UserItem(codeQuestion)
-            userItem.codeHtml = "<li class='list-inline-item form-inline justify-content-center mb-2'>" +
-                "<div class='d-inline'><input type='radio' name='item' class='ml-2' disabled/></div>" +
-                "<div class='d-inline'><input class='form-control item-text' type='text' id="+ userItem.TxtBId+"/></div > <div class='d-inline ml-2'>" +
-                "<button><i href='#' class='fas fa-trash-alt'></i></button></div ></li> ";
+            let userItem = new UserItem(codeQuestion);
             questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
-            questionObj.modifUser = true;
             let idUl = "#" + questionObj.itemUlId;
-            $(".exemple").fadeOut(400, function () { $(this).remove(); });
-            $(idUl).fadeIn(300, function () {
-                $(this).append(userItem.codeHtml);
-            });
+            if (questionObj.type == "Nrep") {
+                userItem.codeHtml = "<li class='list-inline-item form-inline justify-content-center mb-2'>" +
+                    "<div class='d-inline'><input type='checkbox' name='item' class='ml-2' disabled/></div>" +
+                    "<div class='d-inline'><input class='form-control item-text' id=" + userItem.TxtBId + " type='text'/></div> <div class='d-inline ml-2'>" +
+                    "<button><i href='#' id=" + userItem.Id + " class='fas fa-trash-alt suppr-item'></i></button></div ></li> ";
+                $(".exemplechk").fadeOut(400, function () { $(this).remove(); });
+                $(idUl).fadeIn(300, function () {
+                    $(this).append(userItem.codeHtml);
+                });
+            }
+            if (questionObj.type == "1rep") {
+                userItem.codeHtml = "<li class='list-inline-item form-inline justify-content-center mb-2'>" +
+                    "<div class='d-inline'><input type='radio' name='item' class='ml-2' disabled/></div>" +
+                    "<div class='d-inline'><input class='form-control item-text' id=" + userItem.TxtBId + " type='text'/></div> <div class='d-inline ml-2'>" +
+                    "<button><i href='#' id=" + userItem.Id + " class='fas fa-trash-alt suppr-item'></i></button></div ></li> ";
+                $(".exemple").fadeOut(400, function () { $(this).remove(); });
+                $(idUl).fadeIn(300, function () {
+                    $(this).append(userItem.codeHtml);
+                });
+            }
+            if (questionObj.type == "1repListe") {
+                userItem.codeHtml = "<li class='list-inline-item form-inline justify-content-center mb-2'>" +
+                    "<div class='d-inline'><input type='radio' name='item' class='ml-2' disabled/></div>" +
+                    "<div class='d-inline'><input class='form-control item-text' id=" + userItem.TxtBId + " type='text'/></div> <div class='d-inline ml-2'>" +
+                    "<button><i href='#' id=" + userItem.Id + " class='fas fa-trash-alt suppr-item'></i></button></div ></li> ";
+                $(idUl).fadeIn(300, function () {
+                    $(this).append(userItem.codeHtml);
+                    $(".exemplelst").remove();
+                });
+            }
+            C("id txtB", userItem.TxtBId);
+            questionObj.modifUser = true;
             let item = new Item(questionObj.questionId);
             item.Id = userItem.IdPreview;
             userItem.itemPrev = item;
             C(userItem);
             CreerItemPreview(questionObj, userItem);
-        })
-        $(document.body).on('keyup', '.item-txtb', function () {
-            C("KeyUP");
-            let questionObj = new QuestionObj();
-            let intitule = '';
-            codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
-            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
-            C(questionObj);
-            var userItemId = $(this).attr("id");
-            userItem = questionObj.listUserItems.find(c => c.Id === userItemId)
-            C(userItem);
-            lblPrev = "#Lbl" + userItem.IdPreview;
-            userTxtB = "#" + userItem.Id;
-            intitule = $(userTxtB).val();
-            $(lblPrev).text('');
-            $(lblPrev).append(intitule)
-            userItem.Intitule = intitule;
-            C(userItem);
         })
 
         $("#modalSupprBtn").click(function () {
@@ -419,6 +430,11 @@
             C("objet transmis",questionObj);
 
         })
+        $("#BtnEnregistrer").click(function () {
+            questionnaire.EtatQuestionnaire = 0;
+            CreerQuestionnaire(questionnaire);
+
+        })
         $("#BtnValider").click(function () {
             ////OBJET Quest
             let titre = '';
@@ -433,10 +449,20 @@
             //CreerQuestionnaire(questionnaire);
             alert("Questionnaire " + titre + " créé.");
         })
+        $("#Btn1repListe").click(function () {
+            type = "1repListe";
+            choixRequis = true;
+            ajoutSupprChoix = true;
+        })
+        $("#BtnNrep").click(function () {
+            type = "Nrep";
+            choixRequis = true;
+            ajoutSupprChoix = true;
+        })
         $("#Btn4niv").click(function () {
             type = "4niv";
             choixRequis = true;
-            ajoutSupprChoix = false;
+            ajoutSupprChoix = true;
         })
         $("#BtnValNum").click(function () {
             type = "ValNum";
@@ -489,7 +515,88 @@
         })
         function CreerItemPreview(questionObj, userItem) {
             C("CreerPreviewItem");
+            if (questionObj.type == "1repListe") {
+                if (userItem != null) {
+                    let item = userItem.itemPrev;
+                    C("CreerPreviewItem NRep");
+                    item.Id = userItem.IdPreview;
+                    item.Lbl = "Lbl" + userItem.IdPreview;
+                    var idLabel = "#" + item.Lbl;
+                    var listItemId = "#" + questionObj.divListItemId;
+                    C(item.Lbl);
+                    C(questionObj.graphique);
+                    item.codeHtml = "<option id=" + item.Lbl + ">" + "option" +"</option>";
+                    if (questionObj.requis == "false") {
+                        $(listItemId).prop('required', false);
+                    }
+                    if (questionObj.requis == "true") {
+                        $(listItemId).prop('required', true);
+                    }
+                    $(listItemId).append(item.codeHtml);
+                    userItem.itemPrev = item;
+                    questionObj.listUserItems.push(userItem);
+                }
+            }
 
+            if (questionObj.type == "Nrep") {
+                if (userItem != null) {
+                    let item = userItem.itemPrev;
+                    C("CreerPreviewItem NRep");
+                    item.Id = userItem.IdPreview;
+                    item.Lbl = "Lbl" + userItem.IdPreview;
+                    var idLabel = "#" + item.Lbl;
+                    var listItemId = "#"+ questionObj.divListItemId;
+                    C(item.Lbl);
+                    C(questionObj.graphique);
+                    item.codeHtml = "<div class='checkbox'>" +
+                        "<input type='checkbox' name=" + item.groupName + " id=" + item.Id + " class='mr-1'>" +
+                        "<label id=" + item.Lbl + " for=" + item.Id + "></label></div> ";
+                    if (questionObj.graphique == 1) {
+                        $(idLabel).parent().toggleClass("d-inline", false);
+                        $(idLabel).parent().toggleClass("checkbox", true);
+                    }
+                    if (questionObj.graphique == 2) {
+                        $(idLabel1).parent().toggleClass("checkbox", false);
+                        $(idLabel1).parent().toggleClass("d-inline mr-2", true);
+                    }
+                    if (questionObj.requis == "false") {
+                        $(idLabel1).children().prop('required', false);
+                    }
+                    if (questionObj.requis == "true") {
+                        $(idLabel1).children().prop('required', true);
+                    }
+                    $(listItemId).append(item.codeHtml);
+                    userItem.itemPrev = item;
+                    questionObj.listUserItems.push(userItem);
+                }
+                else {
+                    C("Liste UserItems", questionObj.listUserItems);
+                    for (var i = 1; i < questionObj.listUserItems.length; i++) {
+                        var userItem = new UserItem();
+                        var item = new Item();
+                        userItem = questionObj.listUserItems[i];
+                        item = userItem.itemPrev;
+                        C(item);
+                        var idLabel = "#" + item.Lbl;
+                        if (questionObj.graphique == 1) {
+                            $(idLabel).parent().toggleClass("d-inline", false);
+                            $(idLabel).parent().toggleClass("checkbox", true);
+                        }
+                        if (questionObj.graphique == 2) {
+                            $(idLabel).parent().toggleClass("checkbox", false);
+                            $(idLabel).parent().toggleClass("d-inline mr-2", true);
+                        }
+                        if (questionObj.requis == "false") {
+                            $(idLabel).children().prop('required', false);
+                        }
+                        if (questionObj.requis == "true") {
+                            $(idLabel).children().prop('required', true);
+                        }
+                    }
+
+                }
+
+            }
 
             if (questionObj.type == "1rep")
             {
@@ -520,7 +627,8 @@
                 if (questionObj.requis == "true") {
                     $(idLabel1).children().prop('required', true);
                     }
-                    $("#listItemRadio").append(item.codeHtml);
+                    let idListItem = "#" + questionObj.divListItemId;
+                    $(idListItem).append(item.codeHtml);
                     userItem.itemPrev = item;
                     questionObj.listUserItems.push(userItem);
                 }
@@ -548,7 +656,7 @@
                             $(idLabel).children().prop('required', true);
                         }
                     }
-                   
+
                 }
 
             }
@@ -557,6 +665,75 @@
         function CreerQuestion(questionObj) {
             C("objet reçu", questionObj);
             C("CreaQuest type : ", questionObj.type);
+            if (questionObj.type == "1repListe") {
+                $("#sortable").append("<li id=" + questionObj.questionId + "><div class='card'><div class='card-header'><div class='row justify-content-between align-items-center btn-sm'>" +
+                    "<div class='align-self-end questIntitule' id=" + questionObj.intituleDivBId + ">" + questionObj.intitule + "</div>" +
+                    "<div class='ml-auto align-self-start'>" +
+                    "<i class='fa fa-chevron-up ml-3 rotate' data-toggle='collapse' data-target=" + questionObj.dataTarget + " aria-expanded='false' aria-controls='collapseExample'></i>" +
+                    "<i class='fas fa-arrows-alt ml-2'></i>" +
+                    "<i id=" + questionObj.trashIconId + " class='fas fa-trash-alt ml-2 trash' data-toggle='modal' data-target='#supprModal'></i></div></div></div>" +
+                    "<div class='collapse' id=" + questionObj.TargetId + ">" +
+                    "<div class='card card-body'>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Intitulé de la question :</div>" +
+                    "<div class='d-inline ml-2'><input class='form-control intituleTxtB' placeholder='Intitulé' type='text' id=" + questionObj.intituleTxtBId + " /></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Réponse obligatoire : </div>" +
+                    "<div class='d-inline ml-2'><div class='form-check-inline'><label>" +
+                    "<input class='form-check-input requis' type='radio' value='true' name=" + questionObj.questionId + " id=" + questionObj.requisOuiRadioId + " checked> Oui</label>" +
+                    "<label><input class='form-check-input ml-5 requis' type='radio' value='false' name=" + questionObj.questionId + " id=" + questionObj.requisNonRadioId + "> Non</label></div></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Type de graphique :</div>" +
+                    "<div class='d-inline ml-2'>" +
+                    "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption' disabled>" +
+                    "<option value='1'>Colonne</option>" +
+                    "<option selected value='2'>Ligne</option></select></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Valeurs possibles :</div>" +
+                    "<div class='d-inline ml-2'>" +
+                    "<input type='button' value='Ajouter un item' class='btn-sm ajout-radio' id=" + questionObj.ajouterBtnId + "/></div></div>" +
+                    "<div class='col-md- 4'>"+
+                    "<select id='selectbasic' name='selectbasic' class='form-control' disabled >"+
+                    "<option value='1'>Option one</option>"+
+                    "<option value='2'>Option two</option>"+
+                    "</select>" +
+                    "<ul class='pl-0 mt-2' id=" + questionObj.itemUlId + "></ul>" +
+                    "</div>");
+
+
+            }
+            if (questionObj.type == "Nrep") {
+                $("#sortable").append("<li id=" + questionObj.questionId + "><div class='card'><div class='card-header'><div class='row justify-content-between align-items-center btn-sm'>" +
+                    "<div class='align-self-end questIntitule' id=" + questionObj.intituleDivBId + ">" + questionObj.intitule + "</div>" +
+                    "<div class='ml-auto align-self-start'>" +
+                    "<i class='fa fa-chevron-up ml-3 rotate' data-toggle='collapse' data-target=" + questionObj.dataTarget + " aria-expanded='false' aria-controls='collapseExample'></i>" +
+                    "<i class='fas fa-arrows-alt ml-2'></i>" +
+                    "<i id=" + questionObj.trashIconId + " class='fas fa-trash-alt ml-2 trash' data-toggle='modal' data-target='#supprModal'></i></div></div></div>" +
+                    "<div class='collapse' id=" + questionObj.TargetId + ">" +
+                    "<div class='card card-body'>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Intitulé de la question :</div>" +
+                    "<div class='d-inline ml-2'><input class='form-control intituleTxtB' placeholder='Intitulé' type='text' id=" + questionObj.intituleTxtBId + " /></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Réponse obligatoire : </div>" +
+                    "<div class='d-inline ml-2'><div class='form-check-inline'><label>" +
+                    "<input class='form-check-input requis' type='radio' value='true' name=" + questionObj.questionId + " id=" + questionObj.requisOuiRadioId + " checked> Oui</label>" +
+                    "<label><input class='form-check-input ml-5 requis' type='radio' value='false' name=" + questionObj.questionId + " id=" + questionObj.requisNonRadioId + "> Non</label></div></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Type de graphique :</div>" +
+                    "<div class='d-inline ml-2'>" +
+                    "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption'>" +
+                    "<option selected value='1'>Colonne</option>" +
+                    "<option value='2'>Ligne</option></select></div></div>" +
+                    "<div class='row mt-2 justify-content-center'>" +
+                    "<div class='d-inline'>Valeurs possibles :</div>" +
+                    "<div class='d-inline ml-2'>" +
+                    "<input type='button' value='Ajouter un item' class='btn-sm ajout-radio' id=" + questionObj.ajouterBtnId + " /></div></div>" +
+                    "<ul class='pl-0 mt-2' id=" + questionObj.itemUlId + ">" +
+                    "<li class='form-inline justify-content-center mb-2 exemplechk'><div class='d-inline'><input type='checkbox' name='item' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control' type='text' value='item1' disabled/></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li>" +
+                    "<li class='form-inline justify-content-center mb-2 exemplechk'><div class='d-inline'><input type='checkbox' name='item' class='d-inline ml-2' disabled /></div><div width='50' class='d-inline'><input class='form-control' type='text' value='item2' disabled/></div><div class='d-inline ml-2'><button disabled><i href='#' class='fas fa-trash-alt'></i></button></div></li></ul></div></div></div></li>");
+
+            }
             if (questionObj.type == "ValNum") {
                 $("#sortable").append("<li id=" + questionObj.questionId + "><div class='card'><div class='card-header'><div class='row justify-content-between align-items-center btn-sm'>" +
                     "<div class='align-self-end questIntitule' id=" + questionObj.intituleDivBId + ">" + questionObj.intitule + "</div>" +
@@ -866,6 +1043,154 @@
             var qPreview = "#" + questionObj.questionPreviewId;
             C("Div q preview", qPreview);
             var groupName;
+            if (questionObj.type == "1repListe") {
+                questionObj.listItems = [''];
+                groupName = "radios" + questionObj.questionId;
+                C("Graphique", questionObj.graphique);
+                var itemExemple1 = new Item(questionObj.questionId);
+                var itemExemple2 = new Item(questionObj.questionId);
+                if (questionObj.modifUser == true) {
+                    $(document.body).ready(function () {
+                        var idDivPrev = "#" + questionObj.questionPreviewId;
+                        $(idDivPrev).find("label.control-label").html('');
+                        $(idDivPrev).find("label.control-label").html(questionObj.intitule);
+                    })
+                }
+                if (questionObj.modifUser == false) {
+                    $(qPreview).remove();
+                    C("ID itemExemple", itemExemple2.Id, itemExemple1.Id)
+                    questionObj.listItems.push(itemExemple1, itemExemple2);
+                    questionObj.codeHtml = "<div id= " + questionObj.questionPreviewId + " class='form-group' >" +
+                        "<label class='col-md-4 control-label'>" + questionObj.intitule + "</label>" +
+                        "<div class='col-md-4'>" +
+                        "<select id=" + questionObj.divListItemId + " name='selectbasic' class='form-control' required>" +
+                        "</div>"+
+                        "</select>"+
+                        "</div></fieldset>";
+                    AppendPrev(questionObj);
+
+                    $(document.body).ready(function () {
+                        itemExemple1 = questionObj.listItems[1];
+                        itemExemple2 = questionObj.listItems[2];
+                        var idLabel1 = "#" + itemExemple1.lblId;
+                        var idLabel2 = "#" + itemExemple2.lblId;
+                        if (questionObj.graphique == 2) {
+                            C("ENTREE GRAPH 2");
+                            C(itemExemple2.lblId);
+                            $(idLabel1).parent().toggleClass("checkbox", false);
+                            $(idLabel1).parent().toggleClass("d-inline mr-2", true);
+                            $(idLabel2).parent().toggleClass("checkbox", false);
+                            $(idLabel2).parent().toggleClass("d-inline mr-2", true);
+
+                            if (questionObj.requis == "false") {
+
+                                $(idLabel1).children().prop('required', false);
+                            }
+                            else {
+                                $(idLabel1).children().prop('required', true);
+                            }
+                        }
+                        if (questionObj.graphique == 1) {
+                            C("Graphique", questionObj.graphique);
+                            $(idLabel1).parent().toggleClass("d-inline", false);
+                            $(idLabel1).parent().toggleClass("checkbox", true);
+                            $(idLabel2).parent().toggleClass("d-inline", false);
+                            $(idLabel2).parent().toggleClass("checkbox", true);
+
+                            if (questionObj.requis == "false") {
+                                $(idLabel1).children().prop('required', false);
+                            }
+                            else {
+                                $(idLabel1).children().prop('required', true);
+                            }
+                        }
+
+                    });
+
+                }
+                else {
+
+                }
+            }
+
+            if (questionObj.type == "Nrep") {
+                questionObj.listItems = [''];
+                groupName = "radios" + questionObj.questionId;
+                C("Graphique", questionObj.graphique);
+                var itemExemple1 = new Item(questionObj.questionId);
+                var itemExemple2 = new Item(questionObj.questionId);
+                if (questionObj.modifUser == true) {
+                    $(document.body).ready(function () {
+                        var idDivPrev = "#" + questionObj.questionPreviewId;
+                        $(idDivPrev).find("label.control-label").html('');
+                        $(idDivPrev).find("label.control-label").html(questionObj.intitule);
+                    })
+                }
+                if (questionObj.modifUser == false) {
+                    $(qPreview).remove();
+                    C("ID itemExemple", itemExemple2.Id, itemExemple1.Id)
+                    questionObj.listItems.push(itemExemple1, itemExemple2);
+                    questionObj.codeHtml = "<div id= " + questionObj.questionPreviewId + " class='form-group' > <fieldset id=" + groupName + ">" +
+                        "<label class='col-md-4 control-label' for=" + itemExemple1.groupName + ">" + questionObj.intitule + "</label>" +
+                        "<div class='col-md-4'>" +
+                        "<div id=" + questionObj.divListItemId +">" +
+                        "<div class='exemplechk'>" +
+                        "<div class='checkbox'>" +
+                        "<label class='checkbox' id=" + itemExemple1.lblId + " for=" + itemExemple1.Id + ">" +
+                        "<input type='checkbox' name=" + itemExemple1.groupName + " id=" + itemExemple1.Id + " required>" +
+                        "choix 1" +
+                        "</label></div>" +
+                        "<div class='checkbox'>" +
+                        "<label class='checkbox' id=" + itemExemple2.lblId + " for=" + itemExemple2.Id + ">" +
+                        "<input type='checkbox' name=" + itemExemple2.groupName + " id=" + itemExemple2.Id + ">" +
+                        "choix 2" +
+                        "</label></div>" +
+                        "</div></div></fieldset>";
+                    AppendPrev(questionObj);
+
+                    $(document.body).ready(function () {
+                        itemExemple1 = questionObj.listItems[1];
+                        itemExemple2 = questionObj.listItems[2];
+                        var idLabel1 = "#" + itemExemple1.lblId;
+                        var idLabel2 = "#" + itemExemple2.lblId;
+                        if (questionObj.graphique == 2) {
+                            C("ENTREE GRAPH 2");
+                            C(itemExemple2.lblId);
+                            $(idLabel1).parent().toggleClass("checkbox", false);
+                            $(idLabel1).parent().toggleClass("d-inline mr-2", true);
+                            $(idLabel2).parent().toggleClass("checkbox", false);
+                            $(idLabel2).parent().toggleClass("d-inline mr-2", true);
+
+                            if (questionObj.requis == "false") {
+
+                                $(idLabel1).children().prop('required', false);
+                            }
+                            else {
+                                $(idLabel1).children().prop('required', true);
+                            }
+                        }
+                        if (questionObj.graphique == 1) {
+                            C("Graphique", questionObj.graphique);
+                            $(idLabel1).parent().toggleClass("d-inline", false);
+                            $(idLabel1).parent().toggleClass("checkbox", true);
+                            $(idLabel2).parent().toggleClass("d-inline", false);
+                            $(idLabel2).parent().toggleClass("checkbox", true);
+
+                            if (questionObj.requis == "false") {
+                                $(idLabel1).children().prop('required', false);
+                            }
+                            else {
+                                $(idLabel1).children().prop('required', true);
+                            }
+                        }
+
+                    });
+
+                }
+                else {
+
+                }
+            }
             if (questionObj.type == "4niv")
             {
                 $(qPreview).remove();
@@ -876,7 +1201,7 @@
                 questionObj.listItems = [''];
                 questionObj.listItems.push(item1, item2, item3, item4);
                 if (questionObj.requis == "false") {
-                    "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
+                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
                         "<label class='col-md-4 control-label' for=" + item1.groupName + ">" + questionObj.intitule + "</label>" +
                         "<div class='col-md-4'>" +
                         "<label class='radio-inline mr-2' for=" + item1.Id + ">" +
@@ -897,7 +1222,7 @@
                         "</label></div></fieldset></div>"
                 }
                 else {
-                    "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
+                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
                         "<label class='col-md-4 control-label' for=" + item1.groupName + ">" + questionObj.intitule + "</label>" +
                         "<div class='col-md-4'>" +
                         "<label class='radio-inline mr-2' for=" + item1.Id + ">" +
@@ -939,17 +1264,26 @@
                 AppendPrev(questionObj);
             }
             if (questionObj.type == "1rep") {
+                questionObj.listItems = [''];
                 groupName = "radios" + questionObj.questionId;
                 C("Graphique", questionObj.graphique);
-                if (questionObj.codeHtml == '') {
-                    var itemExemple1 = new Item(questionObj.questionId);
-                    var itemExemple2 = new Item(questionObj.questionId);
+                var itemExemple1 = new Item(questionObj.questionId);
+                var itemExemple2 = new Item(questionObj.questionId);
+                if (questionObj.modifUser == true) {
+                    $(document.body).ready(function () {
+                        var idDivPrev = "#" + questionObj.questionPreviewId;
+                        $(idDivPrev).find("label.control-label").html('');
+                        $(idDivPrev).find("label.control-label").html(questionObj.intitule);
+                    })
+                }
+                if (questionObj.modifUser == false) {
+                    $(qPreview).remove();
                     C("ID itemExemple", itemExemple2.Id, itemExemple1.Id)
                     questionObj.listItems.push(itemExemple1, itemExemple2);
-                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
+                    questionObj.codeHtml = "<div id= " + questionObj.questionPreviewId + " class='form-group' > <fieldset id=" + groupName + ">" +
                         "<label class='col-md-4 control-label' for=" + itemExemple1.groupName + ">" + questionObj.intitule + "</label>" +
                         "<div class='col-md-4'>" +
-                        "<div id='listItemRadio'>" +
+                        "<div id=" + questionObj.divListItemId +">" +
                         "<div class='exemple'>" +
                         "<div class='radio'>" +
                         "<label class='radio' id=" + itemExemple1.lblId +" for=" + itemExemple1.Id + ">" +
@@ -963,8 +1297,7 @@
                         "</label></div>" +
                         "</div></div></fieldset>";
                     AppendPrev(questionObj);
-                }
-                else {
+
                     $(document.body).ready(function () {
                         itemExemple1 = questionObj.listItems[1];
                         itemExemple2 = questionObj.listItems[2];
@@ -1409,6 +1742,7 @@
             this.itemUlId = "item" + codeQuestion + "Ul";
             this.itemLiId = "item" + codeQuestion;
             this.modifUser = false;
+            this.divListItemId = "listItem" + codeQuestion;
             this.listItems = [''];
             this.listUserItems = [''];
         }
@@ -1425,6 +1759,7 @@
             this.Id = codeQuestion + "userItem" +  String(Math.floor((Math.random() * 100) + 1));
             this.IdPreview = "itemPrev"+ codeQuestion  + String(Math.floor((Math.random() * 100) + 1));
             this.type = '';
+            this.fakeId = 1;
             this.TxtBId = "intituleItem" + codeQuestion + "TxtB" + String(Math.floor((Math.random() * 100) + 1));
             this.UlId = '';
             this.Intitule = '';

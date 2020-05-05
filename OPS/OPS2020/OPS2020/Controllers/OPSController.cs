@@ -58,6 +58,7 @@ namespace OPS2020.Controllers
             questionnaire.IdQuestionnaire = questionnaireModel.IdQuestionnaire;
             questionnaire.TitreQuestionnaire = questionnaireModel.TitreQuestionnaire;
             _context.Questionnaire.Add(questionnaire);
+            _context.SaveChanges();
         }
         [HttpPost]
         public async Task<IActionResult> GetQuestionObj(string codeQuestion)
