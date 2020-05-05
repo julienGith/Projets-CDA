@@ -5,9 +5,27 @@ using System.Threading.Tasks;
 
 namespace OPS2020.Models
 {
+    public class UserItem
+    {
+        public string Id { get; set; }
+        public string IdPreview { get; set; }
+        public string TxtBId { get; set; }
+        public string UlId { get; set; }
+        public string Intitule { get; set; }
+        public string codeHtml { get; set; }
+        public string Name { get; set; }
+        public object itemPrev { get; set; }
+        public string type { get; set; }
+    }
     public class Item
     {
-
+        public object Id { get; set; }
+        public object Lbl { get; set; }
+        public object lblId { get; set; }
+        public object Name { get; set; }
+        public object Intitule { get; set; }
+        public object groupName { get; set; }
+        public object codeHtml { get; set; }
     }
     public class QuestionOBJ
     {
@@ -31,14 +49,19 @@ namespace OPS2020.Models
         public string trashIconId { get; set; }
         public string graphique { get; set; }
         public string graphiqueId { get; set; }
+        public string questionPreviewId { get; set; }
         public string graphiqueLigneId { get; set; }
         public string graphiqueColId { get; set; }
-        public string questionPreviewId { get; set; }
         public string divPosPrev { get; set; }
         public string codeHtml { get; set; }
         public string itemUlId { get; set; }
         public string itemLiId { get; set; }
+        public bool modifUser { get; set; }
+        public string divListItemId { get; set; }
+
+        List<UserItem> userItems = new List<UserItem>();
         List<Item> items = new List<Item>();
+
     }
     public class QuestionModel
     {
@@ -52,7 +75,6 @@ namespace OPS2020.Models
     {
         public QuestionnaireModel()
         {
-            questions = new HashSet<QuestionModel>();
             questionsObj = new HashSet<QuestionOBJ>();
         }
         public int IdQuestionnaire { get; set; }
@@ -61,7 +83,6 @@ namespace OPS2020.Models
         public string DataJson { get; set; }
         public int CodeProduitFormation { get; set; }
         public int EtatQuestionnaire { get; set; }
-        public ICollection<QuestionModel> questions { get; set; }
         public ICollection<QuestionOBJ> questionsObj { get; set; }
     }
 }

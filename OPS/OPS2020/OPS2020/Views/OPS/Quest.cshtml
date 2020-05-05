@@ -215,8 +215,6 @@
     $(document.body).on('click', '.rotate', function () { $(this).toggleClass("down"); });
 
     $(document).ready(function () {
-
-
        // "use strict";
         $(document.body).on('click', '#ordreBtn', function () {
             //alert($("#sortable").sortable('toArray'));
@@ -239,18 +237,22 @@
             questionnaireId: '',
             TitreQuestionnaire: '',
             Description: '',
-            DataJson: '',
+            DataJson: [''],
             EtatQuestionnaire:'',
             listQuestObj: ['']
         }
         $(document.body).on('click', '.suppr-item', function (e) {
             let questionObj = new QuestionObj();
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
+            var toto = $(this).attr("id");
+            C("USerItem Id :",toto);
+
             questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
-            C(questionObj.listUserItems);
+            C("avant pop",questionObj);
             let userItemId = $(this).attr("id");
             let userItem = new UserItem();
             userItem = questionObj.listUserItems.find(u => u.Id === userItemId);
+            C("liste userItem avant le pop :",questionObj.listUserItems);
             let item = new Item();
             item = userItem.itemPrev;
             let userItemIdS = "#" + $(this).attr("id");
@@ -268,8 +270,8 @@
             }
             $(userItemIdS).parent().parent().parent('li').remove();
             C(userItemId);
-            questionObj.listUserItems.pop(userItem);
-            C(questionObj.listUserItems);
+            questionObj.listUserItems = questionObj.listUserItems.filter(u => u.Id !== userItem.Id)
+            C("liste userItem après le pop :",questionObj.listUserItems);
         });
         $(document.body).on('keyup', '.item-text', function () {
 
@@ -311,6 +313,7 @@
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
             let userItem = new UserItem(codeQuestion);
             questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            C("QuestionObj pour le pop :", questionObj)
             let idUl = "#" + questionObj.itemUlId;
             if (questionObj.type == "Nrep") {
                 userItem.codeHtml = "<li class='list-inline-item form-inline justify-content-center mb-2'>" +
@@ -347,24 +350,8 @@
             let item = new Item(questionObj.questionId);
             item.Id = userItem.IdPreview;
             userItem.itemPrev = item;
-            C(userItem);
+            C("Ajout User item objs transmis : ", questionObj, userItem)
             CreerItemPreview(questionObj, userItem);
-        })
-
-        $("#modalSupprBtn").click(function () {
-            let questionObj = new QuestionObj();
-            let divPosPrevId = '';
-            let idLiQuestion = '';
-            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
-            var removeIndex = questionnaire.listQuestObj.map(function (item) { return item.questionId; }).indexOf(codeQuestion);
-            questionPreviewId = "questionPreview" + questionObj.questionId;
-            idLiQuestion = "#" + questionObj.questionId;
-            $(idLiQuestion).remove();
-            C(questionObj.questionPreviewId);
-            divPosPrevId = "#" + questionObj.divPosPrev;
-            questionnaire.listQuestObj.splice(removeIndex, 1);
-            $(divPosPrevId).remove();
-            C(questionnaire.listQuestObj);
         })
         $(document.body).on('click', '.trash', function () {
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
@@ -430,8 +417,25 @@
             C("objet transmis",questionObj);
 
         })
+        $("#modalSupprBtn").click(function () {
+            let questionObj = new QuestionObj();
+            let divPosPrevId = '';
+            let idLiQuestion = '';
+            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            var removeIndex = questionnaire.listQuestObj.map(function (item) { return item.questionId; }).indexOf(codeQuestion);
+            questionPreviewId = "questionPreview" + questionObj.questionId;
+            idLiQuestion = "#" + questionObj.questionId;
+            $(idLiQuestion).remove();
+            C(questionObj.questionPreviewId);
+            divPosPrevId = "#" + questionObj.divPosPrev;
+            questionnaire.listQuestObj.splice(removeIndex, 1);
+            $(divPosPrevId).remove();
+            C(questionnaire.listQuestObj);
+        })
         $("#BtnEnregistrer").click(function () {
+            questionnaire.CodeProduitFormation = 9952;
             questionnaire.EtatQuestionnaire = 0;
+            questionnaire.DataJson = JSON.stringify(questionnaire);
             CreerQuestionnaire(questionnaire);
 
         })
@@ -515,59 +519,52 @@
         })
         function CreerItemPreview(questionObj, userItem) {
             C("CreerPreviewItem");
+            C("Test variable", userItem.itemPrev.Id);
             if (questionObj.type == "1repListe") {
                 if (userItem != null) {
-                    let item = userItem.itemPrev;
                     C("CreerPreviewItem NRep");
-                    item.Id = userItem.IdPreview;
-                    item.Lbl = "Lbl" + userItem.IdPreview;
-                    var idLabel = "#" + item.Lbl;
+                    userItem.itemPrev.Id = userItem.IdPreview;
+                    userItem.itemPrev.Lbl = "Lbl" + userItem.IdPreview;
+                    var idLabel = "#" + userItem.itemPrev.Lbl;
                     var listItemId = "#" + questionObj.divListItemId;
-                    C(item.Lbl);
-                    C(questionObj.graphique);
-                    item.codeHtml = "<option id=" + item.Lbl + ">" + "option" +"</option>";
+                    userItem.itemPrev.codeHtml = "<option id=" + userItem.itemPrev.Lbl + ">" + "option" +"</option>";
                     if (questionObj.requis == "false") {
                         $(listItemId).prop('required', false);
                     }
                     if (questionObj.requis == "true") {
                         $(listItemId).prop('required', true);
                     }
-                    $(listItemId).append(item.codeHtml);
-                    userItem.itemPrev = item;
-                    questionObj.listUserItems.push(userItem);
+                    $(listItemId).append(userItem.itemPrev.codeHtml);
+
                 }
             }
-
             if (questionObj.type == "Nrep") {
                 if (userItem != null) {
-                    let item = userItem.itemPrev;
                     C("CreerPreviewItem NRep");
-                    item.Id = userItem.IdPreview;
-                    item.Lbl = "Lbl" + userItem.IdPreview;
-                    var idLabel = "#" + item.Lbl;
-                    var listItemId = "#"+ questionObj.divListItemId;
-                    C(item.Lbl);
+                    userItem.itemPrev.Id = userItem.IdPreview;
+                    userItem.itemPrev.Lbl = "Lbl" + userItem.IdPreview;
+                    var idLabel = "#" + userItem.itemPrev.Lbl;
+                    var listItemId = "#" + questionObj.divListItemId;
                     C(questionObj.graphique);
-                    item.codeHtml = "<div class='checkbox'>" +
-                        "<input type='checkbox' name=" + item.groupName + " id=" + item.Id + " class='mr-1'>" +
-                        "<label id=" + item.Lbl + " for=" + item.Id + "></label></div> ";
+                    userItem.itemPrev.codeHtml = "<div class='checkbox'>" +
+                        "<input type='checkbox' name=" + userItem.itemPrev.groupName + " id=" + userItem.itemPrev.Id + " class='mr-1'>" +
+                        "<label id=" + userItem.itemPrev.Lbl + " for=" + userItem.itemPrev.Id + "></label></div> ";
                     if (questionObj.graphique == 1) {
                         $(idLabel).parent().toggleClass("d-inline", false);
                         $(idLabel).parent().toggleClass("checkbox", true);
                     }
                     if (questionObj.graphique == 2) {
-                        $(idLabel1).parent().toggleClass("checkbox", false);
-                        $(idLabel1).parent().toggleClass("d-inline mr-2", true);
+                        $(idLabel).parent().toggleClass("checkbox", false);
+                        $(idLabel).parent().toggleClass("d-inline mr-2", true);
                     }
                     if (questionObj.requis == "false") {
-                        $(idLabel1).children().prop('required', false);
+                        $(idLabel).children().prop('required', false);
                     }
                     if (questionObj.requis == "true") {
-                        $(idLabel1).children().prop('required', true);
+                        $(idLabel).children().prop('required', true);
                     }
-                    $(listItemId).append(item.codeHtml);
-                    userItem.itemPrev = item;
-                    questionObj.listUserItems.push(userItem);
+                    $(listItemId).append(userItem.itemPrev.codeHtml);
+
                 }
                 else {
                     C("Liste UserItems", questionObj.listUserItems);
@@ -597,22 +594,19 @@
                 }
 
             }
-
             if (questionObj.type == "1rep")
             {
                 if (userItem != null)
                 {
-                    let item = userItem.itemPrev;
 
                 C("CreerPreviewItem 1Rep");
-                item.Id = userItem.IdPreview;
-                item.Lbl = "Lbl" + userItem.IdPreview;
-                var idLabel = "#" + item.Lbl;
-                C(item.Lbl);
+                    userItem.itemPrev.Id = userItem.IdPreview;
+                    userItem.itemPrev.Lbl = "Lbl" + userItem.IdPreview;
+                    var idLabel = "#" + userItem.itemPrev.Lbl;
                 C(questionObj.graphique);
-                item.codeHtml = "<div class='radio'>" +
-                    "<input type='radio' name=" + item.groupName + " id=" + item.Id + " class='mr-1'>" +
-                    "<label id=" + item.Lbl + " for=" + item.Id + "></label></div> ";
+                    userItem.itemPrev.codeHtml = "<div class='radio'>" +
+                        "<input type='radio' name=" + userItem.itemPrev.groupName + " id=" + userItem.itemPrev.Id + " class='mr-1'>" +
+                        "<label id=" + userItem.itemPrev.Lbl + " for=" + userItem.itemPrev.Id + "></label></div> ";
                 if (questionObj.graphique == 1) {
                     $(idLabel).parent().toggleClass("d-inline", false);
                     $(idLabel).parent().toggleClass("radio", true);
@@ -628,9 +622,8 @@
                     $(idLabel1).children().prop('required', true);
                     }
                     let idListItem = "#" + questionObj.divListItemId;
-                    $(idListItem).append(item.codeHtml);
-                    userItem.itemPrev = item;
-                    questionObj.listUserItems.push(userItem);
+                    $(idListItem).append(userItem.itemPrev.codeHtml);
+
                 }
                 else {
                     C("Liste UserItems",questionObj.listUserItems);
@@ -660,7 +653,9 @@
                 }
 
             }
-
+            
+            questionObj.listUserItems.push(userItem);
+            C("Liste UserItems après ajout :", questionObj.listUserItems);
         }
         function CreerQuestion(questionObj) {
             C("objet reçu", questionObj);
@@ -886,8 +881,8 @@
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Réponse obligatoire : </div>" +
                     "<div class='d-inline ml-2'><div class='form-check-inline'><label>" +
-                    "<input class='form-check-input' type='radio' name=" + questionObj.questionId + " id=" + questionObj.requisOuiRadioId + " checked> Oui</label>" +
-                    "<label><input class='form-check-input ml-5' type='radio' name=" + questionObj.questionId + " id=" + questionObj.requisNonRadioId + " disabled> Non</label></div></div></div>" +
+                    "<input class='form-check-input requis' type='radio' value='true' name=" + questionObj.questionId + " id=" + questionObj.requisOuiRadioId + " checked> Oui</label>" +
+                    "<label><input class='form-check-input ml-5 requis' type='radio' value='false' name=" + questionObj.questionId + " id=" + questionObj.requisNonRadioId + "> Non</label></div></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -918,8 +913,8 @@
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Réponse obligatoire : </div>" +
                     "<div class='d-inline ml-2'><div class='form-check-inline'><label>" +
-                    "<input class='form-check-input' type='radio' name=" + questionObj.questionId + " id=" + questionObj.requisOuiRadioId + " checked> Oui</label>" +
-                    "<label><input class='form-check-input ml-5' type='radio' name=" + questionObj.questionId + " id=" + questionObj.requisNonRadioId + " disabled> Non</label></div></div></div>" +
+                    "<input class='form-check-input requis' type='radio' value='true' name=" + questionObj.questionId + " id=" + questionObj.requisOuiRadioId + " checked> Oui</label>" +
+                    "<label><input class='form-check-input ml-5 requis' type='radio' value='false' name=" + questionObj.questionId + " id=" + questionObj.requisNonRadioId + "> Non</label></div></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -1112,7 +1107,6 @@
 
                 }
             }
-
             if (questionObj.type == "Nrep") {
                 questionObj.listItems = [''];
                 groupName = "radios" + questionObj.questionId;
@@ -1394,7 +1388,7 @@
                         "<label class='col-md-4 control-label' for=" + questionObj.questionId + ">" + questionObj.intitule + "</label>" +
                         "<div class='col-md-4'>" +
                         "<label class='radio-inline mr-2' for=" + itemOui.itemId + ">" +
-                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.Id + " value='1' checked='checked'>" +
+                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.Id + " value='1' checked='checked' required>" +
                         "Oui" +
                         "</label>" +
                         "<label class='radio-inline mr-2' for=" + itemNon.itemId + ">" +
@@ -1402,7 +1396,19 @@
                         "Non" +
                         "</label>" +
                         "</div>" +
-                        "</div>"
+                        "</div>";
+                    AppendPrev(questionObj);
+                    $(document.body).ready(function () {
+                        if (questionObj.requis == "false") {
+                            var itemId = "#" + itemOui.Id;
+                            C(itemId);
+                            $(itemId).prop('required', false);
+                        }
+                        if (questionObj.requis == "true") {
+                            var itemId = "#" + itemOui.Id;
+                            $(itemId).prop('required', true);
+                        }
+                    });
                 }
                 else if (questionObj.graphique = 1) {
                     C("graph = 1");
@@ -1411,7 +1417,7 @@
                         "<div class='col-md-4'>" +
                         "<div class='radio'>" +
                         "<label for=" + itemOui.Id + ">" +
-                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.Id + " value='1' checked='checked'>" +
+                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.Id + " value='1' checked='checked' required>" +
                         "Oui" +
                         "</label>" +
                         "</div>" +
@@ -1423,8 +1429,19 @@
                         "</div>" +
                         "</div>" +
                         "</div>";
+                    AppendPrev(questionObj);
+                    $(document.body).ready(function () {
+                        if (questionObj.requis == "false") {
+                            var itemId = "#" + itemOui.Id;
+                            C(itemId);
+                            $(itemId).prop('required', false);
+                        }
+                        if (questionObj.requis == "true") {
+                            var itemId = "#" + itemOui.Id;
+                            $(itemId).prop('required', true);
+                        }
+                    });
                 }
-                AppendPrev(questionObj);
             }
             if (questionObj.type == "OuiNonNsp")
             {
@@ -1443,7 +1460,7 @@
                         "<label class='col-md-4 control-label' for=" + questionObj.questionId + ">" + questionObj.intitule +"</label>" +
                         "<div class='col-md-4'>" +
                         "<label class='radio-inline mr-2' for=" + itemOui.Id + ">" +
-                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.Id + " value='1' checked='checked'>" +
+                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.Id + " value='1' checked='checked' required>" +
                         "Oui" +
                         "</label>" +
                         "<label class='radio-inline mr-2' for=" + itemNon.Id + ">" +
@@ -1456,6 +1473,17 @@
                         "</label>" +
                         "</div>" +
                         "</div>";
+                    AppendPrev(questionObj);
+                    $(document.body).ready(function () {
+                        if (questionObj.requis == "false") {
+                            var itemId = "#" + itemNon.Id;
+                            $(itemId).prop('required', false);
+                        }
+                        if (questionObj.requis == "true") {
+                            var itemId = "#" + itemNon.Id;
+                            $(itemId).prop('required', true);
+                        }
+                    });
                 }
                 else if (questionObj.graphique == 1) {
                     questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'>" +
@@ -1463,7 +1491,7 @@
                         "<div class='col-md-4'>" +
                         "<div class='radio'>"+
                         "<label for=" + itemOui.Id + ">" +
-                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.Id + " value='1' checked='checked'>" +
+                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.Id + " value='1' checked='checked' required>" +
                         "Oui" +
                         "</label>" +
                         "</div>" +
@@ -1481,8 +1509,18 @@
                         "</div>" +
                         "</div>" +
                         "</div>";
+                    AppendPrev(questionObj);
+                    $(document.body).ready(function () {
+                        if (questionObj.requis == "false") {
+                            var itemId = "#" + itemNon.Id;
+                            $(itemId).prop('required', false);
+                        }
+                        if (questionObj.requis == "true") {
+                            var itemId = "#" + itemNon.Id;
+                            $(itemId).prop('required', true);
+                        }
+                    });
                 }
-                AppendPrev(questionObj);
             }
             if (questionObj.type == "1a10")
             {
