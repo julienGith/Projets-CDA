@@ -29,6 +29,7 @@ namespace OPS2020.Models
     }
     public class QuestionOBJ
     {
+        public int numQ { get; set; }
         public string type { get; set; }
         public string sousType { get; set; }
         public string choixRequis { get; set; }

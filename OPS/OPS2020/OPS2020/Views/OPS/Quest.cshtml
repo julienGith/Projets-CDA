@@ -171,7 +171,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title">Ajout De question</h4>
             </div>
             <div class="modal-body">
                 <label for="intituleTxtB">Intitulé de la question :</label>
@@ -208,8 +208,9 @@
 
 
     $(document.body).on('click', '.element', function (e) { });
-
     $(document.body).on('click', '.element', function (e) { });
+
+
 
 
     $(document.body).on('click', '.rotate', function () { $(this).toggleClass("down"); });
@@ -226,7 +227,7 @@
         })
 
         var C = console.log;
-        var nombreDeLi = $("#sortable").children().length;
+
         var numQuestion = 0;
         var codeQuestion;
         var type;
@@ -241,7 +242,9 @@
             EtatQuestionnaire:'',
             listQuestObj: ['']
         }
-        $(document.body).on('click', '.suppr-item', function (e) {
+        // Evènement sur les controls html générés
+        // Suppression d'une valeur possible ajouté par l'utilisateur
+        $(document.body).on('click', '.suppr-item', function () {
             let questionObj = new QuestionObj();
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
             var toto = $(this).attr("id");
@@ -273,6 +276,7 @@
             questionObj.listUserItems = questionObj.listUserItems.filter(u => u.Id !== userItem.Id)
             C("liste userItem après le pop :",questionObj.listUserItems);
         });
+        // Modification d'une valeur possible
         $(document.body).on('keyup', '.item-text', function () {
 
             let questionObj = new QuestionObj();
@@ -307,6 +311,7 @@
 
 
         });
+        // Ajout d'une valeur possible
         $(document.body).on('click', '.ajout-radio', function () {
 
             let questionObj = new QuestionObj();
@@ -353,11 +358,13 @@
             C("Ajout User item objs transmis : ", questionObj, userItem)
             CreerItemPreview(questionObj, userItem);
         })
+        // Suppression question
         $(document.body).on('click', '.trash', function () {
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
             C(codeQuestion);
         })
-        $(document.body).on('click', '.requis', function (e) {
+        // Modification du caratère requis de la question
+        $(document.body).on('click', '.requis', function () {
             let questionObj = new QuestionObj();
             let qpreview = '';
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
@@ -379,6 +386,24 @@
 
 
         })
+        // Modification de l'aperçu de l'intitulé de la question
+        $(document.body).on('change', '.intituleTxtB', function () {
+            let qpreview = '';
+            let intituleBtn = '';
+            let intitule = '';
+            let intituleDivB = '';
+            let questionObj = new QuestionObj();
+            codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
+            questionObj = questionnaire.listQuestObj.find(c => c.questionId === codeQuestion);
+            intituleBtn = "#" + $(this).attr("id");
+            intituleDivB = "#intitule" + codeQuestion + "Div";
+            $(intituleDivB).html('');
+            intitule = $(intituleBtn).val();
+            $(intituleDivB).html("Question n° " + questionObj.numQ + " : " + intitule);
+            questionObj.intitule = "Question n° " + questionObj.numQ + " : "   + intitule;
+            CreerPreview(questionObj);
+        })
+        // Modification de l'intitulé de la question dans la fenêtre de gestion
         $(document.body).on('keyup', '.intituleTxtB', function () {
             let qpreview = '';
             let intituleBtn = '';
@@ -391,15 +416,11 @@
             intituleDivB = "#intitule" + codeQuestion + "Div";
             $(intituleDivB).html('');
             intitule = $(intituleBtn).val();
-            $(intituleDivB).html(intitule);
-            C(questionObj);
-            C("Obj trouvé boucle :", questionObj);
-            questionObj.intitule = intitule;
-            C("Div preview :", qpreview);
-            C("objet transmis", questionObj);
-            CreerPreview(questionObj);
+            $(intituleDivB).html("Question n° " + questionObj.numQ + " : " + intitule);
+            questionObj.intitule = "Question n° " + questionObj.numQ + " : " + intitule;
         })
-        $(document.body).on('change', '.graphOption', function (e) {
+        // Modification de l'alignement de la question
+        $(document.body).on('change', '.graphOption', function () {
             let questionObj = new QuestionObj();
             let value = '';
             codeQuestion = ExtraireCodeQuestion($(this).attr("id"));
@@ -417,6 +438,7 @@
             C("objet transmis",questionObj);
 
         })
+        // Evènement Boutons
         $("#modalSupprBtn").click(function () {
             let questionObj = new QuestionObj();
             let divPosPrevId = '';
@@ -505,158 +527,24 @@
         })
         $("#modalIntituleBtn").click(function () {
             C(type);
-            numQuestion += 1;
-            var intitule = '';
-            intitule = $("#intituleModalTxtB").val();
-            codeQuestion = String(numQuestion) + String(nombreDeLi) + String(Math.floor((Math.random() * 100) + 1));
-            let questionObj = new QuestionObj(type, choixRequis, ajoutSupprChoix, intitule, codeQuestion);
-            C("Création questionObj 5 param :", questionObj);
-            questionnaire.listQuestObj.push(questionObj);
-            $("#intituleModalTxtB").val('');
-            C("questionnaire après ajout question :", questionnaire.listQuestObj);
-            CreerQuestion(questionObj);
-            CreerPreview(questionObj);
+
+            $(document.body).ready(function () {
+                numQuestion += 1;
+                var numQ = $("#sortable").children().length + 1;
+                var intitule = '';
+                var nombreDeLi = $("#sortable").children().length;
+                intitule = "Question n° " + numQ + " : " + $("#intituleModalTxtB").val();
+                codeQuestion = String(numQuestion) + String(nombreDeLi) + String(Math.floor((Math.random() * 100) + 1));
+                let questionObj = new QuestionObj(type, choixRequis, ajoutSupprChoix, intitule, codeQuestion, numQ);
+                questionnaire.listQuestObj.push(questionObj);
+                CreerQuestion(questionObj);
+                CreerPreview(questionObj);
+                $("#intituleModalTxtB").val('');
+            });
         })
-        function CreerItemPreview(questionObj, userItem) {
-            C("CreerPreviewItem");
-            C("Test variable", userItem.itemPrev.Id);
-            if (questionObj.type == "1repListe") {
-                if (userItem != null) {
-                    C("CreerPreviewItem NRep");
-                    userItem.itemPrev.Id = userItem.IdPreview;
-                    userItem.itemPrev.Lbl = "Lbl" + userItem.IdPreview;
-                    var idLabel = "#" + userItem.itemPrev.Lbl;
-                    var listItemId = "#" + questionObj.divListItemId;
-                    userItem.itemPrev.codeHtml = "<option id=" + userItem.itemPrev.Lbl + ">" + "option" +"</option>";
-                    if (questionObj.requis == "false") {
-                        $(listItemId).prop('required', false);
-                    }
-                    if (questionObj.requis == "true") {
-                        $(listItemId).prop('required', true);
-                    }
-                    $(listItemId).append(userItem.itemPrev.codeHtml);
-
-                }
-            }
-            if (questionObj.type == "Nrep") {
-                if (userItem != null) {
-                    C("CreerPreviewItem NRep");
-                    userItem.itemPrev.Id = userItem.IdPreview;
-                    userItem.itemPrev.Lbl = "Lbl" + userItem.IdPreview;
-                    var idLabel = "#" + userItem.itemPrev.Lbl;
-                    var listItemId = "#" + questionObj.divListItemId;
-                    C(questionObj.graphique);
-                    userItem.itemPrev.codeHtml = "<div class='checkbox'>" +
-                        "<input type='checkbox' name=" + userItem.itemPrev.groupName + " id=" + userItem.itemPrev.Id + " class='mr-1'>" +
-                        "<label id=" + userItem.itemPrev.Lbl + " for=" + userItem.itemPrev.Id + "></label></div> ";
-                    if (questionObj.graphique == 1) {
-                        $(idLabel).parent().toggleClass("d-inline", false);
-                        $(idLabel).parent().toggleClass("checkbox", true);
-                    }
-                    if (questionObj.graphique == 2) {
-                        $(idLabel).parent().toggleClass("checkbox", false);
-                        $(idLabel).parent().toggleClass("d-inline mr-2", true);
-                    }
-                    if (questionObj.requis == "false") {
-                        $(idLabel).children().prop('required', false);
-                    }
-                    if (questionObj.requis == "true") {
-                        $(idLabel).children().prop('required', true);
-                    }
-                    $(listItemId).append(userItem.itemPrev.codeHtml);
-
-                }
-                else {
-                    C("Liste UserItems", questionObj.listUserItems);
-                    for (var i = 1; i < questionObj.listUserItems.length; i++) {
-                        var userItem = new UserItem();
-                        var item = new Item();
-                        userItem = questionObj.listUserItems[i];
-                        item = userItem.itemPrev;
-                        C(item);
-                        var idLabel = "#" + item.Lbl;
-                        if (questionObj.graphique == 1) {
-                            $(idLabel).parent().toggleClass("d-inline", false);
-                            $(idLabel).parent().toggleClass("checkbox", true);
-                        }
-                        if (questionObj.graphique == 2) {
-                            $(idLabel).parent().toggleClass("checkbox", false);
-                            $(idLabel).parent().toggleClass("d-inline mr-2", true);
-                        }
-                        if (questionObj.requis == "false") {
-                            $(idLabel).children().prop('required', false);
-                        }
-                        if (questionObj.requis == "true") {
-                            $(idLabel).children().prop('required', true);
-                        }
-                    }
-
-                }
-
-            }
-            if (questionObj.type == "1rep")
-            {
-                if (userItem != null)
-                {
-
-                C("CreerPreviewItem 1Rep");
-                    userItem.itemPrev.Id = userItem.IdPreview;
-                    userItem.itemPrev.Lbl = "Lbl" + userItem.IdPreview;
-                    var idLabel = "#" + userItem.itemPrev.Lbl;
-                C(questionObj.graphique);
-                    userItem.itemPrev.codeHtml = "<div class='radio'>" +
-                        "<input type='radio' name=" + userItem.itemPrev.groupName + " id=" + userItem.itemPrev.Id + " class='mr-1'>" +
-                        "<label id=" + userItem.itemPrev.Lbl + " for=" + userItem.itemPrev.Id + "></label></div> ";
-                if (questionObj.graphique == 1) {
-                    $(idLabel).parent().toggleClass("d-inline", false);
-                    $(idLabel).parent().toggleClass("radio", true);
-                }
-                if (questionObj.graphique == 2) {
-                    $(idLabel1).parent().toggleClass("radio", false);
-                    $(idLabel1).parent().toggleClass("d-inline mr-2", true);
-                }
-                if (questionObj.requis == "false") {
-                    $(idLabel1).children().prop('required', false);
-                }
-                if (questionObj.requis == "true") {
-                    $(idLabel1).children().prop('required', true);
-                    }
-                    let idListItem = "#" + questionObj.divListItemId;
-                    $(idListItem).append(userItem.itemPrev.codeHtml);
-
-                }
-                else {
-                    C("Liste UserItems",questionObj.listUserItems);
-                    for (var i = 1; i < questionObj.listUserItems.length; i++) {
-                        var userItem = new UserItem();
-                        var item = new Item();
-                        userItem = questionObj.listUserItems[i];
-                        item = userItem.itemPrev;
-                        C(item);
-                        var idLabel = "#" + item.Lbl;
-                        if (questionObj.graphique == 1) {
-                            $(idLabel).parent().toggleClass("d-inline", false);
-                            $(idLabel).parent().toggleClass("radio", true);
-                        }
-                        if (questionObj.graphique == 2) {
-                            $(idLabel).parent().toggleClass("radio", false);
-                            $(idLabel).parent().toggleClass("d-inline mr-2", true);
-                        }
-                        if (questionObj.requis == "false") {
-                            $(idLabel).children().prop('required', false);
-                        }
-                        if (questionObj.requis == "true") {
-                            $(idLabel).children().prop('required', true);
-                        }
-                    }
-
-                }
-
-            }
-            
-            questionObj.listUserItems.push(userItem);
-            C("Liste UserItems après ajout :", questionObj.listUserItems);
-        }
+        // Fontions de l'interface
+        // Fonctions qui génèrent le code html des questions
+        // Génère le code html pour la card de gestion de la question
         function CreerQuestion(questionObj) {
             C("objet reçu", questionObj);
             C("CreaQuest type : ", questionObj.type);
@@ -1032,7 +920,147 @@
 
             }
         }
-        function CreerPreview(questionObj=null) {
+        // Génère le code html des valeur possible de la question
+        function CreerItemPreview(questionObj, userItem) {
+            C("CreerPreviewItem");
+            C("Test variable", userItem.itemPrev.Id);
+            if (questionObj.type == "1repListe") {
+                if (userItem != null) {
+                    C("CreerPreviewItem NRep");
+                    userItem.itemPrev.Id = userItem.IdPreview;
+                    userItem.itemPrev.Lbl = "Lbl" + userItem.IdPreview;
+                    var idLabel = "#" + userItem.itemPrev.Lbl;
+                    var listItemId = "#" + questionObj.divListItemId;
+                    userItem.itemPrev.codeHtml = "<option id=" + userItem.itemPrev.Lbl + ">" + "option" + "</option>";
+                    if (questionObj.requis == "false") {
+                        $(listItemId).prop('required', false);
+                    }
+                    if (questionObj.requis == "true") {
+                        $(listItemId).prop('required', true);
+                    }
+                    $(listItemId).append(userItem.itemPrev.codeHtml);
+
+                }
+            }
+            if (questionObj.type == "Nrep") {
+                if (userItem != null) {
+                    C("CreerPreviewItem NRep");
+                    userItem.itemPrev.Id = userItem.IdPreview;
+                    userItem.itemPrev.Lbl = "Lbl" + userItem.IdPreview;
+                    var idLabel = "#" + userItem.itemPrev.Lbl;
+                    var listItemId = "#" + questionObj.divListItemId;
+                    C(questionObj.graphique);
+                    userItem.itemPrev.codeHtml = "<div class='checkbox'>" +
+                        "<input type='checkbox' name=" + userItem.itemPrev.groupName + " id=" + userItem.itemPrev.Id + " class='mr-1'>" +
+                        "<label id=" + userItem.itemPrev.Lbl + " for=" + userItem.itemPrev.Id + "></label></div> ";
+                    if (questionObj.graphique == 1) {
+                        $(idLabel).parent().toggleClass("d-inline", false);
+                        $(idLabel).parent().toggleClass("checkbox", true);
+                    }
+                    if (questionObj.graphique == 2) {
+                        $(idLabel).parent().toggleClass("checkbox", false);
+                        $(idLabel).parent().toggleClass("d-inline mr-2", true);
+                    }
+                    if (questionObj.requis == "false") {
+                        $(idLabel).children().prop('required', false);
+                    }
+                    if (questionObj.requis == "true") {
+                        $(idLabel).children().prop('required', true);
+                    }
+                    $(listItemId).append(userItem.itemPrev.codeHtml);
+
+                }
+                else {
+                    C("Liste UserItems", questionObj.listUserItems);
+                    for (var i = 1; i < questionObj.listUserItems.length; i++) {
+                        var userItem = new UserItem();
+                        var item = new Item();
+                        userItem = questionObj.listUserItems[i];
+                        item = userItem.itemPrev;
+                        C(item);
+                        var idLabel = "#" + item.Lbl;
+                        if (questionObj.graphique == 1) {
+                            $(idLabel).parent().toggleClass("d-inline", false);
+                            $(idLabel).parent().toggleClass("checkbox", true);
+                        }
+                        if (questionObj.graphique == 2) {
+                            $(idLabel).parent().toggleClass("checkbox", false);
+                            $(idLabel).parent().toggleClass("d-inline mr-2", true);
+                        }
+                        if (questionObj.requis == "false") {
+                            $(idLabel).children().prop('required', false);
+                        }
+                        if (questionObj.requis == "true") {
+                            $(idLabel).children().prop('required', true);
+                        }
+                    }
+
+                }
+
+            }
+            if (questionObj.type == "1rep") {
+                if (userItem != null) {
+
+                    C("CreerPreviewItem 1Rep");
+                    userItem.itemPrev.Id = userItem.IdPreview;
+                    userItem.itemPrev.Lbl = "Lbl" + userItem.IdPreview;
+                    var idLabel = "#" + userItem.itemPrev.Lbl;
+                    C(questionObj.graphique);
+                    userItem.itemPrev.codeHtml = "<div class='radio'>" +
+                        "<input type='radio' name=" + userItem.itemPrev.groupName + " id=" + userItem.itemPrev.Id + " class='mr-1'>" +
+                        "<label id=" + userItem.itemPrev.Lbl + " for=" + userItem.itemPrev.Id + "></label></div> ";
+                    if (questionObj.graphique == 1) {
+                        $(idLabel).parent().toggleClass("d-inline", false);
+                        $(idLabel).parent().toggleClass("radio", true);
+                    }
+                    if (questionObj.graphique == 2) {
+                        $(idLabel1).parent().toggleClass("radio", false);
+                        $(idLabel1).parent().toggleClass("d-inline mr-2", true);
+                    }
+                    if (questionObj.requis == "false") {
+                        $(idLabel1).children().prop('required', false);
+                    }
+                    if (questionObj.requis == "true") {
+                        $(idLabel1).children().prop('required', true);
+                    }
+                    let idListItem = "#" + questionObj.divListItemId;
+                    $(idListItem).append(userItem.itemPrev.codeHtml);
+
+                }
+                else {
+                    C("Liste UserItems", questionObj.listUserItems);
+                    for (var i = 1; i < questionObj.listUserItems.length; i++) {
+                        var userItem = new UserItem();
+                        var item = new Item();
+                        userItem = questionObj.listUserItems[i];
+                        item = userItem.itemPrev;
+                        C(item);
+                        var idLabel = "#" + item.Lbl;
+                        if (questionObj.graphique == 1) {
+                            $(idLabel).parent().toggleClass("d-inline", false);
+                            $(idLabel).parent().toggleClass("radio", true);
+                        }
+                        if (questionObj.graphique == 2) {
+                            $(idLabel).parent().toggleClass("radio", false);
+                            $(idLabel).parent().toggleClass("d-inline mr-2", true);
+                        }
+                        if (questionObj.requis == "false") {
+                            $(idLabel).children().prop('required', false);
+                        }
+                        if (questionObj.requis == "true") {
+                            $(idLabel).children().prop('required', true);
+                        }
+                    }
+
+                }
+
+            }
+
+            questionObj.listUserItems.push(userItem);
+            C("Liste UserItems après ajout :", questionObj.listUserItems);
+        }
+        // Génère le code html pour l'aperçu de la question
+        function CreerPreview(questionObj) {
             C("objet recup pour preview", questionObj);
             console.log("creer preview");
             var qPreview = "#" + questionObj.questionPreviewId;
@@ -1637,6 +1665,7 @@
                 AppendPrev(questionObj);
             }
         }
+        // Crée l'aperçu de la question
         function AppendPrev(questionObj) {
             var divPosPrevId = "#" + questionObj.divPosPrev;
             C("avant append")
@@ -1751,7 +1780,9 @@
             }
             return QuestionObj;
         }
-        function QuestionObj(type, choixRequis, ajoutSupprChoix, intitule, codeQuestion) {
+        // Objets de l'interface
+        function QuestionObj(type, choixRequis, ajoutSupprChoix, intitule, codeQuestion, numQ) {
+            this.numQ = numQ;
             this.type = type;
             this.sousType = '';
             this.choixRequis = choixRequis;
@@ -1805,6 +1836,7 @@
             this.Name = '';
             this.itemPrev = {};
         }
+        // Foncrion d'extraction de l' id de la question en utilisant en entrée un id du dom
         function ExtraireCodeQuestion(Id = '') {
 
         if (Id.match(/(\d+)/)) {
