@@ -1202,19 +1202,20 @@
                 $(qPreview).remove();
                 var itemTxtC = new Item();
                 itemTxtC.Id = "TxtC" + codeQuestion;
-                if (questionObj.requis == "false") {
-                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                        "<label class='col-md-4 control-label' for=" + itemTxtC.Id + ">" + questionObj.intitule +
-                        "<input id =" + itemTxtC.Id + " name ='textinput' type ='number' class='form-control input-md'>" +
-                        "</label ></div >"
-                }
-                else {
-                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                        "<label class='col-md-4 control-label' for=" + itemTxtC.Id + ">" + questionObj.intitule +
-                        "<input id =" + itemTxtC.Id + " type ='number' class='form-control input-md' required>" +
-                        "</label ></div >"
-                }
+                var inputId = "#" + itemTxtC.Id;
+                questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'>" +
+                    "<label class='col-md-4 control-label' for=" + itemTxtC.Id + ">" + questionObj.intitule +
+                    "<input id =" + itemTxtC.Id + " type ='number' class='form-control input-md' required>" +
+                    "</label ></div >";
                 AppendPrev(questionObj);
+                $(document.body).on(function () {
+                    if (questionObj.requis == "false") {
+                        $(inputId).prop('required', false);
+                    }
+                    else {
+                        $(inputId).prop('required', true);
+                    }
+                });
             }
             if (questionObj.type == "1rep") {
                 questionObj.listItems = [''];
@@ -1499,101 +1500,61 @@
                 questionObj.listItems.push(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10);
                 C(questionObj.listItems);
                 C(questionObj.requis);
-                if (questionObj.requis == "false") {
-                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
-                        "<label class='col-md-4 control-label' for=" + item1.groupName + ">" + questionObj.intitule + "</label>" +
-                        "<div class='col-md-4'>" +
-                        "<label class='radio-inline mr-2' for=" + item1.Id + ">" +
-                        "<input type='radio' name=" + item1.groupName + " id=" + item1.Id + " value='1'>" +
-                        "1" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item2.itemId + ">" +
-                        "<input type='radio' name=" + item2.groupName + " id=" + item2.Id + " value='1'>" +
-                        "2" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item3.itemId + ">" +
-                        "<input type='radio' name=" + item3.groupName + " id=" + item3.Id + " value='1'>" +
-                        "3" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item4.itemId + ">" +
-                        "<input type='radio' name=" + item4.groupName + " id=" + item4.Id + " value='1'>" +
-                        "4" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item5.itemId + ">" +
-                        "<input type='radio' name=" + item5.groupName + " id=" + item5.Id + " value='1'>" +
-                        "5" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item6.itemId + ">" +
-                        "<input type='radio' name=" + item6.groupName + " id=" + item6.Id + " value='1'>" +
-                        "6" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item7.itemId + ">" +
-                        "<input type='radio' name=" + item7.groupName + " id=" + item7.Id + " value='1'>" +
-                        "7" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item8.itemId + ">" +
-                        "<input type='radio' name=" + item8.groupName + " id=" + item8.Id + " value='1'>" +
-                        "8" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item9.itemId + ">" +
-                        "<input type='radio' name=" + item9.groupName + " id=" + item9.Id + " value='1'>" +
-                        "9" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item10.itemId + ">" +
-                        "<input type='radio' name=" + item10.groupName + " id=" + item10.Id + " value='1'>" +
-                        "10" +
-                        "</label></div></fieldset></div>";
-
-
-                }
-                else  {
-                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
-                        "<label class='col-md-4 control-label' for=" + groupName + ">" + questionObj.intitule + "</label>" +
-                        "<div class='col-md-4'>" +
-                        "<label class='radio-inline mr-2' for=" + item1.itemId + ">" +
-                        "<input type='radio' name=" + item1.groupName + " id=" + item1.Id + " value='1' required>" +
-                        "1" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item2.itemId + ">" +
-                        "<input type='radio' name=" + item2.groupName + " id=" + item2.Id + " value='1'>" +
-                        "2" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item3.itemId + ">" +
-                        "<input type='radio' name=" + item3.groupName + " id=" + item3.Id + " value='1'>" +
-                        "3" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item4.itemId + ">" +
-                        "<input type='radio' name=" + item4.groupName + " id=" + item4.Id + " value='1'>" +
-                        "4" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item5.itemId + ">" +
-                        "<input type='radio' name=" + item5.groupName + " id=" + item5.Id + " value='1'>" +
-                        "5" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item6.itemId + ">" +
-                        "<input type='radio' name=" + item6.groupName + " id=" + item6.Id + " value='1'>" +
-                        "6" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item7.itemId + ">" +
-                        "<input type='radio' name=" + item7.groupName + " id=" + item7.Id + " value='1'>" +
-                        "7" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item8.itemId + ">" +
-                        "<input type='radio' name=" + item8.groupName + " id=" + item8.Id + " value='1'>" +
-                        "8" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item9.itemId + ">" +
-                        "<input type='radio' name=" + item9.groupName + " id=" + item9.Id + " value='1'>" +
-                        "9" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item10.itemId + ">" +
-                        "<input type='radio' name=" + item10.groupName + " id=" + item10.Id + " value='1'>" +
-                        "10" +
-                        "</label></div></fieldset></div>";
-
-
-                }
+                var radioId = "#" + item1.Id;
+                questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
+                    "<label class='col-md-4 control-label' for=" + groupName + ">" + questionObj.intitule + "</label>" +
+                    "<div class='col-md-4'>" +
+                    "<label class='radio-inline mr-2' for=" + item1.Id + ">" +
+                    "<input type='radio' name=" + item1.groupName + " id=" + item1.Id + " value='1' required>" +
+                    "1" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for=" + item2.Id + ">" +
+                    "<input type='radio' name=" + item2.groupName + " id=" + item2.Id + " value='1'>" +
+                    "2" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for=" + item3.Id + ">" +
+                    "<input type='radio' name=" + item3.groupName + " id=" + item3.Id + " value='1'>" +
+                    "3" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for=" + item4.Id + ">" +
+                    "<input type='radio' name=" + item4.groupName + " id=" + item4.Id + " value='1'>" +
+                    "4" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for=" + item5.Id + ">" +
+                    "<input type='radio' name=" + item5.groupName + " id=" + item5.Id + " value='1'>" +
+                    "5" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for=" + item6.Id + ">" +
+                    "<input type='radio' name=" + item6.groupName + " id=" + item6.Id + " value='1'>" +
+                    "6" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for=" + item7.Id + ">" +
+                    "<input type='radio' name=" + item7.groupName + " id=" + item7.Id + " value='1'>" +
+                    "7" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for=" + item8.Id + ">" +
+                    "<input type='radio' name=" + item8.groupName + " id=" + item8.Id + " value='1'>" +
+                    "8" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for=" + item9.Id + ">" +
+                    "<input type='radio' name=" + item9.groupName + " id=" + item9.Id + " value='1'>" +
+                    "9" +
+                    "</label>" +
+                    "<label class='radio-inline mr-2' for=" + item10.Id + ">" +
+                    "<input type='radio' name=" + item10.groupName + " id=" + item10.Id + " value='1'>" +
+                    "10" +
+                    "</label></div></fieldset></div>";
                 AppendPrev(questionObj);
+                $(document.body).ready(function () {
+                    if (questionObj.requis == "false") {
+                        $(radioId).prop('required', false);
+                    }
+                    else {
+                        $(radioId).prop('required', true);
+                    }
+                });
+
+                
             }
         }
         // Crée l'aperçu de la question
@@ -1747,9 +1708,9 @@
             this.listUserItems = [''];
         }
         function Item(codeQuestion) {
-            this.Id = codeQuestion + "Item" + String(Math.floor((Math.random() * 100) + 1));
+            this.Id = codeQuestion + "Item" + String(Math.floor((Math.random() * 1000) + 1));
             this.Lbl = '';
-            this.lblId = codeQuestion + "Item" + String(Math.floor((Math.random() * 100) + 1))
+            this.lblId = codeQuestion + "Item" + String(Math.floor((Math.random() * 1000) + 1))
             this.Name = '';
             this.Intitule = '';
             this.groupName = "radios" + codeQuestion;
@@ -1757,7 +1718,7 @@
         }
         function UserItem(codeQuestion) {
             this.Id = codeQuestion + "userItem" +  String(Math.floor((Math.random() * 100) + 1));
-            this.IdPreview = "itemPrev"+ codeQuestion  + String(Math.floor((Math.random() * 100) + 1));
+            this.IdPreview = "itemPrev"+ codeQuestion  + String(Math.floor((Math.random() * 1000) + 1));
             this.type = '';
             this.fakeId = 1;
             this.TxtBId = "intituleItem" + codeQuestion + "TxtB" + String(Math.floor((Math.random() * 100) + 1));
