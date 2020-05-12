@@ -189,12 +189,29 @@
                 questionnaire = @Html.Raw(Json.Serialize(Model));
                 $("#titreTxtB").val(questionnaire.titreQuestionnaire);
                 $("#descriptionTxtA").val(questionnaire.description);
+                $("#formName").html(questionnaire.titreQuestionnaire);
+                $("#titreDiv").html(questionnaire.titreQuestionnaire);
                 C(questionnaire);
                 questionnaire.listQuestObj = filter_array_values(questionnaire.listQuestObj);
                 C("liste questionOBJ", questionnaire.listQuestObj);
                 for (let x of questionnaire.listQuestObj) {
                     C("Boucle chargement");
                     CreerQuestion(x);
+                    $(document.body).ready(function () {
+                    if (x.requis == false) {
+                        let idRadioOreq = "#" + x.requisOuiRadioId;
+                        let idRadioNreq = "#" + x.requisNonRadioId;
+                        C("ID requis : ",idRadioNreq);
+                        $(idRadioOreq).prop('checked', false);
+                        $(idRadioNreq).prop('checked', true);
+                    }
+                    if (x.graphique == 2) {
+                        let idDdlGraph = "#" + x.graphiqueId;
+                        $(idDdlGraph).find(':selected').prop('selected', false);
+                        $(idDdlGraph).find("option[value='2']").prop('selected', true);
+                    }
+                    })
+
                     AppendPrev(x);
                     x.listUserItems = filter_array_values(x.listUserItems);
                     C("liste usersItem", x.listUserItems);
@@ -202,7 +219,10 @@
                         C("Boucle chargement usertItems");
                         C("UserItem", y);
                         if (x.modifUser = true) {
-                            $(document.body).ready(function () {$(".exemple").remove();
+                            $(document.body).ready(function () {
+                                $(".exemple").remove();
+                                $(".exemplechk").remove();
+                                $(".exemplelst").remove();
                             let idUl = "";
                             let idListItem = "";
                             let lblPrev = "";
@@ -1423,7 +1443,7 @@
                         "<label class='col-md-4 control-label' for=" + questionObj.questionId + ">" + questionObj.intitule + "</label>" +
                         "<div class='col-md-4'>" +
                         "<label class='radio-inline mr-2' for=" + itemOui.itemId + ">" +
-                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.id + " value='1' checked='checked' required>" +
+                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.id + " value='1' required>" +
                         "Oui" +
                         "</label>" +
                         "<label class='radio-inline mr-2' for=" + itemNon.itemId + ">" +
@@ -1495,7 +1515,7 @@
                         "<label class='col-md-4 control-label' for=" + questionObj.questionId + ">" + questionObj.intitule +"</label>" +
                         "<div class='col-md-4'>" +
                         "<label class='radio-inline mr-2' for=" + itemOui.id + ">" +
-                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.id + " value='1' checked='checked' required>" +
+                        "<input type='radio' name=" + itemOui.itemName + " id=" + itemOui.id + " value='1' required>" +
                         "Oui" +
                         "</label>" +
                         "<label class='radio-inline mr-2' for=" + itemNon.id + ">" +
