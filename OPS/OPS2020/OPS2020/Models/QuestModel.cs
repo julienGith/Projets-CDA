@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,25 +8,26 @@ namespace OPS2020.Models
 {
     public class UserItem
     {
-        public string Id { get; set; }
-        public string IdPreview { get; set; }
-        public string TxtBId { get; set; }
-        public string UlId { get; set; }
-        public string Intitule { get; set; }
+        public string id { get; set; }
+        public string idPreview { get; set; }
+        public string txtBId { get; set; }
+        public string ulId { get; set; }
+        public string intitule { get; set; }
         public string codeHtml { get; set; }
-        public string Name { get; set; }
-        public object itemPrev { get; set; }
+        public string groupName { get; set; }
+        [JsonProperty(PropertyName = "itemPrev")]
+        public Item itemPrev { get; set; }
         public string type { get; set; }
     }
     public class Item
     {
-        public object Id { get; set; }
-        public object Lbl { get; set; }
-        public object lblId { get; set; }
-        public object Name { get; set; }
-        public object Intitule { get; set; }
-        public object groupName { get; set; }
-        public object codeHtml { get; set; }
+        public string id { get; set; }
+        public string lbl { get; set; }
+        public string lblId { get; set; }
+        public string Name { get; set; }
+        public string intitule { get; set; }
+        public string groupName { get; set; }
+        public string codeHtml { get; set; }
     }
     public class QuestionOBJ
     {
@@ -59,9 +61,10 @@ namespace OPS2020.Models
         public string itemLiId { get; set; }
         public bool modifUser { get; set; }
         public string divListItemId { get; set; }
-
-        List<UserItem> userItems = new List<UserItem>();
-        List<Item> items = new List<Item>();
+        [JsonProperty(PropertyName = "listUserItems")]
+        public ICollection<UserItem> listUserItems { get; set; }
+        [JsonProperty(PropertyName = "listItems")]
+        public ICollection<Item> listItems { get; set; }
 
     }
     public class QuestionModel
@@ -76,14 +79,15 @@ namespace OPS2020.Models
     {
         public QuestionnaireModel()
         {
-            questionsObj = new HashSet<QuestionOBJ>();
+            listQuestObj = new HashSet<QuestionOBJ>();
         }
-        public int IdQuestionnaire { get; set; }
-        public string TitreQuestionnaire { get; set; }
-        public string Description { get; set; }
-        public string DataJson { get; set; }
-        public int CodeProduitFormation { get; set; }
-        public int EtatQuestionnaire { get; set; }
-        public ICollection<QuestionOBJ> questionsObj { get; set; }
+        public int? questionnaireId { get; set; }
+        public string titreQuestionnaire { get; set; }
+        public string description { get; set; }
+        public string dataJson { get; set; }
+        public int codeProduitFormation { get; set; }
+        public int etatQuestionnaire { get; set; }
+        [JsonProperty(PropertyName = "listQuestObj")]
+        public ICollection<QuestionOBJ> listQuestObj { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace OPS2020.Models
     public class Etape0Model
     {
         public int CodeProduitFormation { get; set; }
+        public string IdQuestionnaire { get; set; }
     }
     public class Etape1Model
     {

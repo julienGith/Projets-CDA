@@ -27,12 +27,12 @@ namespace OPS2020.Controllers
         {
             return View("Etape0", etape0);
         }
-            
-        
+
+
         [HttpPost]
         public async Task<IActionResult> Etape0(Etape0Model etape0, string BtnValider)
         {
-            return RedirectToAction("Quest","OPS");
+            return RedirectToAction("Quest", "OPS");
         }
         [HttpGet]
         public async Task<IActionResult> Quest(Etape0Model etape0, QuestionnaireModel questionnaireModel)
@@ -40,24 +40,39 @@ namespace OPS2020.Controllers
             if (HttpContext.Session.Get<Etape0Model>("etape0")!=null)
             {
                 etape0 = HttpContext.Session.Get<Etape0Model>("etape0");
-                questionnaireModel.CodeProduitFormation = etape0.CodeProduitFormation;
+                questionnaireModel.codeProduitFormation = etape0.CodeProduitFormation;
             }
             return View("Quest", questionnaireModel);
         }
         [HttpPost]
-        public void CreerQuestionnaire(string query)
+        public void CreerQuestionnaire(string data)
         {
-            SetCookie("Questionnaire", query, 180);
+            //foreach (var item in data["listQuestObj"])
+            //{
+            //}
+            //SetCookie("Questionnaire", questionnaireJson, 180);
             QuestionnaireModel questionnaireModel = new QuestionnaireModel();
             Questionnaire questionnaire = new Questionnaire();
-            questionnaireModel = JsonConvert.DeserializeObject<QuestionnaireModel>(query);
-            questionnaire.CodeProduitFormation = questionnaireModel.CodeProduitFormation;
-            questionnaire.DataJson = JsonConvert.SerializeObject(questionnaireModel.questionsObj);
-            questionnaire.Description = questionnaireModel.Description;
-            questionnaire.EtatQuestionnaire = questionnaireModel.EtatQuestionnaire;
-            questionnaire.IdQuestionnaire = questionnaireModel.IdQuestionnaire;
-            questionnaire.TitreQuestionnaire = questionnaireModel.TitreQuestionnaire;
-            _context.Questionnaire.Add(questionnaire);
+            questionnaireModel = JsonConvert.DeserializeObject<QuestionnaireModel>(data);
+            if (questionnaireModel.questionnaireId != null)
+            {
+                questionnaire = _context.Questionnaire.FirstOrDefault(q => q.IdQuestionnaire == questionnaireModel.questionnaireId);
+                questionnaire.CodeProduitFormation = questionnaireModel.codeProduitFormation;
+                questionnaire.DataJson = JsonConvert.SerializeObject(questionnaireModel.listQuestObj);
+                questionnaire.Description = questionnaireModel.description;
+                questionnaire.EtatQuestionnaire = questionnaireModel.etatQuestionnaire;
+                questionnaire.TitreQuestionnaire = questionnaireModel.titreQuestionnaire;
+            }
+            else
+            {
+                questionnaire.CodeProduitFormation = questionnaireModel.codeProduitFormation;
+                questionnaire.DataJson = JsonConvert.SerializeObject(questionnaireModel.listQuestObj);
+                questionnaire.Description = questionnaireModel.description;
+                questionnaire.EtatQuestionnaire = questionnaireModel.etatQuestionnaire;
+                questionnaire.TitreQuestionnaire = questionnaireModel.titreQuestionnaire;
+                _context.Questionnaire.Add(questionnaire);
+            }
+
             _context.SaveChanges();
         }
         [HttpPost]
@@ -66,7 +81,7 @@ namespace OPS2020.Controllers
             QuestionnaireModel questionnaire = new QuestionnaireModel();
             QuestionOBJ questionOBJ = new QuestionOBJ();
             questionnaire = HttpContext.Session.Get<QuestionnaireModel>("Quest");
-            questionOBJ = questionnaire.questionsObj.FirstOrDefault(q => q.questionId == codeQuestion);
+            questionOBJ = questionnaire.listQuestObj.FirstOrDefault(q => q.questionId == codeQuestion);
             return Json(new { Data = questionOBJ });
         }
         [HttpPost]
@@ -77,18 +92,32 @@ namespace OPS2020.Controllers
             
             questionnaire = HttpContext.Session.Get<QuestionnaireModel>("Quest");
             questionOBJ = JsonConvert.DeserializeObject<QuestionOBJ>(query);
-            questionnaire.questionsObj.Add(questionOBJ);
+            questionnaire.listQuestObj.Add(questionOBJ);
 
             return Json(new { Data = questionOBJ });
         }
-        [HttpPost]
-        public async Task<IActionResult> GetQuestionnaire(string codeQuestion)
+        [HttpGet]
+        public async Task<IActionResult> ModifierQuestionnnaire(QuestionnaireModel questionnaireModel)
         {
-            QuestionnaireModel questionnaire = new QuestionnaireModel();
-            QuestionOBJ questionOBJ = new QuestionOBJ();
-            questionnaire = HttpContext.Session.Get<QuestionnaireModel>("Quest");
-            questionOBJ = questionnaire.questionsObj.FirstOrDefault(q => q.questionId == codeQuestion);
-            return Json(new { Data = questionOBJ });
+            questionnaireModel= HttpContext.Session.Get<QuestionnaireModel>("Questionnaire");
+            return View("Quest", questionnaireModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetQuestionnaireById(string query)
+        {
+            QuestionnaireModel questionnaireModel = new QuestionnaireModel();
+            Questionnaire questionnaire = new Questionnaire();
+            questionnaire = _context.Questionnaire.FirstOrDefault(q => q.IdQuestionnaire == int.Parse(query));
+            questionnaireModel.codeProduitFormation = questionnaire.CodeProduitFormation;
+            questionnaireModel.dataJson = questionnaire.DataJson;
+            questionnaireModel.description = questionnaire.Description;
+            questionnaireModel.etatQuestionnaire = questionnaire.EtatQuestionnaire;
+            questionnaireModel.questionnaireId = questionnaire.IdQuestionnaire;
+            questionnaireModel.listQuestObj = JsonConvert.DeserializeObject<List<QuestionOBJ>>(questionnaire.DataJson);
+            questionnaireModel.titreQuestionnaire = questionnaire.TitreQuestionnaire;
+            HttpContext.Session.Set<QuestionnaireModel>("Questionnaire", questionnaireModel);
+            //return RedirectToAction("ModifierQuestionnnaire", "OPS");
+            return Json(new { result = "Redirect", url = Url.Action("ModifierQuestionnnaire", "OPS") });
         }
 
         public void SetCookie(string key, string value, int? expireTime)

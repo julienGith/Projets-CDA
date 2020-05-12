@@ -73,7 +73,7 @@
     <div class="row">
         <div id="divListQ">
             <div class="card">
-                <div class="card-header">Liste des questionnaires<a class="right" onclick='MyFunction(); return false;'>Nouveau formulaire</a></div>
+                <div class="card-header">Liste des questionnaires<form asp-controller="OPS" asp-action="Etape0" method="post"><input method="post" type="submit" value="Nouveau formulaire" class="right" /></form></div>
                 <div class="card-body">
                     <table id="listQTable" class="table">
                     </table>
@@ -84,11 +84,13 @@
 </div>
 
 <script type="text/javascript">
+    var C = console.log;
     $(document).ready(function () {
         var produit = null;
         var codeProduit = '';
         var model = null;
         var quest = null;
+
         $("#divListQ").hide();
         $("#divProduitDetail").hide();
         $("#listVide").hide();
@@ -245,15 +247,16 @@
                                 "<span class='navbar-toggler-icon'></span></button><div class='collapse navbar-collapse' id='navbarSupportedContent" +
                                 value.idQuestionnaire + "'>" +
                                     "<ul class='navbar-nav mr-auto'>"+
-                                        "<li class='nav-item'>"+
-                                "<a class= 'nav-link' href='#'> Modifier <span class='sr-only'>(current)</span></a>"+
+                                "<li class='nav-item'>" +
+                                "<form asp-controller='OPS' asp-action='ModifierQuestionnnaire' method='post'><input method='post' type='submit' value='modifier'/></form>"+
+                                "<a class= 'nav-link .modifier' id=" + value.idQuestionnaire + 'modif' +" href='#'> Modifier <span class='sr-only'>(current)</span></a>"+
                                         "</li>"+
                                     "<li class='nav-item'>" +
                                 "<a class= 'nav-link' href='#' onclick='MyFunction(" +
                                 value.idQuestionnaire + "); return false;'>Copier</a>"+
                                     "</li>" +
                                     "<li class='nav-item'>"+
-                                "<a class= 'nav-link' href='#' onclick='MyFunction(" +
+                                "<a class= 'nav-link' href='#' onclick='GetQuestionnaire(" +
                                 value.idQuestionnaire + "); return false;'>Visualiser</a> "+
                                         "</li> "+
                                 "<li class= 'nav-item'> "+
@@ -325,6 +328,16 @@
         getSigleByLibel(textSelection);
         $("#targetUL2").remove();
     }
+
+    $(document.body).on('click', '.modifier', function () {
+        C("Click modifier")
+        var qId = ExtraireIdQuestionnaire($(this).attr("id"));
+        GetQuestionnaire(qId);
+        window.location.href = '@Url.Action("ModifierQuestionnnaire", "OPS")';
+    });
+    $(document.body).on('click', '.preview', function (e) {
+
+    });
     function LettreSeuleument(query = '') {
         var letters = /^[A-Za-z]+$/;
         if (query.match(letters)) {
@@ -335,4 +348,34 @@
             return false;
         }
     }
+    function ExtraireIdQuestionnaire(Id = '') {
+
+        if (Id.match(/(\d+)/)) {
+            var code = '';
+            code = Id.match(/(\d+)/);
+            return code[0];
+        }
+        else {
+
+            return false;
+        }
+    }
+    function GetQuestionnaire(qId) {
+        C(qId);
+        $.ajax({
+            url: '@Url.Action("GetQuestionnaireById", "OPS")',
+            data: { "query": qId },
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                if (response.result == 'Redirect')
+                    window.location = response.url;
+            },
+            error: function (xhr, status, error) {
+
+            }
+        });
+
+    }
+
 </script>
