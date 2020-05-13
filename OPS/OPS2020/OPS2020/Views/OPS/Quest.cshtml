@@ -188,6 +188,7 @@
             if ($("#idQuestionnaire").data("count") != 0) {
                 C("Chargement questionnaire");
                 questionnaire = @Html.Raw(Json.Serialize(Model));
+                // Remplissage propriétés du questionnaire
                 $("#titreTxtB").val(questionnaire.titreQuestionnaire);
                 $("#descriptionTxtA").val(questionnaire.description);
                 $("#formName").html(questionnaire.titreQuestionnaire);
@@ -195,6 +196,7 @@
                 C(questionnaire);
                 questionnaire.listQuestObj = filter_array_values(questionnaire.listQuestObj);
                 C("liste questionOBJ", questionnaire.listQuestObj);
+                // Boucle chargement question
                 for (let x of questionnaire.listQuestObj) {
                     C("Boucle chargement");
                     CreerQuestion(x);
@@ -216,6 +218,7 @@
                     AppendPrev(x);
                     x.listUserItems = filter_array_values(x.listUserItems);
                     C("liste usersItem", x.listUserItems);
+                    // Boucle Chargement des items de la question en cours
                     for (let y of x.listUserItems) {
                         C("Boucle chargement usertItems");
                         C("UserItem", y);
@@ -236,7 +239,6 @@
                             $(lblPrev).append(y.intitule);
                             $(txtBintituleId).val(y.intitule);
                                 C("Intitule", y.intitule);
-                                //CreerItemPreview(x);
                             })
                         }
                     }
@@ -991,8 +993,6 @@
                             $(idLabel).children().prop('required', true);
                         }
                     });
-
-
                 }
                 else {
                     C("Liste UserItems", questionObj.listUserItems);
@@ -1061,8 +1061,9 @@
                     });
                     }
                     else {
-                        C("Liste UserItems", questionObj.listUserItems);
-                    for (var i = 1; i < questionObj.listUserItems.length; i++) {
+                    C("Liste UserItems", questionObj.listUserItems);
+                    questionObj.listUserItems = filter_array_values(questionObj.listUserItems);
+                    for (var i = 0; i < questionObj.listUserItems.length; i++) {
                         var userItem = new UserItem();
                         var item = new Item();
                         userItem = questionObj.listUserItems[i];
@@ -1087,8 +1088,6 @@
 
                 }
             }
-            //questionObj.listUserItems.pop(i=> i.id === userItem.id);
-
             C("Liste UserItems après ajout :", questionObj.listUserItems);
         }
         // Génère le code html pour l'aperçu de la question
