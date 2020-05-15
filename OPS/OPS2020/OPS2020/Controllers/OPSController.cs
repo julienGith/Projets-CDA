@@ -102,6 +102,23 @@ namespace OPS2020.Controllers
             questionnaireModel= HttpContext.Session.Get<QuestionnaireModel>("Questionnaire");
             return View("Quest", questionnaireModel);
         }
+        [HttpGet]
+        public async Task<IActionResult> PreviewQuestionnnaire(QuestionnaireModel questionnaireModel)
+        {
+            questionnaireModel = HttpContext.Session.Get<QuestionnaireModel>("Questionnaire");
+            return View("Quest", questionnaireModel);
+        }
+        [HttpPost]
+        public void CopyQuestionnaireById(string query)
+        {
+            QuestionnaireModel questionnaireModel = new QuestionnaireModel();
+            Questionnaire questionnaire = new Questionnaire();
+            questionnaire = _context.Questionnaire.FirstOrDefault(q => q.IdQuestionnaire == int.Parse(query));
+            questionnaire.IdQuestionnaire = null;
+            _context.Questionnaire.Add(questionnaire);
+            _context.SaveChanges();
+            //return Json(new { result = "Redirect", url = Url.Action("ModifierQuestionnnaire", "OPS") });
+        }
         [HttpPost]
         public async Task<IActionResult> GetQuestionnaireById(string query)
         {
@@ -116,8 +133,23 @@ namespace OPS2020.Controllers
             questionnaireModel.listQuestObj = JsonConvert.DeserializeObject<List<QuestionOBJ>>(questionnaire.DataJson);
             questionnaireModel.titreQuestionnaire = questionnaire.TitreQuestionnaire;
             HttpContext.Session.Set<QuestionnaireModel>("Questionnaire", questionnaireModel);
-            //return RedirectToAction("ModifierQuestionnnaire", "OPS");
             return Json(new { result = "Redirect", url = Url.Action("ModifierQuestionnnaire", "OPS") });
+        }
+        [HttpPost]
+        public async Task<IActionResult> PreviewQuestionnaireById(string query)
+        {
+            QuestionnaireModel questionnaireModel = new QuestionnaireModel();
+            Questionnaire questionnaire = new Questionnaire();
+            questionnaire = _context.Questionnaire.FirstOrDefault(q => q.IdQuestionnaire == int.Parse(query));
+            questionnaireModel.codeProduitFormation = questionnaire.CodeProduitFormation;
+            questionnaireModel.dataJson = questionnaire.DataJson;
+            questionnaireModel.description = questionnaire.Description;
+            questionnaireModel.etatQuestionnaire = questionnaire.EtatQuestionnaire;
+            questionnaireModel.questionnaireId = questionnaire.IdQuestionnaire;
+            questionnaireModel.listQuestObj = JsonConvert.DeserializeObject<List<QuestionOBJ>>(questionnaire.DataJson);
+            questionnaireModel.titreQuestionnaire = questionnaire.TitreQuestionnaire;
+            HttpContext.Session.Set<QuestionnaireModel>("Questionnaire", questionnaireModel);
+            return Json(new { result = "Redirect", url = Url.Action("PreviewQuestionnnaire", "OPS") });
         }
 
         public void SetCookie(string key, string value, int? expireTime)

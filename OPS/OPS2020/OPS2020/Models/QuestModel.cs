@@ -81,6 +81,7 @@ namespace OPS2020.Models
         {
             listQuestObj = new HashSet<QuestionOBJ>();
         }
+        public bool ModePreview { get; set; }
         public int? questionnaireId { get; set; }
         public string titreQuestionnaire { get; set; }
         public string description { get; set; }

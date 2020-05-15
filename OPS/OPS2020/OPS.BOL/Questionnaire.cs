@@ -5,7 +5,7 @@ namespace OPS.BOL
 {
     public partial class Questionnaire
     {
-        public int IdQuestionnaire { get; set; }
+        public int? IdQuestionnaire { get; set; }
         public string TitreQuestionnaire { get; set; }
         public string Description { get; set; }
         public string DataJson { get; set; }

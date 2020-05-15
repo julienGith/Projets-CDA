@@ -184,7 +184,6 @@
         C(@Model.questionnaireId);
         //Chargement du questionnaire
         $(document.body).ready(function () {
-
             if ($("#idQuestionnaire").data("count") != 0) {
                 C("Chargement questionnaire");
                 questionnaire = @Html.Raw(Json.Serialize(Model));
@@ -248,7 +247,6 @@
         //if (document.cookie) {
         //    C(document.cookie);
         //}
-
         // Evènement sur les controls html générés
         // Animation flêche dépliage propriétés de la question
         $(document.body).on('click', '.rotate', function () { $(this).toggleClass("down"); });

@@ -85,9 +85,9 @@
 
 <script type="text/javascript">
     var C = console.log;
+    var codeProduit = '';
     $(document).ready(function () {
         var produit = null;
-        var codeProduit = '';
         var model = null;
         var quest = null;
 
@@ -224,64 +224,7 @@
                 }
         });
     }
-    function GetListQuestionnaire(query) {
-         $.ajax({
-                url: '@Url.Action("GetListQuestionnaire", "AutoComplete")',
-                data: { "query": query },
-                type: 'POST',
-                dataType: 'json',
-                success: function (response) {
-                    if (response.data.length!= 0) {
-                        $("#listQTable").find("tr").remove();
-                        $("#listQTable").find("thead").remove();
-                        $("#listQTable").append($("<thead class='thead-light'><tr><th>Titre</th ><th>Description</th><th>Action</th></tr></thead>"));
-                        data = response.data;
-                        quest = response.data;
-                        $.each(data, function (index, value) {
-                            $("#listQTable").append($("<tbody><tr><td width='20%'>" +
-                                value.titreQuestionnaire + "</td><td width='50%'>" +
-                                value.description + "</td><td><nav class='navbar navbar-expand-lg navbar-light bg-light'>" +
-                                "<a class='navbar-brand' href='#'></a>" +
-                                "<button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent" +
-                                value.idQuestionnaire + "' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>" +
-                                "<span class='navbar-toggler-icon'></span></button><div class='collapse navbar-collapse' id='navbarSupportedContent" +
-                                value.idQuestionnaire + "'>" +
-                                    "<ul class='navbar-nav mr-auto'>"+
-                                "<li class='nav-item'>" +
-                                "<form asp-controller='OPS' asp-action='ModifierQuestionnnaire' method='post'><input method='post' type='submit' value='modifier'/></form>"+
-                                "<a class= 'nav-link .modifier' id=" + value.idQuestionnaire + 'modif' +" href='#'> Modifier <span class='sr-only'>(current)</span></a>"+
-                                        "</li>"+
-                                    "<li class='nav-item'>" +
-                                "<a class= 'nav-link' href='#' onclick='MyFunction(" +
-                                value.idQuestionnaire + "); return false;'>Copier</a>"+
-                                    "</li>" +
-                                    "<li class='nav-item'>"+
-                                "<a class= 'nav-link' href='#' onclick='GetQuestionnaire(" +
-                                value.idQuestionnaire + "); return false;'>Visualiser</a> "+
-                                        "</li> "+
-                                "<li class= 'nav-item'> "+
-                                "<a class= 'nav-link' href='#' onclick='MyFunction(" +
-                                value.idQuestionnaire + "); return false;'>Tester</a> "+
-                                        "</li> "+
-                                    "</ul> "+
-                                "</div> "+
-                                "</nav></td></tr></tbody>"));
-                            $("#divListQ").fadeIn(1500);
 
-                        });
-                    }
-                    else {
-                        $("#listQTable").find("tr").remove();
-                        $("#listQTable").find("thead").remove();
-                        $("#divListQ").hide();
-                        $("#listVide").fadeIn(1500);
-                    }
-                },
-                error: function (xhr, status, error) {
-
-                }
-        });
-        }
 
     });
     function getSigleByLibel(query) {
@@ -328,16 +271,6 @@
         getSigleByLibel(textSelection);
         $("#targetUL2").remove();
     }
-
-    $(document.body).on('click', '.modifier', function () {
-        C("Click modifier")
-        var qId = ExtraireIdQuestionnaire($(this).attr("id"));
-        GetQuestionnaire(qId);
-        window.location.href = '@Url.Action("ModifierQuestionnnaire", "OPS")';
-    });
-    $(document.body).on('click', '.preview', function (e) {
-
-    });
     function LettreSeuleument(query = '') {
         var letters = /^[A-Za-z]+$/;
         if (query.match(letters)) {
@@ -360,6 +293,64 @@
             return false;
         }
     }
+    function GetListQuestionnaire(query) {
+         $.ajax({
+                url: '@Url.Action("GetListQuestionnaire", "AutoComplete")',
+                data: { "query": query },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.data.length!= 0) {
+                        $("#listQTable").find("tr").remove();
+                        $("#listQTable").find("thead").remove();
+                        $("#listQTable").append($("<thead class='thead-light'><tr><th>Titre</th ><th>Description</th><th>Action</th></tr></thead>"));
+                        data = response.data;
+                        quest = response.data;
+                        $.each(data, function (index, value) {
+                            $("#listQTable").append($("<tbody><tr><td width='20%'>" +
+                                value.titreQuestionnaire + "</td><td width='50%'>" +
+                                value.description + "</td><td><nav class='navbar navbar-expand-lg navbar-light bg-light'>" +
+                                "<a class='navbar-brand' href='#'></a>" +
+                                "<button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent" +
+                                value.idQuestionnaire + "' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>" +
+                                "<span class='navbar-toggler-icon'></span></button><div class='collapse navbar-collapse' id='navbarSupportedContent" +
+                                value.idQuestionnaire + "'>" +
+                                    "<ul class='navbar-nav mr-auto'>"+
+                                "<li class='nav-item'>" +
+                                "<a class= 'nav-link' href='#' onclick='GetQuestionnaire(" +
+                                value.idQuestionnaire + "); return false;'> Modifier <span class='sr-only'>(current)</span></a>"+
+                                        "</li>"+
+                                    "<li class='nav-item'>" +
+                                "<a class= 'nav-link' href='#' onclick='CopyQuestionnaire(" +
+                                value.idQuestionnaire + "); return false;'>Copier</a>"+
+                                    "</li>" +
+                                    "<li class='nav-item'>"+
+                                "<a class= 'nav-link' href='#' onclick='GetQuestionnaire(" +
+                                value.idQuestionnaire + "); return false;'>Visualiser</a> "+
+                                        "</li> "+
+                                "<li class= 'nav-item'> "+
+                                "<a class= 'nav-link' href='#' onclick='MyFunction(" +
+                                value.idQuestionnaire + "); return false;'>Tester</a> "+
+                                        "</li> "+
+                                    "</ul> "+
+                                "</div> "+
+                                "</nav></td></tr></tbody>"));
+                            $("#divListQ").fadeIn(1500);
+
+                        });
+                    }
+                    else {
+                        $("#listQTable").find("tr").remove();
+                        $("#listQTable").find("thead").remove();
+                        $("#divListQ").hide();
+                        $("#listVide").fadeIn(1500);
+                    }
+                },
+                error: function (xhr, status, error) {
+
+                }
+        });
+        }
     function GetQuestionnaire(qId) {
         C(qId);
         $.ajax({
@@ -377,5 +368,43 @@
         });
 
     }
+    function CopyQuestionnaire(qId) {
+        C(qId);
+        $.ajax({
+            url: '@Url.Action("CopyQuestionnaireById", "OPS")',
+            data: { "query": qId },
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+
+            },
+            error: function (xhr, status, error) {
+
+            }
+        });
+        var query = codeProduit;
+        GetListQuestionnaire(query);
+
+    }
+    function PreviewQuestionnaire(qId) {
+        C(qId);
+        $.ajax({
+            url: '@Url.Action("PreviewQuestionnaireById", "OPS")',
+            data: { "query": qId },
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                if (response.result == 'Redirect')
+                    window.open = response.url;
+            },
+            error: function (xhr, status, error) {
+
+            }
+        });
+        var query = codeProduit;
+        GetListQuestionnaire(query);
+
+    }
+
 
 </script>
