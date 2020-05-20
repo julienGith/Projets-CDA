@@ -82,6 +82,20 @@
         </div>
     </div>
 </div>
+<div id="previewModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Aperçu du questionnaire</h4>
+            </div>
+            <div id="modalPreviewQuest" class="modal-body">
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     var C = console.log;
@@ -325,7 +339,7 @@
                                 value.idQuestionnaire + "); return false;'>Copier</a>"+
                                     "</li>" +
                                     "<li class='nav-item'>"+
-                                "<a class= 'nav-link' href='#' onclick='GetQuestionnaire(" +
+                                "<a class= 'nav-link' href='#' onclick='PreviewQuestionnaire(" +
                                 value.idQuestionnaire + "); return false;'>Visualiser</a> "+
                                         "</li> "+
                                 "<li class= 'nav-item'> "+
@@ -376,14 +390,21 @@
             type: 'POST',
             dataType: 'json',
             success: function (response) {
+                if (response.data != null) {
+                    $(document.body).ready(function () {
+                        var query = codeProduit;
+                        GetListQuestionnaire(query);
+                    });
+                }
 
             },
             error: function (xhr, status, error) {
 
             }
         });
-        var query = codeProduit;
-        GetListQuestionnaire(query);
+        
+
+        
 
     }
     function PreviewQuestionnaire(qId) {
@@ -394,15 +415,15 @@
             type: 'POST',
             dataType: 'json',
             success: function (response) {
-                if (response.result == 'Redirect')
-                    window.open = response.url;
+                data = String(response.data);
+                C(data);
+                $("#modalPreviewQuest").html(data);
+                $("#previewModal").modal('show');
             },
             error: function (xhr, status, error) {
 
             }
         });
-        var query = codeProduit;
-        GetListQuestionnaire(query);
 
     }
 

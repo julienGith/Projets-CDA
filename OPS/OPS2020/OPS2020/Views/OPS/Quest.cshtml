@@ -89,16 +89,17 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
-                    <form class="form-horizontal">
-                        <fieldset>
-                            <legend id="formName">Form Name</legend>
-                            <div id="previewQuestions">
+                    <div id="previewQuestionnaire">
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <legend id="formName">Form Name</legend>
+                                <div id="previewQuestions">
 
 
-                            </div>
-                        </fieldset>
-                    </form>
-
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
 
             </div>
@@ -178,7 +179,8 @@
             titreQuestionnaire: '',
             description: '',
             dataJson: [''],
-            etatQuestionnaire:'',
+            etatQuestionnaire: '',
+            codeHtml:'',
             listQuestObj: ['']
         }
         C(@Model.questionnaireId);
@@ -437,8 +439,10 @@
             questionnaire.codeProduitFormation = 9952;
             questionnaire.etatQuestionnaire = 0;
             questionnaire.dataJson = "vide";
+            let previewQuest = $("#previewQuestionnaire").html();
+            questionnaire.codeHtml = previewQuest
             EnregistrerQuestionnaire(questionnaire);
-            SetCookieQuestionnaire(questionnaire);
+            //SetCookieQuestionnaire(questionnaire);
 
         })
         // création de l'objet questionnaire
@@ -1680,18 +1684,15 @@
             });
         }
 
-
         function filter_array_values(arr) {
             arr = arr.filter(isEligible);
             return arr;
         }
-
         function isEligible(value) {
             if (value !== false || value !== null || value !== 0 || value !== "") {
                 return value;
             }
         }
-
         function getQuestionnaire(id) {
 
         }

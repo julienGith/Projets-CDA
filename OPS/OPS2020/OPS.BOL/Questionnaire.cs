@@ -9,6 +9,7 @@ namespace OPS.BOL
         public string TitreQuestionnaire { get; set; }
         public string Description { get; set; }
         public string DataJson { get; set; }
+        public string CodeHtml { get; set; }
         public int CodeProduitFormation { get; set; }
         public int EtatQuestionnaire { get; set; }
 

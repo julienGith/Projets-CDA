@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OPS.BOL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace OPS2020.Models
 {
+    public class GestionEnquete
+    {
+        CollaborateurAfpa Formateur { get; set; }
+        List<ProduitFormation> produitFormations { get; set; }
+    }
     public class UserItem
     {
         public string id { get; set; }
@@ -86,6 +92,7 @@ namespace OPS2020.Models
         public string titreQuestionnaire { get; set; }
         public string description { get; set; }
         public string dataJson { get; set; }
+        public string codeHtml { get; set; }
         public int codeProduitFormation { get; set; }
         public int etatQuestionnaire { get; set; }
         [JsonProperty(PropertyName = "listQuestObj")]
