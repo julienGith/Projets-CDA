@@ -7,11 +7,7 @@ using System.Threading.Tasks;
 
 namespace OPS2020.Models
 {
-    public class GestionEnquete
-    {
-        CollaborateurAfpa Formateur { get; set; }
-        List<ProduitFormation> produitFormations { get; set; }
-    }
+
     public class UserItem
     {
         public string id { get; set; }

@@ -154,56 +154,42 @@ namespace OPS2020.Controllers
             Response.Cookies.Append(key, value, option);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Identification(GestionEnquete gestionEnquete)
-        {
-            if (HttpContext.Session.Get<Etape0Model>("etape0") == null)
-            {
-                CollaborateurAfpa Formateur = _context.CollaborateurAfpa.Include(c => c.CodeTitreCiviliteNavigation).Where(c => c.MatriculeCollaborateurAfpa == "96GB011").First();
-                gestionEnquete.
-                BeneficiaireOffreFormation infosStagiaire = await _context.BeneficiaireOffreFormation
-                    .Include(b => b.MatriculeBeneficiaireNavigation)
-                    .Include(b => b.OffreFormationIdN)
-                    //.ThenInclude(p=>p.CodeProduitFormationNavigation)
-                    //.ThenInclude(t=>t.TitreProfessionnelN)
-                    //.ThenInclude(cp=>cp.Ccp)
-                    .Where(bo => bo.MatriculeBeneficiaire == "19071529"
-                && bo.IdEtablissement == "19011" && bo.IdOffreFormation == 19017).SingleAsync();
-                Beneficiaire beneficiaire = await _context.Beneficiaire.Include(b => b.CodeTitreCiviliteNavigation).Where(b => b.MatriculeBeneficiaire == "19071529").FirstAsync();
-                etape0 = new Etape0Model
-                {
-                    IdOffreFormation = infosStagiaire.IdOffreFormation,
-                    LibelleOffreFormation = infosStagiaire.OffreFormationIdN.LibelleOffreFormation,
-                    PrenomNomBeneficiaire = infosStagiaire.MatriculeBeneficiaireNavigation.PrenomBeneficiaire + " " + infosStagiaire.MatriculeBeneficiaireNavigation.NomBeneficiaire,
-                    MatriculeCollaborateurAfpa = infosStagiaire.OffreFormationIdN.MatriculeCollaborateurAfpa,
-                    MatriculeBeneficiaire = infosStagiaire.MatriculeBeneficiaire,
-                    NomBeneficiaire = infosStagiaire.MatriculeBeneficiaireNavigation.NomBeneficiaire,
-                    PrenomBeneficiaire = infosStagiaire.MatriculeBeneficiaireNavigation.PrenomBeneficiaire,
-                    TitreCivilitéBeneficiaire = beneficiaire.CodeTitreCiviliteNavigation.TitreCiviliteComplet,
-                    DateDebutOffreFormation = infosStagiaire.OffreFormationIdN.DateDebutOffreFormation,
-                    DateFinOffreFormation = infosStagiaire.OffreFormationIdN.DateFinOffreFormation,
-                };
-                HttpContext.Session.Set<Etape0Model>("etape0", etape0);
-            }
-            else
-            {
-                etape0 = HttpContext.Session.Get<Etape0Model>("etape0");
-            }
-            return View(etape0);
-        }
         [HttpPost]
-        public async Task<IActionResult> Identification(Etape0Model etape0, string BtnNext)
+        public IActionResult GetListeOffreFormation(string query)
         {
-            etape0 = HttpContext.Session.Get<Etape0Model>("etape0");
-            if (BtnNext != null)
+            //matriculeFormateur = "96GB011";
+            GestionEnqueteModel gestionEnqueteModel = new GestionEnqueteModel();
+            List<OffreFormation> offreFormations = new List<OffreFormation>();
+            if (HttpContext.Session.Get<Etape0Model>("gestionEnqueteEtape1") == null)
             {
-                if (ModelState.IsValid)
+                
+                offreFormations = _context.OffreFormation.Include(o => o.CampagneMail).Where(c => c.MatriculeCollaborateurAfpa == "96GB011").ToList();
+                foreach (var item in offreFormations)
                 {
-                    HttpContext.Session.Set<Etape0Model>("etape0", etape0);
-
+                    OffreFormationModel offreFormationModel = new OffreFormationModel();
+                    offreFormationModel.CampagneMail = item.CampagneMail;
+                    offreFormationModel.BeneficiaireOffreFormation = item.BeneficiaireOffreFormation;
+                    offreFormationModel.CodeProduitFormation = item.CodeProduitFormation;
+                    offreFormationModel.DateFinOffreFormation = item.DateFinOffreFormation;
+                    offreFormationModel.LibelleOffreFormation = item.LibelleOffreFormation;
+                    offreFormationModel.LibelleReduitOffreFormation = item.LibelleReduitOffreFormation;
+                    gestionEnqueteModel.OffreFormationModels.Add(offreFormationModel);
                 }
+                //HttpContext.Session.Set<GestionEnqueteModel>("gestionEnqueteEtape1", gestionEnqueteModel);
             }
-            return RedirectToAction("Competences");
+
+            return Json(new { Data = gestionEnqueteModel.OffreFormationModels });
+        }
+        [HttpGet]
+        public async Task<IActionResult> GestionEnquete(GestionEnqueteModel gestionEnqueteModel)
+        {
+            if (HttpContext.Session.Get<GestionEnqueteModel>("gestionEnquete")!=null)
+            {
+                gestionEnqueteModel = HttpContext.Session.Get<GestionEnqueteModel>("gestionEnquete");
+            }
+            
+
+            return View("gestionEnquete", gestionEnqueteModel);
         }
 
     }
