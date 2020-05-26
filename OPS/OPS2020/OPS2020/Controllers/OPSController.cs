@@ -36,7 +36,7 @@ namespace OPS2020.Controllers
         [HttpGet]
         public async Task<IActionResult> Quest(Etape0Model etape0, QuestionnaireModel questionnaireModel)
         {
-            if (HttpContext.Session.Get<Etape0Model>("etape0")!=null)
+            if (HttpContext.Session.Get<Etape0Model>("etape0") != null)
             {
                 etape0 = HttpContext.Session.Get<Etape0Model>("etape0");
                 questionnaireModel.codeProduitFormation = etape0.CodeProduitFormation;
@@ -88,7 +88,7 @@ namespace OPS2020.Controllers
         {
             QuestionnaireModel questionnaire = new QuestionnaireModel();
             QuestionOBJ questionOBJ = new QuestionOBJ();
-            
+
             questionnaire = HttpContext.Session.Get<QuestionnaireModel>("Quest");
             questionOBJ = JsonConvert.DeserializeObject<QuestionOBJ>(query);
             questionnaire.listQuestObj.Add(questionOBJ);
@@ -99,7 +99,7 @@ namespace OPS2020.Controllers
         [HttpGet]
         public async Task<IActionResult> ModifierQuestionnnaire(QuestionnaireModel questionnaireModel)
         {
-            questionnaireModel= HttpContext.Session.Get<QuestionnaireModel>("Questionnaire");
+            questionnaireModel = HttpContext.Session.Get<QuestionnaireModel>("Questionnaire");
             return View("Quest", questionnaireModel);
         }
         // Duplication du questionnaire sélectionné dans la list à l'étape 0
@@ -160,20 +160,49 @@ namespace OPS2020.Controllers
             //matriculeFormateur = "96GB011";
             GestionEnqueteModel gestionEnqueteModel = new GestionEnqueteModel();
             List<OffreFormation> offreFormations = new List<OffreFormation>();
+            List<CampagneMail> CampagneMails = new List<CampagneMail>();
+
             if (HttpContext.Session.Get<Etape0Model>("gestionEnqueteEtape1") == null)
             {
-                
-                offreFormations = _context.OffreFormation.Include(o => o.CampagneMail).Where(c => c.MatriculeCollaborateurAfpa == "96GB011").ToList();
+                offreFormations = _context.OffreFormation.Include(o => o.CampagneMail).ThenInclude(o => o.PlanificationCampagneMail).Where(c => c.MatriculeCollaborateurAfpa == "96GB011").ToList();
                 foreach (var item in offreFormations)
                 {
                     OffreFormationModel offreFormationModel = new OffreFormationModel();
-                    offreFormationModel.CampagneMail = item.CampagneMail;
+
                     offreFormationModel.BeneficiaireOffreFormation = item.BeneficiaireOffreFormation;
                     offreFormationModel.CodeProduitFormation = item.CodeProduitFormation;
                     offreFormationModel.DateFinOffreFormation = item.DateFinOffreFormation;
                     offreFormationModel.LibelleOffreFormation = item.LibelleOffreFormation;
                     offreFormationModel.LibelleReduitOffreFormation = item.LibelleReduitOffreFormation;
+                    offreFormationModel.CampagneMail = item.CampagneMail;
                     gestionEnqueteModel.OffreFormationModels.Add(offreFormationModel);
+
+                    //foreach (var campagne in item.CampagneMail)
+                    //{
+                    //    CampagneMailModel campagneMailModel = new CampagneMailModel();
+                    //    campagneMailModel.DateCreation = campagne.DateCreation;
+                    //    campagneMailModel.Description = campagne.Description;
+                    //    campagneMailModel.IdCampagneMail = campagne.IdCampagneMail;
+                    //    campagneMailModel.IdEtablissement = campagne.IdEtablissement;
+                    //    campagneMailModel.IdOffreFormation = campagne.IdOffreFormation;
+                    //    campagneMailModel.IdQuestionnaire = campagne.IdQuestionnaire;
+                    //    offreFormationModel.CampagneMailModel.Add(campagneMailModel);
+
+                    //    foreach (var planification in campagne.PlanificationCampagneMail)
+                    //    {
+                    //        PlanificationCampagneMailModel planificationCampagneMailModel = new PlanificationCampagneMailModel();
+                    //        planificationCampagneMailModel.IdCampagneMail = planification.IdCampagneMail;
+                    //        //planificationCampagneMailModel.IdCampagneMailNavigation = planification.IdCampagneMailNavigation;
+                    //        planificationCampagneMailModel.IdPlanificationCampagneMail = planification.IdPlanificationCampagneMail;
+                    //        planificationCampagneMailModel.NombreDestinataires = planification.NombreDestinataires;
+                    //        planificationCampagneMailModel.NombreEnvois = planification.NombreEnvois;
+                    //        planificationCampagneMailModel.NombreReponses = planification.NombreReponses;
+                    //        planificationCampagneMailModel.Type = planification.Type;
+                    //        campagneMailModel.PlanificationCampagneMailModel.Add(planificationCampagneMailModel);
+                    //    }
+                    //    campagneMailModel.IdQuestionnaire = campagne.IdQuestionnaire;
+                    //}
+
                 }
                 //HttpContext.Session.Set<GestionEnqueteModel>("gestionEnqueteEtape1", gestionEnqueteModel);
             }
@@ -183,14 +212,65 @@ namespace OPS2020.Controllers
         [HttpGet]
         public async Task<IActionResult> GestionEnquete(GestionEnqueteModel gestionEnqueteModel)
         {
-            if (HttpContext.Session.Get<GestionEnqueteModel>("gestionEnquete")!=null)
+            //GestionEnqueteModel gestionEnqueteModel = new GestionEnqueteModel();
+            List<OffreFormation> offreFormations = new List<OffreFormation>();
+            List<CampagneMail> CampagneMails = new List<CampagneMail>();
+            if (HttpContext.Session.Get<GestionEnqueteModel>("gestionEnquete") != null)
             {
                 gestionEnqueteModel = HttpContext.Session.Get<GestionEnqueteModel>("gestionEnquete");
             }
-            
+            if (HttpContext.Session.Get<Etape0Model>("gestionEnqueteEtape1") == null)
+            {
+                offreFormations = _context.OffreFormation.Include(o => o.CampagneMail).ThenInclude(o => o.PlanificationCampagneMail).Where(c => c.MatriculeCollaborateurAfpa == "96GB011").ToList();
+                offreFormations.Reverse();
+                foreach (var item in offreFormations)
+                {
+                    OffreFormationModel offreFormationModel = new OffreFormationModel();
+
+                    offreFormationModel.BeneficiaireOffreFormation = item.BeneficiaireOffreFormation;
+                    offreFormationModel.CodeProduitFormation = item.CodeProduitFormation;
+                    offreFormationModel.DateFinOffreFormation = item.DateFinOffreFormation;
+                    offreFormationModel.LibelleOffreFormation = item.LibelleOffreFormation;
+                    offreFormationModel.LibelleReduitOffreFormation = item.LibelleReduitOffreFormation;
+                    offreFormationModel.CampagneMail = item.CampagneMail;
+                    gestionEnqueteModel.OffreFormationModels.Add(offreFormationModel);
+
+
+                }
+                //HttpContext.Session.Set<GestionEnqueteModel>("gestionEnqueteEtape1", gestionEnqueteModel);
+            }
+
 
             return View("gestionEnquete", gestionEnqueteModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> GetListBeneficiaire(string codeProduitFormation)
+        {
+            GestionEnqueteModel gestionEnqueteModel = new GestionEnqueteModel();
+            OffreFormation offreFormation = new OffreFormation();
+            BeneficiaireModel beneficiaireModel = new BeneficiaireModel();
+            offreFormation = _context.OffreFormation.Where(c => c.CodeProduitFormation == int.Parse(codeProduitFormation)).Include(o => o.BeneficiaireOffreFormation).ThenInclude(b=>b.MatriculeBeneficiaireNavigation).ThenInclude(b=>b.CodeTitreCiviliteNavigation).First();
+            foreach (var item in offreFormation.BeneficiaireOffreFormation)
+            {
+                beneficiaireModel.MailBeneficiaire = item.MatriculeBeneficiaireNavigation.MailBeneficiaire;
+                beneficiaireModel.MatriculeBeneficiaire = item.MatriculeBeneficiaireNavigation.MatriculeBeneficiaire;
+                beneficiaireModel.NomBeneficiaire = item.MatriculeBeneficiaireNavigation.NomBeneficiaire;
+                beneficiaireModel.PrenomBeneficiaire = item.MatriculeBeneficiaireNavigation.PrenomBeneficiaire;
+                beneficiaireModel.TitreCivilite = item.MatriculeBeneficiaireNavigation.CodeTitreCiviliteNavigation.TitreCiviliteComplet;
+
+                gestionEnqueteModel.BeneficiaireModels.Add(beneficiaireModel);
+            }
+            HttpContext.Session.Set<GestionEnqueteModel>("GestionEnqueteModel", gestionEnqueteModel);
+            return Json(new { result = "Redirect", url = Url.Action("CampagneEtape1", "OPS") });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CampagneEtape1(GestionEnqueteModel gestionEnqueteModel)
+        {
+            gestionEnqueteModel = HttpContext.Session.Get<GestionEnqueteModel>("GestionEnqueteModel");
+            return View("CampagneMailEtape1", gestionEnqueteModel);
+        }
     }
+
 }

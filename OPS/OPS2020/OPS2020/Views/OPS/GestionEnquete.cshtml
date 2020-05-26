@@ -4,11 +4,42 @@
 }
 
 <h2>Nouvelle campagne de sondage : Choix de la formation</h2>
+
 <div class="row">
+    
     <div id="divListO">
         <div class="card">
             <div class="card-body">
                 <table id="listOTable" class="table">
+                    <thead class="thead-light">
+                        <tr><th>ID Offre</th><th>Désignation</th><th>Date de fin</th><th colspan="4">Les enquêtes planifiées</th></tr>
+                    </thead>
+                    @foreach (var item in Model.OffreFormationModels)
+                    {
+                <tr>
+                    <td> @item.CodeProduitFormation</td>
+                    <td> @item.LibelleOffreFormation</td>
+                    <td> @item.DateFinOffreFormation.ToString("dd. MM. yyyy")</td>
+                    @if (item.CampagneMail.Count == 0)
+                    {
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td><input type="button" id="choisirBtn" data-codeProduitFormation="@item.CodeProduitFormation" value="Choisir"/></td>
+                    }
+                    @foreach (var campagne in item.CampagneMail)
+                    {
+                        
+                        @foreach (var plan in campagne.PlanificationCampagneMail.Reverse())
+                        {
+                            <td>@plan.DateRealisation.Value.Date.Day. @plan.DateRealisation.Value.Date.Month. @plan.DateRealisation.Value.Date.Year</td>
+
+                        }
+                        <td>Déjà Planifiée</td>
+                    }
+
+                </tr>
+                    }
                 </table>
             </div>
         </div>
@@ -16,54 +47,33 @@
 </div>
 
 
+
+
+
+
 <script>
     var query = "96GB011";
-(function GetListOffre(query) {
+    $(document.body).ready(function () {
+       var C = console.log;
+        $("#choisirBtn").click(function() {
+
+            var codeProduitFormation = $("#choisirBtn").attr("data-codeProduitFormation");
+            C(codeProduitFormation);
             $.ajax({
-                url: '@Url.Action("GetListeOffreFormation", "OPS")',
-                data: { "query": "96GB011"},
+                url: '@Url.Action("GetListBeneficiaire", "OPS")',
+                data: { "codeProduitFormation": codeProduitFormation },
                 type: 'POST',
                 dataType: 'json',
                 success: function (response) {
-                    if (response.data.length != 0) {
-                        $("#listOTable").find("tr").remove();
-                        $("#listOTable").find("thead").remove();
-                        $("#listOTable").append($("<thead class='thead-light'><tr><th>ID Offre</th><th>Désignation</th><th>Date de fin</th><th>Les enquêtes planifiées</th></tr></thead>"));
-                        data = response.data;
-                        $.each(data, function (index, value) {
-                            $("#listOTable").append($("<tbody><tr><td width='20%'>" +
-                                value.codeProduitFormation + "</td><td width='50%'>" +
-                                value.libelleOffreFormation + "</td><td><nav class='navbar navbar-expand-lg navbar-light bg-light'>" +
-                                value.dateFinOffreFormation + "</td><td><nav class='navbar navbar-expand-lg navbar-light bg-light'>" +
-                                value.campagneMail.dateCreation + "</td><td><nav class='navbar navbar-expand-lg navbar-light bg-light'>" +
-                                value.campagneMail.dateCreation + "</td><td><nav class='navbar navbar-expand-lg navbar-light bg-light'>" +
-                                "<a class='navbar-brand' href='#'></a>" +
-                                "<button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent" +
-                                value.codeProduitFormation + "' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>" +
-                                "<span class='navbar-toggler-icon'></span></button><div class='collapse navbar-collapse' id='navbarSupportedContent'>" +
-                                "<ul class='navbar-nav mr-auto'>" +
-                                "<li class='nav-item'>" +
-                                "<a class= 'nav-link' href='#' onclick='GetQuestionnaire(); return false;'>Choisir<span class='sr-only'>(current)</span></a>" +
-                                "</li>" +
-                                "</ul> " +
-                                "</div> " +
-                                "</nav></td></tr></tbody>"));
-                            $("#divListO").fadeIn(1500);
-
-                        });
-                    }
-                    else {
-                        $("#listOTable").find("tr").remove();
-                        $("#listOTable").find("thead").remove();
-                        $("#divListO").hide();
-                        $("#listVide").fadeIn(1500);
-                    }
+                    if (response.result == 'Redirect')
+                        window.location = response.url;
                 },
                 error: function (xhr, status, error) {
 
                 }
+            })
 
-            }) })();
-
+        });
+    });
 
 </script>
