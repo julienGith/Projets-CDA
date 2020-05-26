@@ -3,5 +3,37 @@
     ViewData["Title"] = "CampagneMailEtape1";
 }
 
-<h2>Rédigez une description de l'enquête</h2>
 
+    <form class="form-horizontal">
+        <fieldset>
+
+            <legend>Rédigez une description de l'enquête</legend>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="textarea">Description de l'enquête</label>
+                <div class="col-md-4">
+                    <textarea class="form-control" id="textarea" name="textarea">Description</textarea>
+                </div>
+            </div>
+
+        </fieldset>
+        <div class="row">
+            <div id="divListB">
+                <div class="card">
+                    <div class="card-header">Destinataires de la campagne de mailing</div>
+                    <div class="card-body">
+                        <table id="listBTable" class="table">
+@foreach (var item in Model.BeneficiaireModels)
+{
+    <tr>
+        <td>@item.NomBeneficiaire @item.PrenomBeneficiaire (@item.MatriculeBeneficiaire)</td>
+        <td><input type="button" id="supprBtn" data-matriculeBeneficiaire="@item.MatriculeBeneficiaire" class="btn btn-danger" value="Supprimer"/></td>
+    </tr>
+}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </form>

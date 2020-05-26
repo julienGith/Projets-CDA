@@ -273,13 +273,13 @@
             }
         });
     }
-    function appendTextToTextBox1() {
+    function appendTextToTextBox1(e) {
         var textSelection = e.innerText;
         $("#sigleTxtB").val(textSelection);
         getLibelBySigle(textSelection);
         $("#targetUL1").remove();
     }
-    function appendTextToTextBox2() {
+    function appendTextToTextBox2(e) {
         var textSelection = e.innerText;
         $("#libelTxtB").val(textSelection);
         getSigleByLibel(textSelection);
