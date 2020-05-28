@@ -7,7 +7,7 @@
 
 <div class="row">
     
-    <div id="divListO">
+    <div id="divListO" class="col">
         <div class="card">
             <div class="card-body">
                 <table id="listOTable" class="table">
@@ -20,17 +20,17 @@
                     <td> @item.CodeProduitFormation</td>
                     <td> @item.LibelleOffreFormation</td>
                     <td> @item.DateFinOffreFormation.ToString("dd. MM. yyyy")</td>
-                    @if (item.CampagneMail.Count == 0)
+                    @if (item.CampagneMailModel.Count == 0)
                     {
                         <td>---</td>
                         <td>---</td>
                         <td>---</td>
-                        <td><input type="button" id="choisirBtn" data-codeProduitFormation="@item.CodeProduitFormation" value="Choisir"/></td>
+                        <td><input type="button" id="choisirBtn" data-idOffreFormation="@item.IdOffreFormation" data-idEtablissement="@item.IdEtablissement" value="Choisir"/></td>
                     }
-                    @foreach (var campagne in item.CampagneMail)
+                    @foreach (var campagne in item.CampagneMailModel)
                     {
                         
-                        @foreach (var plan in campagne.PlanificationCampagneMail.Reverse())
+                        @foreach (var plan in campagne.PlanificationCampagneMailModel.Reverse())
                         {
                             <td>@plan.DateRealisation.Value.Date.Day. @plan.DateRealisation.Value.Date.Month. @plan.DateRealisation.Value.Date.Year</td>
 
@@ -53,15 +53,19 @@
 
 <script>
     var query = "96GB011";
-    $(document.body).ready(function () {
-       var C = console.log;
-        $("#choisirBtn").click(function() {
 
-            var codeProduitFormation = $("#choisirBtn").attr("data-codeProduitFormation");
-            C(codeProduitFormation);
+    $(document.body).ready(function () {
+        var C = console.log;
+        //Evènement click "choisir" transite vers la vue CampagneEtape1
+        $("#choisirBtn").click(function() {
+            var idOffreFormation = $("#choisirBtn").attr("data-idOffreFormation");
+            var idEtablissement = $("#choisirBtn").attr("data-idEtablissement");
             $.ajax({
                 url: '@Url.Action("GetListBeneficiaire", "OPS")',
-                data: { "codeProduitFormation": codeProduitFormation },
+                data: {
+                    "idOffreFormation": idOffreFormation,
+                    "idEtablissement": idEtablissement
+                },
                 type: 'POST',
                 dataType: 'json',
                 success: function (response) {

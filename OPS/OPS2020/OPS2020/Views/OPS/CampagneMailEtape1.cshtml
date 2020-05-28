@@ -4,36 +4,109 @@
 }
 
 
-    <form class="form-horizontal">
-        <fieldset>
-
-            <legend>Rédigez une description de l'enquête</legend>
-
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="textarea">Description de l'enquête</label>
-                <div class="col-md-4">
-                    <textarea class="form-control" id="textarea" name="textarea">Description</textarea>
-                </div>
-            </div>
-
-        </fieldset>
-        <div class="row">
-            <div id="divListB">
-                <div class="card">
-                    <div class="card-header">Destinataires de la campagne de mailing</div>
-                    <div class="card-body">
-                        <table id="listBTable" class="table">
-@foreach (var item in Model.BeneficiaireModels)
-{
-    <tr>
-        <td>@item.NomBeneficiaire @item.PrenomBeneficiaire (@item.MatriculeBeneficiaire)</td>
-        <td><input type="button" id="supprBtn" data-matriculeBeneficiaire="@item.MatriculeBeneficiaire" class="btn btn-danger" value="Supprimer"/></td>
-    </tr>
-}
-                        </table>
+<form class="form-horizontal">
+    <div class="row">
+        <div id="divListB" class="col">
+            <div class="card">
+                <div class="card-header">Rédigez une description de l'enquête</div>
+                <div class="card-body">
+                    <div class="form-group ">
+                        <label class="col control-label" for="textarea">Description de l'enquête</label>
+                        <div class="col">
+                            <textarea class="form-control" id="descriptionTxt" rows="5" name="textarea" placeholder="Tapez la description ici">@if (Model.CampagneMailModel.Description!=null)
+                            {
+                                @Model.CampagneMailModel.Description
+                            }</textarea>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-    </form>
+    </div>
+
+    <div class="row">
+        <div id="divListB" class="col">
+            <div class="card">
+                <div class="card-header">Destinataires de la campagne de mailing</div>
+                <div class="card-body">
+                    <table id="listBTable" class="table">
+                        @foreach (var item in Model.BeneficiaireModels)
+                        {
+                            <tr id="@item.MatriculeBeneficiaire">
+                                <td>@item.NomBeneficiaire @item.PrenomBeneficiaire (@item.MatriculeBeneficiaire)</td>
+                                <td class="text-right"><input type="button" data-matriculeBeneficiaire="@item.MatriculeBeneficiaire" class="btn btn-danger btn-sm supprBtn" value="Supprimer" /></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="col">
+        <form method="post">
+            <input type="button" onclick="location.href='@Url.Action("GestionEnquete", "OPS")'" id="precedentBtn" class="btn btn-primary" value="Précédent" />
+            <input type="button" id="suivantBtn" class="btn btn-primary" value="Suivant" />
+        </form>
+    </div>
+</div>
+<script>
+
+    $(document.body).ready(function () {
+        var C = console.log;
+
+        $(".supprBtn").click(function() {
+            var matriculeBeneficiaire = $(this).attr("data-matriculeBeneficiaire");
+            C(matriculeBeneficiaire);
+            $.ajax({
+                url: '@Url.Action("EditListBeneficiaire", "OPS")',
+                data: {
+                    "matriculeBeneficiaire": matriculeBeneficiaire
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.result == 'OK')
+                    var idTr = "#" + matriculeBeneficiaire
+                    $(idTr).remove();
+                    C($("#listBTable").find("tr").length);
+                    if ($("#listBTable").find("tr").length==0) {
+                        $("#suivantBtn").prop('disabled', true);
+                    }
+                },
+                error: function (xhr, status, error) {
+
+                }
+            })
+
+        });
+        $("#suivantBtn").click(function () {
+            var description = $("#descriptionTxt").val();
+
+            C(description);
+            if (description=='') { alert("Veuillez saisir une description pour pouvoir passer à l'étape suivante")
+
+            }
+            else {
+                $.ajax({
+                url: '@Url.Action("GetListQuestionnaire", "OPS")',
+                data: {
+                    "description": description
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.result == 'Redirect')
+                        window.location = response.url;
+                },
+                error: function (xhr, status, error) {
+
+                }
+            })
+            }
+
+
+        })
+    });
+</script>

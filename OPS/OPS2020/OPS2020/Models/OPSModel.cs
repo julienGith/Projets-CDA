@@ -63,13 +63,20 @@ namespace OPS2020.Models
     }
     public class OffreFormationModel
     {
+        public OffreFormationModel()
+        {
+            CampagneMailModel = new HashSet<CampagneMailModel>();
+            BeneficiaireOffreFormation = new HashSet<BeneficiaireOffreFormation>();
+        }
+        public int IdOffreFormation { get; set; }
+        public string IdEtablissement { get; set; }
         public int CodeProduitFormation { get; set; }
         public string LibelleOffreFormation { get; set; }
         public string LibelleReduitOffreFormation { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime DateFinOffreFormation { get; set; }
         public virtual ICollection<BeneficiaireOffreFormation> BeneficiaireOffreFormation { get; set; }
-        public virtual ICollection<CampagneMail> CampagneMail { get; set; }
+        public virtual ICollection<CampagneMailModel> CampagneMailModel { get; set; }
     }
     public class BeneficiaireModel
     {
@@ -86,7 +93,12 @@ namespace OPS2020.Models
         {
             OffreFormationModels = new HashSet<OffreFormationModel>();
             BeneficiaireModels = new HashSet<BeneficiaireModel>();
+            CampagneMailModel = new CampagneMailModel();
+            OffreFormationModel = new OffreFormationModel();
+            QuestionnaireModels = new HashSet<QuestionnaireModel>();
         }
+        public virtual ICollection<QuestionnaireModel> QuestionnaireModels { get; set; }
+        public CampagneMailModel CampagneMailModel { get; set; }
         public OffreFormationModel OffreFormationModel { get; set; }
         public virtual ICollection<OffreFormationModel> OffreFormationModels { get; set; }
         public virtual ICollection<BeneficiaireModel> BeneficiaireModels { get; set; }

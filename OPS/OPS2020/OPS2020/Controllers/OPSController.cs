@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using OPS2020.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
+using System.Security.Cryptography;
 
 namespace OPS2020.Controllers
 {
@@ -158,45 +159,50 @@ namespace OPS2020.Controllers
         [HttpGet]
         public async Task<IActionResult> GestionEnquete(GestionEnqueteModel gestionEnqueteModel)
         {
-            //GestionEnqueteModel gestionEnqueteModel = new GestionEnqueteModel();
             List<OffreFormation> offreFormations = new List<OffreFormation>();
             List<CampagneMail> CampagneMails = new List<CampagneMail>();
-            if (HttpContext.Session.Get<GestionEnqueteModel>("gestionEnqueteEtape1") != null)
+            offreFormations = _context.OffreFormation.Include(o => o.CampagneMail).ThenInclude(o => o.PlanificationCampagneMail).Where(c => c.MatriculeCollaborateurAfpa == "96GB011").ToList();
+            offreFormations.Reverse();
+            foreach (var item in offreFormations)
             {
-                gestionEnqueteModel = HttpContext.Session.Get<GestionEnqueteModel>("gestionEnquete");
-            }
-            if (HttpContext.Session.Get<Etape0Model>("gestionEnqueteEtape1") == null)
-            {
-                offreFormations = _context.OffreFormation.Include(o => o.CampagneMail).ThenInclude(o => o.PlanificationCampagneMail).Where(c => c.MatriculeCollaborateurAfpa == "96GB011").ToList();
-                offreFormations.Reverse();
-                foreach (var item in offreFormations)
+                OffreFormationModel offreFormationModel = new OffreFormationModel();
+                offreFormationModel.IdOffreFormation = item.IdOffreFormation;
+                offreFormationModel.IdEtablissement = item.IdEtablissement;
+                offreFormationModel.BeneficiaireOffreFormation = item.BeneficiaireOffreFormation;
+                offreFormationModel.CodeProduitFormation = item.CodeProduitFormation;
+                offreFormationModel.DateFinOffreFormation = item.DateFinOffreFormation;
+                offreFormationModel.LibelleOffreFormation = item.LibelleOffreFormation;
+                offreFormationModel.LibelleReduitOffreFormation = item.LibelleReduitOffreFormation;
+                foreach (var campagne in item.CampagneMail)
                 {
-                    OffreFormationModel offreFormationModel = new OffreFormationModel();
-
-                    offreFormationModel.BeneficiaireOffreFormation = item.BeneficiaireOffreFormation;
-                    offreFormationModel.CodeProduitFormation = item.CodeProduitFormation;
-                    offreFormationModel.DateFinOffreFormation = item.DateFinOffreFormation;
-                    offreFormationModel.LibelleOffreFormation = item.LibelleOffreFormation;
-                    offreFormationModel.LibelleReduitOffreFormation = item.LibelleReduitOffreFormation;
-                    offreFormationModel.CampagneMail = item.CampagneMail;
-                    gestionEnqueteModel.OffreFormationModels.Add(offreFormationModel);
-
-
+                    CampagneMailModel campagneMailModel = new CampagneMailModel();
+                    campagneMailModel.Description = campagne.Description;
+                    campagneMailModel.IdEtablissement = campagne.IdEtablissement;
+                    campagneMailModel.IdCampagneMail = campagne.IdCampagneMail;
+                    campagneMailModel.IdOffreFormation = campagne.IdOffreFormation;
+                    campagneMailModel.IdQuestionnaire = campagne.IdQuestionnaire;
+                    foreach (var plan in campagne.PlanificationCampagneMail)
+                    {
+                        PlanificationCampagneMailModel planificationCampagneMailModel = new PlanificationCampagneMailModel();
+                        planificationCampagneMailModel.IdCampagneMail = plan.IdCampagneMail;
+                        planificationCampagneMailModel.DateRealisation = plan.DateRealisation;
+                        campagneMailModel.PlanificationCampagneMailModel.Add(planificationCampagneMailModel);
+                    }
+                    offreFormationModel.CampagneMailModel.Add(campagneMailModel);
                 }
-                //HttpContext.Session.Set<GestionEnqueteModel>("gestionEnqueteEtape1", gestionEnqueteModel);
+
+                gestionEnqueteModel.OffreFormationModels.Add(offreFormationModel);
+                HttpContext.Session.Set<GestionEnqueteModel>("gestionEnqueteModel", gestionEnqueteModel);
             }
-
-
             return View("gestionEnquete", gestionEnqueteModel);
         }
-
+        // Récupère la liste des bénéficiaires en fontion de l'offre et de l'établissement
         [HttpPost]
-        public async Task<IActionResult> GetListBeneficiaire(string codeProduitFormation)
+        public async Task<IActionResult> GetListBeneficiaire(GestionEnqueteModel gestionEnqueteModel, string idOffreFormation, string idEtablissement)
         {
-            GestionEnqueteModel gestionEnqueteModel = new GestionEnqueteModel();
+            gestionEnqueteModel = HttpContext.Session.Get<GestionEnqueteModel>("gestionEnqueteModel");
             OffreFormation offreFormation = new OffreFormation();
-            //id offre id etablissement AFAIRE
-            offreFormation = await _context.OffreFormation.Where(c => c.CodeProduitFormation == int.Parse(codeProduitFormation)).Include(o => o.BeneficiaireOffreFormation).ThenInclude(b=>b.MatriculeBeneficiaireNavigation).ThenInclude(b=>b.CodeTitreCiviliteNavigation).FirstAsync();
+            offreFormation = await _context.OffreFormation.Where(c => c.IdEtablissement == idEtablissement && c.IdOffreFormation == int.Parse(idOffreFormation)).Include(o => o.BeneficiaireOffreFormation).ThenInclude(b => b.MatriculeBeneficiaireNavigation).ThenInclude(b => b.CodeTitreCiviliteNavigation).FirstAsync();
             foreach (BeneficiaireOffreFormation item in offreFormation.BeneficiaireOffreFormation)
             {
                 BeneficiaireModel beneficiaireModel = new BeneficiaireModel();
@@ -207,6 +213,10 @@ namespace OPS2020.Controllers
                 beneficiaireModel.TitreCivilite = item.MatriculeBeneficiaireNavigation.CodeTitreCiviliteNavigation.TitreCiviliteComplet;
                 gestionEnqueteModel.BeneficiaireModels.Add(beneficiaireModel);
             }
+            gestionEnqueteModel.OffreFormationModel.CodeProduitFormation = offreFormation.CodeProduitFormation;
+            gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation = offreFormation.DateFinOffreFormation;
+            gestionEnqueteModel.OffreFormationModel.IdEtablissement = offreFormation.IdEtablissement;
+            gestionEnqueteModel.OffreFormationModel.IdOffreFormation = offreFormation.IdOffreFormation;
             HttpContext.Session.Set<GestionEnqueteModel>("GestionEnqueteModel", gestionEnqueteModel);
             return Json(new { result = "Redirect", url = Url.Action("CampagneEtape1", "OPS") });
         }
@@ -216,6 +226,170 @@ namespace OPS2020.Controllers
         {
             gestionEnqueteModel = HttpContext.Session.Get<GestionEnqueteModel>("GestionEnqueteModel");
             return View("CampagneMailEtape1", gestionEnqueteModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditListBeneficiaire(string matriculeBeneficiaire)
+        {
+            GestionEnqueteModel gestionEnqueteModel = new GestionEnqueteModel();
+            gestionEnqueteModel = HttpContext.Session.Get<GestionEnqueteModel>("GestionEnqueteModel");
+            gestionEnqueteModel.BeneficiaireModels.Remove(gestionEnqueteModel.BeneficiaireModels.FirstOrDefault(b => b.MatriculeBeneficiaire == matriculeBeneficiaire));
+            HttpContext.Session.Set<GestionEnqueteModel>("GestionEnqueteModel", gestionEnqueteModel);
+            return Json(new { result = "OK" });
+        }
+        [HttpGet]
+        public async Task<IActionResult> CampagneEtape2(GestionEnqueteModel gestionEnqueteModel)
+        {
+            gestionEnqueteModel = HttpContext.Session.Get<GestionEnqueteModel>("GestionEnqueteModel");
+
+            return View("CampagneMailEtape2", gestionEnqueteModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetListQuestionnaire(GestionEnqueteModel gestionEnqueteModel, string description)
+        {
+            gestionEnqueteModel = HttpContext.Session.Get<GestionEnqueteModel>("GestionEnqueteModel");
+            List<Questionnaire> questionnaires = new List<Questionnaire>();
+            questionnaires = await _context.Questionnaire.Where(q => q.CodeProduitFormation == gestionEnqueteModel.OffreFormationModel.CodeProduitFormation).ToListAsync();
+            foreach (var item in questionnaires)
+            {
+                QuestionnaireModel questionnaireModel = new QuestionnaireModel();
+                questionnaireModel.titreQuestionnaire = item.TitreQuestionnaire;
+                questionnaireModel.questionnaireId = item.IdQuestionnaire;
+                gestionEnqueteModel.QuestionnaireModels.Add(questionnaireModel);
+            }
+            gestionEnqueteModel.CampagneMailModel.Description = description;
+            HttpContext.Session.Set<GestionEnqueteModel>("GestionEnqueteModel", gestionEnqueteModel);
+
+            return Json(new { result = "Redirect", url = Url.Action("CampagneEtape2", "OPS") });
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreatePlanicationCampagne(GestionEnqueteModel gestionEnqueteModel, string idQuestionnaire)
+        {
+            gestionEnqueteModel = HttpContext.Session.Get<GestionEnqueteModel>("GestionEnqueteModel");
+            CampagneMail campagneMail = new CampagneMail();
+            campagneMail.IdQuestionnaire = int.Parse(idQuestionnaire);
+            campagneMail.IdEtablissement = gestionEnqueteModel.OffreFormationModel.IdEtablissement;
+            campagneMail.IdOffreFormation = gestionEnqueteModel.OffreFormationModel.IdOffreFormation;
+            campagneMail.DateCreation = DateTime.Today.Date;
+            campagneMail.Description = gestionEnqueteModel.CampagneMailModel.Description;
+            _context.CampagneMail.Add(campagneMail);
+            _context.SaveChanges();
+            int idCampagneMail = _context.CampagneMail.Where(c => c.IdEtablissement == gestionEnqueteModel.OffreFormationModel.IdEtablissement && c.IdOffreFormation == gestionEnqueteModel.OffreFormationModel.IdOffreFormation)
+                .Select(c => c.IdCampagneMail).FirstOrDefault();
+            //Fin de formation
+            PlanificationCampagneMail planificationCampagneMail1 = new PlanificationCampagneMail();
+            if (DateTime.Today > gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation)
+            {
+                planificationCampagneMail1.DateRealisation = DateTime.Today;
+                planificationCampagneMail1.Echeance = DateTime.Today;
+            }
+            else
+            {
+                planificationCampagneMail1.DateRealisation = gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation.AddDays(1);
+                planificationCampagneMail1.Echeance = gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation.AddDays(1);
+            }
+            foreach (var item in gestionEnqueteModel.BeneficiaireModels)
+            {
+                DestinataireEnquete destinataireEnquete = new DestinataireEnquete();
+                destinataireEnquete.MatriculeBeneficiaire = item.MatriculeBeneficiaire;
+                destinataireEnquete.IdEtablissement = gestionEnqueteModel.OffreFormationModel.IdEtablissement;
+                destinataireEnquete.IdOffreFormation = gestionEnqueteModel.OffreFormationModel.IdOffreFormation;
+                destinataireEnquete.DateRealisationEnquete = null;
+
+                destinataireEnquete.DateEcheanceEnquete = planificationCampagneMail1.Echeance;
+                destinataireEnquete.DateRelance1 = null;
+                destinataireEnquete.DateRelance2 = null;
+                destinataireEnquete.EtapeQuestionnaire = -1;
+                destinataireEnquete.EtatTraitementQuestionnaire = 0;
+                destinataireEnquete.EnEmploi = null;
+                destinataireEnquete.IdContrat = null;
+                destinataireEnquete.IdSoumissionnaire = Guid.NewGuid();
+                planificationCampagneMail1.DestinataireEnquete.Add(destinataireEnquete);
+            }
+            planificationCampagneMail1.Type = "Fin";
+            planificationCampagneMail1.EtatTraitement = 0;
+            planificationCampagneMail1.IdCampagneMail = idCampagneMail;
+            planificationCampagneMail1.NombreDestinataires = gestionEnqueteModel.BeneficiaireModels.Count();
+            planificationCampagneMail1.NombreReponses = 0;
+            planificationCampagneMail1.NombreEnvois = 0;
+
+
+            //A 6 mois
+            PlanificationCampagneMail planificationCampagneMail2 = new PlanificationCampagneMail();
+            if (DateTime.Today > gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation.AddMonths(6) && DateTime.Today < gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation.AddMonths(12))
+            {
+                planificationCampagneMail2.DateRealisation = DateTime.Today;
+                planificationCampagneMail2.Echeance = DateTime.Today;
+            }
+            else
+            {
+                planificationCampagneMail2.DateRealisation = gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation.AddMonths(6);
+                planificationCampagneMail2.Echeance = gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation.AddMonths(6);
+            }
+            foreach (var item in gestionEnqueteModel.BeneficiaireModels)
+            {
+                DestinataireEnquete destinataireEnquete = new DestinataireEnquete();
+                destinataireEnquete.MatriculeBeneficiaire = item.MatriculeBeneficiaire;
+                destinataireEnquete.IdEtablissement = gestionEnqueteModel.OffreFormationModel.IdEtablissement;
+                destinataireEnquete.IdOffreFormation = gestionEnqueteModel.OffreFormationModel.IdOffreFormation;
+                destinataireEnquete.DateRealisationEnquete = null;
+                destinataireEnquete.DateEcheanceEnquete = planificationCampagneMail2.Echeance;
+                destinataireEnquete.DateRelance1 = null;
+                destinataireEnquete.DateRelance2 = null;
+                destinataireEnquete.EtapeQuestionnaire = -1;
+                destinataireEnquete.EtatTraitementQuestionnaire = 0;
+                destinataireEnquete.EnEmploi = null;
+                destinataireEnquete.IdContrat = null;
+                destinataireEnquete.IdSoumissionnaire = Guid.NewGuid();
+                planificationCampagneMail2.DestinataireEnquete.Add(destinataireEnquete);
+            }
+            planificationCampagneMail2.Type = "A6mois";
+            planificationCampagneMail2.EtatTraitement = 0;
+            planificationCampagneMail2.IdCampagneMail = idCampagneMail;
+            planificationCampagneMail2.NombreDestinataires = gestionEnqueteModel.BeneficiaireModels.Count();
+            planificationCampagneMail2.NombreReponses = 0;
+            planificationCampagneMail2.NombreEnvois = 0;
+            planificationCampagneMail2.Echeance = planificationCampagneMail2.Echeance;
+
+            //A 12 mois
+            PlanificationCampagneMail planificationCampagneMail3 = new PlanificationCampagneMail();
+            if (DateTime.Today > gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation && DateTime.Today < gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation.AddMonths(12))
+            {
+                planificationCampagneMail3.DateRealisation = DateTime.Today;
+                planificationCampagneMail3.Echeance = DateTime.Today;
+            }
+            else
+            {
+                planificationCampagneMail3.DateRealisation = gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation.AddMonths(12);
+                planificationCampagneMail3.Echeance = gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation.AddMonths(12);
+            }
+            foreach (var item in gestionEnqueteModel.BeneficiaireModels)
+            {
+                DestinataireEnquete destinataireEnquete = new DestinataireEnquete();
+                destinataireEnquete.MatriculeBeneficiaire = item.MatriculeBeneficiaire;
+                destinataireEnquete.IdEtablissement = gestionEnqueteModel.OffreFormationModel.IdEtablissement;
+                destinataireEnquete.IdOffreFormation = gestionEnqueteModel.OffreFormationModel.IdOffreFormation;
+                destinataireEnquete.DateRealisationEnquete = null;
+                destinataireEnquete.DateEcheanceEnquete = planificationCampagneMail3.Echeance;
+                destinataireEnquete.DateRelance1 = null;
+                destinataireEnquete.DateRelance2 = null;
+                destinataireEnquete.EtapeQuestionnaire = -1;
+                destinataireEnquete.EtatTraitementQuestionnaire = 0;
+                destinataireEnquete.EnEmploi = null;
+                destinataireEnquete.IdContrat = null;
+                destinataireEnquete.IdSoumissionnaire = Guid.NewGuid();
+                planificationCampagneMail3.DestinataireEnquete.Add(destinataireEnquete);
+            }
+            planificationCampagneMail3.Type = "A12mois";
+            planificationCampagneMail3.EtatTraitement = 0;
+            planificationCampagneMail3.IdCampagneMail = idCampagneMail;
+            planificationCampagneMail3.NombreDestinataires = gestionEnqueteModel.BeneficiaireModels.Count();
+            planificationCampagneMail3.NombreReponses = 0;
+            planificationCampagneMail3.NombreEnvois = 0;
+            planificationCampagneMail3.Echeance = planificationCampagneMail3.Echeance;
+
+            _context.PlanificationCampagneMail.AddRange(planificationCampagneMail1, planificationCampagneMail2, planificationCampagneMail3);
+            _context.SaveChanges();
+            return Json(new { result = "OK" });
         }
     }
 

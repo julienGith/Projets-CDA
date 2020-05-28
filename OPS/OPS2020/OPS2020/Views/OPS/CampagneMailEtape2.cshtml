@@ -1,0 +1,95 @@
+﻿@model OPS2020.Models.GestionEnqueteModel
+@{
+    ViewData["Title"] = "CampagneMailEtape2";
+}
+
+<h2>Création d'une nouvelle campagne de sondage</h2>
+<form class="form-horizontal">
+    <div class="row">
+        <div id="divListB" class="col">
+            <div class="card">
+                <div class="card-header">Choix du questionnaire</div>
+                <div class="card-body">
+                    <div class="form-group ">
+                        <div class="col">
+                            <select class="form-control" id="questSelect">
+                                @foreach (var item in Model.QuestionnaireModels)
+                                {
+                                    <option data-idQuest="@item.questionnaireId">@item.titreQuestionnaire</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="divListB" class="col">
+            <div class="card">
+                <div class="card-header">Les échéances de consultation des stagiaires</div>
+                <div class="card-body">
+                    <div class="form-group ">
+                        <div class="col">
+                            <table>
+                                <tr>
+                                    @if (DateTime.Today > Model.OffreFormationModel.DateFinOffreFormation)
+                                    {
+                                        <td>Enquête insertion professionnelle fin de parcours au :  @DateTime.Today sera réalisé le : @DateTime.Today</td>
+
+                                    }
+                                    @if (DateTime.Today < Model.OffreFormationModel.DateFinOffreFormation)
+                                    {
+                                <td>Enquête insertion professionnelle fin de parcours au :  @Model.OffreFormationModel.DateFinOffreFormation.AddDays(1).ToString("dd/MM/yyyy") sera réalisé le : @Model.OffreFormationModel.DateFinOffreFormation.AddDays(1).ToString("dd/MM/yyyy")</td>
+
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>Enquête insertion professionnelle 6 mois après la fin de parcours au : @Model.OffreFormationModel.DateFinOffreFormation.AddMonths(6).ToString("dd/MM/yyyy") sera réalisé le : @Model.OffreFormationModel.DateFinOffreFormation.AddMonths(6).ToString("dd/MM/yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <td>Enquête insertion professionnelle 12 mois après la fin de parcours au : @Model.OffreFormationModel.DateFinOffreFormation.AddMonths(12).ToString("dd/MM/yyyy") sera réalisé le : @Model.OffreFormationModel.DateFinOffreFormation.AddMonths(12).ToString("dd/MM/yyyy") </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col">
+        <form method="post">
+            <input type="button" onclick="location.href='@Url.Action("CampagneEtape1", "OPS")'" id="precedentBtn" class="btn btn-primary" value="Précédent" />
+            <input type="button" id="suivantBtn" class="btn btn-primary" value="Suivant" />
+        </form>
+    </div>
+</div>
+
+<script>
+
+    $(document.body).ready(function () {
+        $("#suivantBtn").click(function () {
+            var idQuestionnaire = $("#questSelect").children("option:selected").attr("data-idQuest");
+            $.ajax({
+                url: '@Url.Action("CreatePlanicationCampagne", "OPS")',
+                data: {
+                    "idQuestionnaire": idQuestionnaire
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.result == 'OK')
+                        alert("Campagne créée")
+                },
+                error: function (xhr, status, error) {
+
+                }
+            })
+
+        })
+
+    })
+</script>
