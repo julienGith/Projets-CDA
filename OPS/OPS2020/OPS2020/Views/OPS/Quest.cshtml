@@ -405,10 +405,10 @@
             questionObj.graphique = value;
             C("Graph queston obj :", questionObj);
             if (questionObj.modifUser == true) {
-                CreerItemPreview(questionObj);
+                //CreerItemPreview(questionObj);
             }
             else {
-                CreerPreview(questionObj);
+                //CreerPreview(questionObj);
             }
             SetCookieQuestionnaire(questionnaire);
 
@@ -596,8 +596,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption' disabled>" +
-                    "<option value='1'>Colonne</option>" +
-                    "<option selected value='2'>Ligne</option></select></div></div>" +
+                    "<option value='Jauge'>Jauge</option>" +
+                    "<option value='Colonnes'>Colonnes</option>" +
+                    "<option value='Camembert'>Camembert</option>" +
+                    "<option selected value='Barre'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -633,8 +635,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption'>" +
-                    "<option selected value='1'>Colonne</option>" +
-                    "<option value='2'>Ligne</option></select></div></div>" +
+                    "<option value='Jauge'>Jauge</option>" +
+                    "<option value='Colonnes'>Colonnes</option>" +
+                    "<option value='Camembert'>Camembert</option>" +
+                    "<option selected value='Barre'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -665,8 +669,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption' disabled>" +
-                    "<option value='1'>Colonne</option>" +
-                    "<option selected value='2'>Ligne</option></select></div></div>" +
+                    "<option value='Jauge'>Jauge</option>" +
+                    "<option value='Colonnes'>Colonnes</option>" +
+                    "<option value='Camembert'>Camembert</option>" +
+                    "<option selected value='Barre'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -696,8 +702,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption' disabled>" +
-                    "<option value='1'>Colonne</option>" +
-                    "<option selected value='2'>Ligne</option></select></div></div>" +
+                    "<option value='Jauge'>Jauge</option>" +
+                    "<option value='Colonnes'>Colonnes</option>" +
+                    "<option value='Camembert'>Camembert</option>" +
+                    "<option selected value='Barre'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -741,8 +749,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption'>" +
-                    "<option selected value='1'>Colonne</option>" +
-                    "<option value='2'>Ligne</option></select></div></div>" +
+                    "<option value='Jauge'>Jauge</option>" +
+                    "<option value='Colonnes'>Colonnes</option>" +
+                    "<option value='Camembert'>Camembert</option>" +
+                    "<option selected value='Barre'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -802,8 +812,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption'>" +
-                    "<option selected value='1'>Colonne</option>" +
-                    "<option value='2'>Ligne</option></select></div></div>" +
+                    "<option value='Jauge'>Jauge</option>" +
+                    "<option value='Colonnes'>Colonnes</option>" +
+                    "<option value='Camembert'>Camembert</option>" +
+                    "<option selected value='Barre'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -833,8 +845,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId +" class='btn-sm graphOption'>" +
-                    "<option selected value='1'>Colonne</option>" +
-                    "<option value='2'>Ligne</option></select></div></div>" +
+                    "<option value='Jauge'>Jauge</option>" +
+                    "<option value='Colonnes'>Colonnes</option>" +
+                    "<option value='Camembert'>Camembert</option>" +
+                    "<option selected value='Barre'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -866,8 +880,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption' disabled>" +
-                    "<option value='1'>Colonne</option>" +
-                    "<option selected value='2'>Ligne</option></select></div></div>" +
+                    "<option value='Jauge'>Jauge</option>" +
+                    "<option value='Colonnes'>Colonnes</option>" +
+                    "<option value='Camembert'>Camembert</option>" +
+                    "<option selected value='Barre'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -946,7 +962,7 @@
 
             }
         }
-        // Génère le code html des valeur possible de la question
+        // Génère le code html des valeurs possible de la question
         function CreerItemPreview(questionObj, userItem) {
             C("CreerPreviewItem");
             if (questionObj.type == "1repListe") {
@@ -1258,44 +1274,50 @@
                 if (questionObj.requis == "false") {
                     questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
                         "<label class='col-md-4 control-label' for=" + item1.groupName + ">" + questionObj.intitule + "</label>" +
-                        "<div class='col-md-4'>" +
-                        "<label class='radio-inline mr-2' for=" + item1.id + ">" +
+                        "<div class='col-md-4'><div class='radio'>" +
+                        "<label for=" + item1.id + ">" +
                         "<input type='radio' name=" + item1.groupName + " id=" + item1.id + " value='1'>" +
                         "peu satisfait" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item2.itemId + ">" +
+                        "</label></div>" +
+                        "<div class='radio'>"+
+                        "<label for=" + item2.itemId + ">" +
                         "<input type='radio' name=" + item2.groupName + " id=" + item2.id + " value='2'>" +
                         "moyennement satisfait" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item3.itemId + ">" +
+                        "</label></div>" +
+                        "<div class='radio'>" +
+                        "<label for=" + item3.itemId + ">" +
                         "<input type='radio' name=" + item3.groupName + " id=" + item3.id + " value='3'>" +
                         "satisfait" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item4.itemId + ">" +
+                        "</label></div>" +
+                        "<div class='radio'>"+
+                        "<label for=" + item4.itemId + ">" +
                         "<input type='radio' name=" + item4.groupName + " id=" + item4.id + " value='4'>" +
                         "très satisfait" +
-                        "</label></div></fieldset></div>"
+                        "</label></div></div></fieldset></div>"
                 }
                 else {
                     questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
                         "<label class='col-md-4 control-label' for=" + item1.groupName + ">" + questionObj.intitule + "</label>" +
-                        "<div class='col-md-4'>" +
-                        "<label class='radio-inline mr-2' for=" + item1.id + ">" +
+                        "<div class='col-md-4'><div class='radio'>" +
+                        "<label for=" + item1.id + ">" +
                         "<input type='radio' name=" + item1.groupName + " id=" + item1.id + " value='1' required>" +
                         "peu satisfait" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item2.itemId + ">" +
+                        "</label></div>" +
+                        "<div class='radio'>" +
+                        "<label for=" + item2.itemId + ">" +
                         "<input type='radio' name=" + item2.groupName + " id=" + item2.id + " value='2'>" +
                         "moyennement satisfait" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item3.itemId + ">" +
+                        "</label></div>" +
+                        "<div class='radio'>" +
+                        "<label for=" + item3.itemId + ">" +
                         "<input type='radio' name=" + item3.groupName + " id=" + item3.id + " value='3'>" +
                         "satisfait" +
-                        "</label>" +
-                        "<label class='radio-inline mr-2' for=" + item4.itemId + ">" +
+                        "</label></div>" +
+                        "<div class='radio'>" +
+                        "<label for=" + item4.itemId + ">" +
                         "<input type='radio' name=" + item4.groupName + " id=" + item4.id + " value='4'>" +
                         "très satisfait" +
-                        "</label></div></fieldset></div>"
+                        "</label></div></div></fieldset></div>"
 
                 }
                 AppendPrev(questionObj);
@@ -1606,46 +1628,55 @@
                 questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
                     "<label class='col-md-4 control-label' for=" + groupName + ">" + questionObj.intitule + "</label>" +
                     "<div class='col-md-4'>" +
-                    "<label class='radio-inline mr-2' for=" + item1.id + ">" +
+                    "<div class='radio'>" +
+                    "<label for=" + item1.id + ">" +
                     "<input type='radio' name=" + item1.groupName + " id=" + item1.id + " value='1' required>" +
                     "1" +
-                    "</label>" +
-                    "<label class='radio-inline mr-2' for=" + item2.id + ">" +
-                    "<input type='radio' name=" + item2.groupName + " id=" + item2.id + " value='1'>" +
+                    "</label></div>" +
+                    "<label for=" + item2.id + ">" +
+                    "<div class='radio'>" +
+                    "<input type='radio' name=" + item2.groupName + " id=" + item2.id + " value='2'>" +
                     "2" +
-                    "</label>" +
-                    "<label class='radio-inline mr-2' for=" + item3.id + ">" +
-                    "<input type='radio' name=" + item3.groupName + " id=" + item3.id + " value='1'>" +
+                    "</label></div>" +
+                    "<div class='radio'>" +
+                    "<label for=" + item3.id + ">" +
+                    "<input type='radio' name=" + item3.groupName + " id=" + item3.id + " value='3'>" +
                     "3" +
-                    "</label>" +
-                    "<label class='radio-inline mr-2' for=" + item4.id + ">" +
-                    "<input type='radio' name=" + item4.groupName + " id=" + item4.id + " value='1'>" +
+                    "</label></div>" +
+                    "<div class='radio'>" +
+                    "<label for=" + item4.id + ">" +
+                    "<input type='radio' name=" + item4.groupName + " id=" + item4.id + " value='4'>" +
                     "4" +
-                    "</label>" +
-                    "<label class='radio-inline mr-2' for=" + item5.id + ">" +
-                    "<input type='radio' name=" + item5.groupName + " id=" + item5.id + " value='1'>" +
+                    "</label></div>" +
+                    "<div class='radio'>" +
+                    "<label for=" + item5.id + ">" +
+                    "<input type='radio' name=" + item5.groupName + " id=" + item5.id + " value='5'>" +
                     "5" +
-                    "</label>" +
-                    "<label class='radio-inline mr-2' for=" + item6.id + ">" +
-                    "<input type='radio' name=" + item6.groupName + " id=" + item6.id + " value='1'>" +
+                    "</label></div>" +
+                    "<div class='radio'>" +
+                    "<label for=" + item6.id + ">" +
+                    "<input type='radio' name=" + item6.groupName + " id=" + item6.id + " value='6'>" +
                     "6" +
-                    "</label>" +
-                    "<label class='radio-inline mr-2' for=" + item7.id + ">" +
-                    "<input type='radio' name=" + item7.groupName + " id=" + item7.id + " value='1'>" +
+                    "</label></div>" +
+                    "<div class='radio'>" +
+                    "<label for=" + item7.id + ">" +
+                    "<input type='radio' name=" + item7.groupName + " id=" + item7.id + " value='7'>" +
                     "7" +
-                    "</label>" +
-                    "<label class='radio-inline mr-2' for=" + item8.id + ">" +
-                    "<input type='radio' name=" + item8.groupName + " id=" + item8.id + " value='1'>" +
+                    "</label></div>" +
+                    "<div class='radio'>" +
+                    "<label for=" + item8.id + ">" +
+                    "<input type='radio' name=" + item8.groupName + " id=" + item8.id + " value='8'>" +
                     "8" +
-                    "</label>" +
-                    "<label class='radio-inline mr-2' for=" + item9.id + ">" +
-                    "<input type='radio' name=" + item9.groupName + " id=" + item9.id + " value='1'>" +
+                    "</label></div>" +
+                    "<div class='radio'>" +
+                    "<label for=" + item9.id + ">" +
+                    "<input type='radio' name=" + item9.groupName + " id=" + item9.id + " value='9'>" +
                     "9" +
-                    "</label>" +
+                    "</label></div>" +
                     "<label class='radio-inline mr-2' for=" + item10.id + ">" +
-                    "<input type='radio' name=" + item10.groupName + " id=" + item10.id + " value='1'>" +
+                    "<input type='radio' name=" + item10.groupName + " id=" + item10.id + " value='10'>" +
                     "10" +
-                    "</label></div></fieldset></div>";
+                    "</label></div></div></fieldset></div>";
                 AppendPrev(questionObj);
                 $(document.body).ready(function () {
                     if (questionObj.requis == "false") {
