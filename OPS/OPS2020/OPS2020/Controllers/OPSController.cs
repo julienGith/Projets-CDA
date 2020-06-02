@@ -119,7 +119,7 @@ namespace OPS2020.Controllers
         }
         // Récupère le questionnaire en fonction de son id puis le place dans le cookie de session retourne l'url pour charger la vue quest en mode modification
         [HttpPost]
-        public async Task<IActionResult> GetQuestionnaireById(string query)
+        public async Task<IActionResult> GetQuestionnaireById(string query,string mode)
         {
             QuestionnaireModel questionnaireModel = new QuestionnaireModel();
             Questionnaire questionnaire = new Questionnaire();
@@ -132,7 +132,15 @@ namespace OPS2020.Controllers
             questionnaireModel.listQuestObj = JsonConvert.DeserializeObject<List<QuestionOBJ>>(questionnaire.DataJson);
             questionnaireModel.titreQuestionnaire = questionnaire.TitreQuestionnaire;
             HttpContext.Session.Set<QuestionnaireModel>("Questionnaire", questionnaireModel);
-            return Json(new { result = "Redirect", url = Url.Action("ModifierQuestionnnaire", "OPS") });
+            if (mode == "test")
+            {
+                return Json(new { result = "Redirect", url = Url.Action("TestQuest", "OPS") });
+            }
+            else
+            {
+                return Json(new { result = "Redirect", url = Url.Action("ModifierQuestionnnaire", "OPS") });
+            }
+            
         }
         // Récupère le code html du questionnaire
         [HttpPost]
@@ -391,6 +399,20 @@ namespace OPS2020.Controllers
             _context.SaveChanges();
             return Json(new { result = "OK" });
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> TestQuest(QuestionnaireModel questionnaireModel)
+        //{
+        //    questionnaireModel = HttpContext.Session.Get<QuestionnaireModel>("Questionnaire");
+        //    return View("TestQuest", questionnaireModel);
+        //}
+        [HttpGet]
+        public async Task<IActionResult> TestQuest(QuestionnaireModel questionnaireModel)
+        {
+            questionnaireModel = HttpContext.Session.Get<QuestionnaireModel>("Questionnaire");
+            return View("TestQuest", questionnaireModel);
+        }
+
     }
 
 }

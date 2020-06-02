@@ -71,7 +71,7 @@
     <br />
     <div id="listVide">Liste vide <form asp-controller="OPS" asp-action="Etape0" method="post"><input method="post" type="submit" value="Nouveau formulaire" class="right" /></form> </div>
     <div class="row">
-        <div id="divListQ">
+        <div id="divListQ" class="col">
             <div class="card">
                 <div class="card-header">Liste des questionnaires<form asp-controller="OPS" asp-action="Etape0" method="post"><input method="post" type="submit" value="Nouveau formulaire" class="right" /></form></div>
                 <div class="card-body">
@@ -343,7 +343,7 @@
                                 value.idQuestionnaire + "); return false;'>Visualiser</a> "+
                                         "</li> "+
                                 "<li class= 'nav-item'> "+
-                                "<a class= 'nav-link' href='#' onclick='MyFunction(" +
+                                "<a class= 'nav-link' href='#' onclick='TestQuestionnaire(" +
                                 value.idQuestionnaire + "); return false;'>Tester</a> "+
                                         "</li> "+
                                     "</ul> "+
@@ -402,9 +402,9 @@
 
             }
         });
-        
 
-        
+
+
 
     }
     function PreviewQuestionnaire(qId) {
@@ -425,6 +425,24 @@
             }
         });
 
+    }
+    function TestQuestionnaire(qId) {
+        $.ajax({
+            url: '@Url.Action("GetQuestionnaireById", "OPS")',
+            data: {
+                "query": qId,
+                "mode": "test"
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                if (response.result == 'Redirect')
+                    window.location = response.url;
+            },
+            error: function (xhr, status, error) {
+
+            }
+        });
     }
 
 

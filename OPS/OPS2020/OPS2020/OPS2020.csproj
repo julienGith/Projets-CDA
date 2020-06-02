@@ -27,5 +27,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\OPS\*.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\Images\CellBot.png" />
+    <None Include="wwwroot\Images\CellLeft.png" />
+    <None Include="wwwroot\Images\CellRight.png" />
+    <None Include="wwwroot\Images\CellTop.png" />
+  </ItemGroup>
 
 </Project>
