@@ -11,6 +11,7 @@ namespace OPS2020.Models
     public class Etape0Model
     {
         public int CodeProduitFormation { get; set; }
+        public string LibelleProduitFormation { get; set; }
         public string IdQuestionnaire { get; set; }
     }
     public class PlanificationCampagneMailModel

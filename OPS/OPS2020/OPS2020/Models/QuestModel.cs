@@ -90,6 +90,7 @@ namespace OPS2020.Models
         public string dataJson { get; set; }
         public string codeHtml { get; set; }
         public int codeProduitFormation { get; set; }
+        public string LibelleProduitFormation { get; set; }
         public int etatQuestionnaire { get; set; }
         [JsonProperty(PropertyName = "listQuestObj")]
         public ICollection<QuestionOBJ> listQuestObj { get; set; }

@@ -41,6 +41,7 @@ namespace OPS2020.Controllers
             {
                 etape0 = HttpContext.Session.Get<Etape0Model>("etape0");
                 questionnaireModel.codeProduitFormation = etape0.CodeProduitFormation;
+                questionnaireModel.LibelleProduitFormation = etape0.LibelleProduitFormation;
             }
             return View("Quest", questionnaireModel);
         }
@@ -98,9 +99,15 @@ namespace OPS2020.Controllers
         }
         // Passage de l'étape 0 à l'étape quest en mode modification, passage du questionnaire via le cookie de session
         [HttpGet]
-        public async Task<IActionResult> ModifierQuestionnnaire(QuestionnaireModel questionnaireModel)
+        public async Task<IActionResult> ModifierQuestionnnaire(Etape0Model etape0, QuestionnaireModel questionnaireModel)
         {
             questionnaireModel = HttpContext.Session.Get<QuestionnaireModel>("Questionnaire");
+            if (HttpContext.Session.Get<Etape0Model>("etape0") != null)
+            {
+                etape0 = HttpContext.Session.Get<Etape0Model>("etape0");
+                questionnaireModel.codeProduitFormation = etape0.CodeProduitFormation;
+                questionnaireModel.LibelleProduitFormation = etape0.LibelleProduitFormation;
+            }
             return View("Quest", questionnaireModel);
         }
         // Duplication du questionnaire sélectionné dans la list à l'étape 0
@@ -407,9 +414,15 @@ namespace OPS2020.Controllers
         //    return View("TestQuest", questionnaireModel);
         //}
         [HttpGet]
-        public async Task<IActionResult> TestQuest(QuestionnaireModel questionnaireModel)
+        public async Task<IActionResult> TestQuest(Etape0Model etape0, QuestionnaireModel questionnaireModel)
         {
             questionnaireModel = HttpContext.Session.Get<QuestionnaireModel>("Questionnaire");
+            if (HttpContext.Session.Get<Etape0Model>("etape0") != null)
+            {
+                etape0 = HttpContext.Session.Get<Etape0Model>("etape0");
+                questionnaireModel.codeProduitFormation = etape0.CodeProduitFormation;
+                questionnaireModel.LibelleProduitFormation = etape0.LibelleProduitFormation;
+            }
             return View("TestQuest", questionnaireModel);
         }
 

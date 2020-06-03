@@ -86,9 +86,9 @@
 <div class="row">
     <div class="col align-self-center">
         <div class="jumbotron">
-            <img src="~/Images/afpa-logo.png" width="165" height="180"/>
-            <p class="lead">Test de l'enquête sur l'insertion des stagiaires.</p>
-            <p class="lead">Nom de la formation</p>
+            <img src="~/Images/afpa-logo-cell.png" class="img-fluid"/>
+            <p class="lead">Test de l'enquête sur l'insertion des anciens stagiaires.</p>
+            <p class="lead">@Model.LibelleProduitFormation</p>
         </div>
     </div>
 </div>
@@ -96,7 +96,7 @@
     <div class="col align-self-center">
         <div class="card">
             <div class="card-header">
-                Ênquête insertion nom de la formation
+                Ênquête insertion @Model.LibelleProduitFormation
             </div>
             <div class="card-body">
                 <div id="previewQuestionnaire">
@@ -116,11 +116,8 @@
                         </div>
 
                         <!-- Circles which indicates the steps of the form: -->
-                        <div style="text-align:center;margin-top:40px;">
-                            <span class="step"></span>
-                            <span class="step"></span>
-                            <span class="step"></span>
-                            <span class="step"></span>
+                        <div id="listCercles" style="text-align:center;margin-top:40px;">
+
                         </div>
                     </form>
                 </div>
@@ -286,22 +283,7 @@
                 // Boucle chargement question
                 for (let x of questionnaire.listQuestObj) {
                     C("Boucle chargement");
-                    //CreerQuestion(x);
-                    //$(document.body).ready(function () {
-                    //if (x.requis == false) {
-                    //    let idRadioOreq = "#" + x.requisOuiRadioId;
-                    //    let idRadioNreq = "#" + x.requisNonRadioId;
-                    //    C("ID requis : ",idRadioNreq);
-                    //    $(idRadioOreq).prop('checked', false);
-                    //    $(idRadioNreq).prop('checked', true);
-                    //}
-                    //if (x.graphique == 2) {
-                    //    let idDdlGraph = "#" + x.graphiqueId;
-                    //    $(idDdlGraph).find(':selected').prop('selected', false);
-                    //    $(idDdlGraph).find("option[value='2']").prop('selected', true);
-                    //}
-                    //})
-
+                    $("#listCercles").append("<span class='step'></span>")
                     AppendPrev(x);
                     x.listUserItems = filter_array_values(x.listUserItems);
                     C("liste usersItem", x.listUserItems);

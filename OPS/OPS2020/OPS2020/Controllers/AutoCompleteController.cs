@@ -54,6 +54,7 @@ namespace OPS2020.Controllers
             ProduitFormation produit = new ProduitFormation();
             produit = _context.ProduitFormation.FirstOrDefault(p => p.LibelleCourtFormation.ToLower().Contains(query.ToLower()));
             etape0.CodeProduitFormation = produit.CodeProduitFormation;
+            etape0.LibelleProduitFormation = produit.LibelleProduitFormation;
             HttpContext.Session.Set<Etape0Model>("etape0", etape0);
             return Json(new { Data = produit });
         }
