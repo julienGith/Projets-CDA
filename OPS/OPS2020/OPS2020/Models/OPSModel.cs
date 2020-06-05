@@ -126,4 +126,12 @@ namespace OPS2020.Models
         //public virtual PlanificationCampagneMail IdPlanificationCampagneMailNavigation { get; set; }
         //public virtual Beneficiaire MatriculeBeneficiaireNavigation { get; set; }
     }
+    public class ReponseModel
+    {
+        public int idQuestion { get; set; }
+        public int idQuestionnaire { get; set; }
+        public Guid idSoumissionaire { get; set; }
+        public string rawValue { get; set; }
+        public int etatReponse { get; set; }
+    }
 }

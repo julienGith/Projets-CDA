@@ -426,7 +426,28 @@ namespace OPS2020.Controllers
             }
             return View("TestQuest", questionnaireModel);
         }
+        [HttpPost]
+        public async Task<IActionResult> SaveReponse(string data)
+        {
+            ReponseModel reponseModel = new ReponseModel();
+            WReponse wReponse = new WReponse();
+            reponseModel = JsonConvert.DeserializeObject<ReponseModel>(data);
+            wReponse = _context.WReponse.FirstOrDefault(r => r.IdQuestion == reponseModel.idQuestion);
+            if (wReponse == null)
+            {
+                wReponse.IdQuestion = reponseModel.idQuestion;
+                wReponse.IdQuestionnaire = reponseModel.idQuestionnaire;
+                wReponse.RawValue = reponseModel.rawValue;
+                _context.WReponse.Add(wReponse);
+            }
+            else
+            {
+                wReponse.RawValue= reponseModel.rawValue;
+            }
+            _context.SaveChanges();
+            return Json(new { result = "Ok"});
 
+        }
     }
 
 }

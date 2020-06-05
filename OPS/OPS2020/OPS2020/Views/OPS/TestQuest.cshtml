@@ -83,7 +83,7 @@
             background-color: #4CAF50;
         }
 </style>
-<div class="row">
+<div id="enteteDiv" class="row">
     <div class="col align-self-center">
         <div class="jumbotron">
             <img src="~/Images/afpa-logo-cell.png" class="img-fluid"/>
@@ -92,7 +92,48 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div id="question1Div" class="row">
+    <div class="col align-self-center">
+        <div class="card">
+            <div class="card-header">
+                Question préliminaire de l'enquête
+            </div>
+            <div class="card-body">
+                <form id="question1Form" class="form-horizontal">
+                    <fieldset>
+                        <!-- Form Name -->
+                        <legend>Form Name</legend>
+                        <!-- Multiple Radios -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="radios">Votre activité professionnelle est-elle en lien avec la formation @Model.LibelleProduitFormation que vous avez suivie ?</label>
+                            <div class="col-md-4">
+                                <div class="radio">
+                                    <label for="question1oui">
+                                        <input type="radio" name="radios" id="question1oui" value="1" required>
+                                        Oui
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="question1non">
+                                        <input type="radio" name="radios" id="question1non" value="2">
+                                        Non
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                    <button type="button" id="question1Btn" class="btn btn-primary" onclick="etape2wizzard(); return false;">Suivant</button>
+                </form>
+                <h2 id="quest1Fin"> Fin de l'enquête merci pour votre participation</h2>
+                <div id="feedbackQuest1" class="alert alert-danger" role="alert">
+                    Attention vous devez fournir une réponse pour passer à l'étape suivante.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="wizzardQuestDiv" class="row">
     <div class="col align-self-center">
         <div class="card">
             <div class="card-header">
@@ -133,8 +174,8 @@
     var C = console.log;
     var reponses = [''];
     var reponse = {
-        numeroQuestion: '',
-        idQuestionnaire: '',
+        idQuestion: '',
+        idQuestionnaire: @Model.questionnaireId,
         idSoumissionnaire: '',
         rawValue: '',
         etat: ''
@@ -170,6 +211,9 @@
         y = x[currentTab].getElementsByTagName("input");
         z = x[currentTab].getElementsByTagName("label");
         k = x[currentTab].getElementsByTagName("option");
+        j = x[currentTab].getElementsByTagName("textarea");
+        l = x[currentTab].getElementsByTagName("select");
+
         // A loop that checks every input field in the current tab:
         for (i = 0; i < y.length; i++) {
 
@@ -179,22 +223,48 @@
                 valid = false;
             }
         }
+        if (l.length>0) {
+            if (l[0].checkValidity() === false) {
+                l[0].className += " invalid";
+                $("#feedback").show();
+                valid = false;
+            }
+        }
+        if (j.length>0) {
+            if (j[0].checkValidity() === false) {
+                j[0].className += " invalid";
+                $("#feedback").show();
+                valid = false;
+            }
+        }
+
         // If the valid status is true, mark the step as finished and valid:
         if (valid) {
+            C("input", y, "option", k, "textarea", j);
             for (i = 0; i < y.length; i++) {
                 reponse.rawValue = y[i].value;
                 C(reponse.rawValue);
                 if (y[i].checked) {
                     reponse.rawValue = z[i + 1].innerText;
+                    reponse.idQuestion = currentTab + 1;
+                    reponses.push(reponse);
                     C(reponse.rawValue);
                 }
-                if (k>0) {
-                    if (k[i].selected == True) {
-                        reponse.rawValue = k[i].innerText;
-                        C(reponse.rawValue);
-                    }
-                }
 
+            }
+            for (i = 0; i < k.length; i++) {
+                if (k[i].selected == true) {
+                    reponse.rawValue = k[i].value;
+                    reponse.idQuestion = currentTab + 1;
+                    reponses.push(reponse);
+                    C(reponse.rawValue);
+                }
+            }
+            if (j.length>0) {
+                reponse.rawValue = j[0].value;
+                reponse.idQuestion = currentTab + 1;
+                reponses.push(reponse);
+                C(reponse.rawValue);
             }
             $("#feedback").hide();
             document.getElementsByClassName("step")[currentTab].className += " finish";
@@ -237,6 +307,58 @@
         });
 
     }
+    function etape2wizzard() {
+        $(document.body).ready(function () {
+            var inputs = document.getElementById("question1Form").getElementsByTagName("input");
+            C("inputs", inputs)
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].checkValidity() === false) {
+                    $("#feedbackQuest1").show();
+                }
+                else {
+                    $("#feedbackQuest1").hide();
+                    if ($("#question1oui").prop('checked')) {
+                        $("#question1Div").hide();
+                        $("#enteteDiv").hide();
+                        $("#wizzardQuestDiv").show();
+                        reponse.rawValue = "Oui";
+                        reponse.idQuestion = 0;
+                        reponses.push(reponse);
+                    }
+                    else {
+                        $("#question1Form").hide();
+                        $("#quest1Fin").show();
+                        reponse.rawValue = "Non";
+                        reponse.idQuestion = 0;
+                        reponses.push(reponse);
+                    }
+                }
+            }
+        });
+    }
+    function SaveReponse(reponse) {
+
+        let reponseJson = JSON.stringify(reponse);
+            C(questionnaireJson);
+        $.ajax({
+                url: '@Url.Action("SaveReponse", "OPS")',
+            data: { "data": reponseJson },
+                type: 'POST',
+            dataType: 'application/json',
+                success: function (response) {
+                    if (response.data != null) {
+
+                    }
+                    else {
+
+                    }
+                },
+                error: function (xhr, status, error) {
+
+                }
+        });
+
+    }
     $(document.body).on('click', '.element', function (e) { });
     $(document).ready(function () {
        // "use strict";
@@ -259,8 +381,12 @@
             listQuestObj: ['']
         }
         $("#feedback").hide();
+        $("#feedbackQuest1").hide();
+        $("#wizzardQuestDiv").hide();
+        $("#quest1Fin").hide();
         //Chargement du questionnaire
         $(document.body).ready(function () {
+
                 questionnaire = @Html.Raw(Json.Serialize(Model));
                 $("#formName").html(questionnaire.titreQuestionnaire);
                 $("#previewQuestions").append(questionnaire.codeHtml);
@@ -282,5 +408,6 @@
                 return value;
             }
         }
+
     });
 </script>

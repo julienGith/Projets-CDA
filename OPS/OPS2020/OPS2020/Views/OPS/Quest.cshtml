@@ -966,7 +966,7 @@
                     userItem.itemPrev.lbl = "Lbl" + userItem.idPreview;
                     var idLabel = "#" + userItem.itemPrev.lbl;
                     var listItemId = "#" + questionObj.divListItemId;
-                    userItem.itemPrev.codeHtml = "<option id=" + userItem.itemPrev.lbl + ">" + "option" + "</option>";
+                    userItem.itemPrev.codeHtml = "<option id=" + userItem.itemPrev.lbl + "></option>";
                     if (questionObj.requis == "false") {
                         $(listItemId).prop('required', false);
                     }
