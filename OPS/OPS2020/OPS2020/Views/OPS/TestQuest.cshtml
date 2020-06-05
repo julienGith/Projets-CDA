@@ -87,7 +87,7 @@
     <div class="col align-self-center">
         <div class="jumbotron">
             <img src="~/Images/afpa-logo-cell.png" class="img-fluid"/>
-            <p class="lead">Test de l'enquête sur l'insertion des anciens stagiaires.</p>
+            <p class="lead">Enquête sur l'insertion des anciens stagiaires.</p>
             <p class="lead">@Model.LibelleProduitFormation</p>
         </div>
     </div>
@@ -102,10 +102,10 @@
                 <form id="question1Form" class="form-horizontal">
                     <fieldset>
                         <!-- Form Name -->
-                        <legend>Form Name</legend>
+                        <p>Votre activité professionnelle est-elle en lien avec la formation @Model.LibelleProduitFormation que vous avez suivie ?</p>
                         <!-- Multiple Radios -->
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="radios">Votre activité professionnelle est-elle en lien avec la formation @Model.LibelleProduitFormation que vous avez suivie ?</label>
+                            <label class="col-md-4 control-label" for="radios"></label>
                             <div class="col-md-4">
                                 <div class="radio">
                                     <label for="question1oui">
@@ -123,9 +123,9 @@
                         </div>
 
                     </fieldset>
-                    <button type="button" id="question1Btn" class="btn btn-primary" onclick="etape2wizzard(); return false;">Suivant</button>
+                    <button type="button" id="question1Btn" class="btn btn-primary" onclick="etape2wizzard(); return false;">Démarrer</button>
                 </form>
-                <h2 id="quest1Fin"> Fin de l'enquête merci pour votre participation</h2>
+                <p id="quest1Fin"> Fin de l'enquête merci pour votre participation</p>
                 <div id="feedbackQuest1" class="alert alert-danger" role="alert">
                     Attention vous devez fournir une réponse pour passer à l'étape suivante.
                 </div>
@@ -318,17 +318,10 @@
                 else {
                     $("#feedbackQuest1").hide();
                     if ($("#question1oui").prop('checked')) {
-                        $("#question1Div").hide();
-                        $("#enteteDiv").hide();
-                        $("#wizzardQuestDiv").show();
+                        $("#question1Div").fadeOut(1500);
+                        $("#enteteDiv").fadeOut(1500);
+                        $("#wizzardQuestDiv").fadeIn(2500); 
                         reponse.rawValue = "Oui";
-                        reponse.idQuestion = 0;
-                        reponses.push(reponse);
-                    }
-                    else {
-                        $("#question1Form").hide();
-                        $("#quest1Fin").show();
-                        reponse.rawValue = "Non";
                         reponse.idQuestion = 0;
                         reponses.push(reponse);
                     }
@@ -336,6 +329,21 @@
             }
         });
     }
+    $(document.body).on('change', '#question1oui', function () {
+        if ($("#question1oui").prop('checked')) {
+            $("#question1Btn").fadeIn(1500);
+
+        }
+    });
+    $(document.body).on('change', '#question1non', function () {
+        if ($("#question1non").prop('checked')) {
+            $("#question1Form").fadeOut(1500);
+            $("#quest1Fin").fadeIn(1500);
+            reponse.rawValue = "Non";
+            reponse.idQuestion = 0;
+            reponses.push(reponse);
+        }
+    });
     function SaveReponse(reponse) {
 
         let reponseJson = JSON.stringify(reponse);
@@ -359,7 +367,7 @@
         });
 
     }
-    $(document.body).on('click', '.element', function (e) { });
+
     $(document).ready(function () {
        // "use strict";
 
@@ -384,6 +392,7 @@
         $("#feedbackQuest1").hide();
         $("#wizzardQuestDiv").hide();
         $("#quest1Fin").hide();
+        $("#question1Btn").hide();
         //Chargement du questionnaire
         $(document.body).ready(function () {
 
