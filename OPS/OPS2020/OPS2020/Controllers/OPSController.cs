@@ -131,6 +131,7 @@ namespace OPS2020.Controllers
             QuestionnaireModel questionnaireModel = new QuestionnaireModel();
             Questionnaire questionnaire = new Questionnaire();
             questionnaire = _context.Questionnaire.FirstOrDefault(q => q.IdQuestionnaire == int.Parse(query));
+            questionnaireModel.codeHtml = questionnaire.CodeHtml;
             questionnaireModel.codeProduitFormation = questionnaire.CodeProduitFormation;
             questionnaireModel.dataJson = questionnaire.DataJson;
             questionnaireModel.description = questionnaire.Description;
