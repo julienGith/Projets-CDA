@@ -71,7 +71,6 @@ namespace OPS2020.Controllers
             listReponse = await _context.ProduitFormation.Select(p => p.LibelleProduitFormation).Where(C => C.ToLower().StartsWith(query.ToLower())).ToListAsync();
             return Json(new { Data = listReponse });
         }
-
         private async Task<IActionResult> AutoCompleteAvecListe(string query)
         {
             List<string> listReponse = null;

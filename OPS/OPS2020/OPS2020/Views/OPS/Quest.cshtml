@@ -55,7 +55,7 @@
                     <input id="titreTxtB" type="text" class="form-control" placeholder="Titre">
                     <label for="libelTxtB">Description du questionnaire</label>
                     <textarea class="form-control" placeholder="Description" name="descriptionTxtA" rows="5" id="descriptionTxtA"></textarea>
-                    <input id="BtnValider" type="button" name="BtnValider" value="Créer" class="btn btn-primary right" />
+                    <input id="BtnValider" type="button" name="BtnValider" value="Valider" class="btn btn-primary right" />
                 </div>
                 <div class="tab-pane fade" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab">
                     <div class="row"> <div id="titreDiv" class="card-header text-center flex-fill">Validez les propriétés du questionnaire le titre apparaîtra ici</div></div>
@@ -140,19 +140,6 @@
 </div>
 <span id="idQuestionnaire"  data-count="@Model.questionnaireId"></span>
 <script>
-
-    //$('#sortable').sortable();
-
-
-
-    $(document.body).on('click', '.element', function (e) { });
-    $(document.body).on('click', '.element', function (e) { });
-
-
-
-
-    //$(document.body).on('click', '.rotate', function () { $(this).toggleClass("down"); });
-
     $(document).ready(function () {
        // "use strict";
         $(document.body).on('click', '#ordreBtn', function () {
@@ -163,9 +150,7 @@
             $("#toggle1").wrap("<div class='radio'></div>");
             $("#toggle2").wrap("<div class='radio'></div>");
         })
-
         var C = console.log;
-
         var numQuestion = 0;
         var codeQuestion;
         var type;
@@ -1625,7 +1610,6 @@
             document.cookie = "Questionnaire="+ questionnaireJson + ";expires=10; path=/";
             C(document.cookie);
         }
-
         function EnregistrerQuestionnaire(questionnaire) {
             let questionnaireJson = JSON.stringify(questionnaire);
             C(questionnaireJson);

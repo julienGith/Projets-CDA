@@ -236,7 +236,6 @@ namespace OPS2020.Controllers
             HttpContext.Session.Set<GestionEnqueteModel>("GestionEnqueteModel", gestionEnqueteModel);
             return Json(new { result = "Redirect", url = Url.Action("CampagneEtape1", "OPS") });
         }
-
         [HttpGet]
         public async Task<IActionResult> CampagneEtape1(GestionEnqueteModel gestionEnqueteModel)
         {
@@ -407,13 +406,6 @@ namespace OPS2020.Controllers
             _context.SaveChanges();
             return Json(new { result = "OK" });
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> TestQuest(QuestionnaireModel questionnaireModel)
-        //{
-        //    questionnaireModel = HttpContext.Session.Get<QuestionnaireModel>("Questionnaire");
-        //    return View("TestQuest", questionnaireModel);
-        //}
         [HttpGet]
         public async Task<IActionResult> TestQuest(Etape0Model etape0, QuestionnaireModel questionnaireModel)
         {

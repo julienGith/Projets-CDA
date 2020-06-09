@@ -19,7 +19,6 @@ namespace OPS.BOL
         public int NombreEnvois { get; set; }
         public int NombreReponses { get; set; }
         public int EtatTraitement { get; set; }
-
         public virtual CampagneMail IdCampagneMailNavigation { get; set; }
         public virtual ICollection<DestinataireEnquete> DestinataireEnquete { get; set; }
     }

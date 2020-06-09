@@ -106,11 +106,9 @@
         var produit = null;
         var model = null;
         var quest = null;
-
         $("#divListQ").hide();
         $("#divProduitDetail").hide();
         $("#listVide").hide();
-
         $("#BtnValider").click(function () {
             var query = codeProduit;
             GetListQuestionnaire(query);
@@ -129,7 +127,6 @@
             }
 
         });
-
         $("#sigleTxtB").keyup(function () {
             query = $(this).val();
             if (LettreSeuleument(query)) {
@@ -173,7 +170,6 @@
 
             });
         }
-
         $("#libelTxtB").keyup(function () {
            var query = $(this).val();
            if (LettreSeuleument(query)) {
@@ -215,8 +211,6 @@
 
             });
         }
-
-
     function GetProduitFormation(query) {
         $.ajax({
                 url: '@Url.Action("GetProduitFormation", "AutoComplete")',
