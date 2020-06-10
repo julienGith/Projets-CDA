@@ -91,7 +91,7 @@
                     <div id="previewQuestionnaire">
                         <form class="form-horizontal col align-self-center">
                             <fieldset>
-                                <legend id="formName">Form Name</legend>
+                                <legend id="formName">Pas de titre veuillez valider les propriétés du questionnaire</legend>
                                 <div id="previewQuestions">
 
 
@@ -493,7 +493,7 @@
             ajoutSupprChoix = false;
         })
         // Bouton de la modal d'ajout de question
-        // crée l'objet questionObj
+        // Crée l'objet questionObj
         $("#modalIntituleBtn").click(function () {
             C(type);
 
@@ -1110,8 +1110,8 @@
                     $(qPreview).remove();
                     C("ID itemExemple", itemExemple2.id, itemExemple1.id)
                     questionObj.listItems.push(itemExemple1, itemExemple2);
-                    questionObj.codeHtml = "<div class='tab'><div id= " + questionObj.questionPreviewId + " class='form-group' >" +
-                        "<label class='col-md-4 control-label'>" + questionObj.intitule + "</label>" +
+                    questionObj.codeHtml = "<div id= " + questionObj.questionPreviewId + " class='form-group' ><div class='tab'>" +
+                        "<label class='col control-label'>" + questionObj.intitule + "</label>" +
                         "<div class='col-md-4'>" +
                         "<select id=" + questionObj.divListItemId + " name='selectbasic' class='form-control' required>" +
                         "</div>"+
@@ -1179,8 +1179,8 @@
                     $(qPreview).remove();
                     C("ID itemExemple", itemExemple2.id, itemExemple1.id)
                     questionObj.listItems.push(itemExemple1, itemExemple2);
-                    questionObj.codeHtml = "<div class='tab'><div id= " + questionObj.questionPreviewId + " class='form-group' > <fieldset id=" + groupName + ">" +
-                        "<label class='col-md-4 control-label' for=" + itemExemple1.groupName + ">" + questionObj.intitule + "</label>" +
+                    questionObj.codeHtml = "<div id= " + questionObj.questionPreviewId + " class='form-group' ><div class='tab'><fieldset id=" + groupName + ">" +
+                        "<label class='col control-label' for=" + itemExemple1.groupName + ">" + questionObj.intitule + "</label>" +
                         "<div class='col-md-4'>" +
                         "<div id=" + questionObj.divListItemId + ">" +
                         "<div class='checkbox-group required'>"+
@@ -1231,8 +1231,8 @@
                 questionObj.listItems = [''];
                 questionObj.listItems.push(item1, item2, item3, item4);
                 if (questionObj.requis == "false") {
-                    questionObj.codeHtml = "<div class='tab'><div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
-                        "<label class='col-md-4 control-label' for=" + item1.groupName + ">" + questionObj.intitule + "</label>" +
+                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + "><div class='tab'>" +
+                        "<label class='col control-label' for=" + item1.groupName + ">" + questionObj.intitule + "</label>" +
                         "<div class='col-md-4'>" +
                         "<div class='radio'>" +
                         "<input type='radio' class='mr-1' name=" + item1.groupName + " id=" + item1.id + " value='1'>" +
@@ -1254,7 +1254,7 @@
                 }
                 else {
                     questionObj.codeHtml = "<div class='tab'><div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
-                        "<label class='col-md-4 control-label' for=" + item1.groupName + ">" + questionObj.intitule + "</label>" +
+                        "<label class='col control-label' for=" + item1.groupName + ">" + questionObj.intitule + "</label>" +
                         "<div class='col-md-4'>" +
                         "<div class='radio'>" +
                         "<input type='radio' class='mr-1' name=" + item1.groupName + " id=" + item1.id + " value='1' required>" +
@@ -1282,8 +1282,8 @@
                 var itemTxtC = new Item();
                 itemTxtC.id = "TxtC" + codeQuestion;
                 var inputId = "#" + itemTxtC.id;
-                questionObj.codeHtml = "<div class='tab'><div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                    "<label class='col-md-4 control-label' for=" + itemTxtC.id + ">" + questionObj.intitule +
+                questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><div class='tab'>" +
+                    "<label class='col control-label' for=" + itemTxtC.id + ">" + questionObj.intitule +
                     "<input id =" + itemTxtC.id + " type ='number' class='form-control input-md' required>" +
                     "</label ></div></div>";
                 AppendPrev(questionObj);
@@ -1313,8 +1313,8 @@
                     $(qPreview).remove();
                     C("ID itemExemple", itemExemple2.id, itemExemple1.id)
                     questionObj.listItems.push(itemExemple1, itemExemple2);
-                    questionObj.codeHtml = "<div class='tab'><div id= " + questionObj.questionPreviewId + " class='form-group' > <fieldset id=" + groupName + ">" +
-                        "<label class='col-md-4 control-label' for=" + itemExemple1.groupName + ">" + questionObj.intitule + "</label>" +
+                    questionObj.codeHtml = "<div id= " + questionObj.questionPreviewId + " class='form-group' ><div class='tab'> <fieldset id=" + groupName + ">" +
+                        "<label class='col control-label' for=" + itemExemple1.groupName + ">" + questionObj.intitule + "</label>" +
                         "<div class='col-md-4'>" +
                         "<div id=" + questionObj.divListItemId +">" +
                         "<div class='exemple'>" +
@@ -1376,15 +1376,15 @@
                 var itemTxtL = new Item();
                 itemTxtL.id = "TxtL" + codeQuestion;
                 if (questionObj.requis == "false") {
-                    questionObj.codeHtml = "<div class='tab'><div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                        "<label class= control-label col-md-4' for=" + itemTxtL.itemId + ">" + questionObj.intitule +
+                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><div class='tab'>" +
+                        "<label class= control-label col' for=" + itemTxtL.itemId + ">" + questionObj.intitule +
                         "<textarea  id =" + itemTxtL.id + " rows='3' class='form-control'></textarea>" +
                         "</label >" +
                         "</div></div>"
                 }
                 else {
-                    questionObj.codeHtml = "<div class='tab'><div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                        "<label class=' control-label col-md-4' for=" + itemTxtL.id + ">" + questionObj.intitule +
+                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><div class='tab'>" +
+                        "<label class=' control-label col' for=" + itemTxtL.id + ">" + questionObj.intitule +
                         "<textarea id =" + itemTxtL.id + " rows='3' class='form-control' required></textarea>" +
                         "</label ></div></div>"
                 }
@@ -1395,14 +1395,14 @@
                 var itemTxtC = new Item();
                 itemTxtC.id = "TxtC" + codeQuestion;
                 if (questionObj.requis == "false") {
-                    questionObj.codeHtml = "<div class='tab'><div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                        "<label class='col-md-4 control-label' for=" + itemTxtC.id + ">" + questionObj.intitule +
+                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><div class='tab'>" +
+                        "<label class='col control-label' for=" + itemTxtC.id + ">" + questionObj.intitule +
                         "<input id =" + itemTxtC.id + " name ='textinput' type ='text' class='form-control input-md'>" +
                         "</label ></div></div>"
                 }
                 else {
-                    questionObj.codeHtml = "<div class='tab'><div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                        "<label class='col-md-4 control-label' for=" + itemTxtC.id + ">" + questionObj.intitule +
+                    questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><div class='tab'>" +
+                        "<label class='col control-label' for=" + itemTxtC.id + ">" + questionObj.intitule +
                         "<input id =" + itemTxtC.id + " type ='text' class='form-control input-md' required>" +
                         "</label ></div></div>"
                 }
@@ -1421,8 +1421,8 @@
                 questionObj.listItems.push(itemNon);
                 questionObj.listItems.push(itemOui);
                 C("avant le if", questionObj.graphique);
-                questionObj.codeHtml = "<div class='tab'><div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                    "<label class='col-md-4 control-label' for=" + questionObj.questionId + ">" + questionObj.intitule + "</label>" +
+                questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><div class='tab'>" +
+                    "<label class='col control-label' for=" + questionObj.questionId + ">" + questionObj.intitule + "</label>" +
                     "<div class='col-md-4'>" +
                     "<div class='radio'>" +
                     "<input type='radio' class='mr-1' name=" + itemOui.itemName + " id=" + itemOui.id + " value='oui' required>" +
@@ -1459,8 +1459,8 @@
                 itemNon.itemName = questionObj.questionId + "-radio" ;
                 itemNeSaisPas.id = "NeSaisPas" + questionObj.questionId;
                 itemNeSaisPas.itemName = questionObj.questionId + "-radio";
-                questionObj.codeHtml = "<div class='tab'><div id=" + questionObj.questionPreviewId + " class='form-group'>" +
-                    "<label class='col-md-4 control-label' for=" + questionObj.questionId + ">" + questionObj.intitule + "</label>" +
+                questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><div class='tab'>" +
+                    "<label class='col control-label' for=" + questionObj.questionId + ">" + questionObj.intitule + "</label>" +
                     "<div class='col-md-4'>" +
                     "<div class='radio'>" +
                     "<input type='radio' class='mr-1' name=" + itemOui.itemName + " id=" + itemOui.id + " value='oui' required>" +
@@ -1507,8 +1507,8 @@
                 C(questionObj.listItems);
                 C(questionObj.requis);
                 var radioId = "#" + item1.id;
-                questionObj.codeHtml = "<div class='tab'><div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + ">" +
-                    "<label class='col-md-4 control-label' for=" + groupName + ">" + questionObj.intitule + "</label>" +
+                questionObj.codeHtml = "<div id=" + questionObj.questionPreviewId + " class='form-group'><fieldset id=" + groupName + "><div class='tab'>" +
+                    "<label class='col control-label' for=" + groupName + ">" + questionObj.intitule + "</label>" +
                     "<div class='col-md-4'>" +
                     "<div class='radio'>" +
                     "<input type='radio' class='mr-1' name=" + item1.groupName + " id=" + item1.id + " value='1' required>" +
@@ -1566,9 +1566,6 @@
         }
         // Crée l'aperçu de la question
         function AppendPrev(questionObj) {
-            //if (true) {
-            //    AjouterQuestionCookie(questionObj);
-            //}
             var divPosPrevId = "#" + questionObj.divPosPrev;
             C("avant append")
             C("Id de la balise de position", divPosPrevId);
@@ -1588,7 +1585,6 @@
                 }
             });
         }
-
         function filter_array_values(arr) {
             arr = arr.filter(isEligible);
             return arr;
