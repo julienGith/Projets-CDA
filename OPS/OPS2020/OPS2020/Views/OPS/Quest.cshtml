@@ -84,7 +84,7 @@
                         <div class="col-sm">
                             <ul id="sortable" class="navbar-nav flex-md-column flex-fill">
                             </ul>
-                       </div>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
@@ -138,7 +138,7 @@
         </div>
     </div>
 </div>
-<span id="idQuestionnaire"  data-count="@Model.questionnaireId"></span>
+<span id="idQuestionnaire" data-count="@Model.questionnaireId"></span>
 <script>
     $(document).ready(function () {
        // "use strict";
@@ -184,19 +184,31 @@
                 for (let x of questionnaire.listQuestObj) {
                     C("Boucle chargement");
                     CreerQuestion(x);
+
                     $(document.body).ready(function () {
-                    if (x.requis == false) {
+                    if (x.requis == 'false') {
                         let idRadioOreq = "#" + x.requisOuiRadioId;
                         let idRadioNreq = "#" + x.requisNonRadioId;
                         C("ID requis : ",idRadioNreq);
                         $(idRadioOreq).prop('checked', false);
                         $(idRadioNreq).prop('checked', true);
-                    }
-                    if (x.graphique == 2) {
+                        }
+                        if (x.graphique == '1') {
+                            let idDdlGraph = "#" + x.graphiqueId;
+                            $(idDdlGraph).find(':selected').prop('selected', false);
+                            $(idDdlGraph).find("option[value='1']").prop('selected', true);
+                        }
+                        if (x.graphique == '2') {
                         let idDdlGraph = "#" + x.graphiqueId;
                         $(idDdlGraph).find(':selected').prop('selected', false);
                         $(idDdlGraph).find("option[value='2']").prop('selected', true);
-                    }
+                        }
+                        if (x.graphique == '3') {
+                            let idDdlGraph = "#" + x.graphiqueId;
+                            $(idDdlGraph).find(':selected').prop('selected', false);
+                            $(idDdlGraph).find("option[value='3']").prop('selected', true);
+                        }
+
                     })
 
                     AppendPrev(x);
@@ -574,10 +586,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption' disabled>" +
-                    "<option value='Jauge'>Jauge</option>" +
-                    "<option value='Colonnes'>Colonnes</option>" +
-                    "<option value='Camembert'>Camembert</option>" +
-                    "<option selected value='Barre'>Barre</option></select></div></div>" +
+                    "<option value='1'>Jauge</option>" +
+                    "<option value='2'>Colonnes</option>" +
+                    "<option value='3'>Camembert</option>" +
+                    "<option selected value='4'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -613,10 +625,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption'>" +
-                    "<option value='Jauge'>Jauge</option>" +
-                    "<option value='Colonnes'>Colonnes</option>" +
-                    "<option value='Camembert'>Camembert</option>" +
-                    "<option selected value='Barre'>Barre</option></select></div></div>" +
+                    "<option value='1'>Jauge</option>" +
+                    "<option value='2'>Colonnes</option>" +
+                    "<option value='3'>Camembert</option>" +
+                    "<option selected value='4'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -647,10 +659,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption' disabled>" +
-                    "<option value='Jauge'>Jauge</option>" +
-                    "<option value='Colonnes'>Colonnes</option>" +
-                    "<option value='Camembert'>Camembert</option>" +
-                    "<option selected value='Barre'>Barre</option></select></div></div>" +
+                    "<option value='1'>Jauge</option>" +
+                    "<option value='2'>Colonnes</option>" +
+                    "<option value='3'>Camembert</option>" +
+                    "<option selected value='4'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -680,10 +692,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption' disabled>" +
-                    "<option value='Jauge'>Jauge</option>" +
-                    "<option value='Colonnes'>Colonnes</option>" +
-                    "<option value='Camembert'>Camembert</option>" +
-                    "<option selected value='Barre'>Barre</option></select></div></div>" +
+                    "<option value='1'>Jauge</option>" +
+                    "<option value='2'>Colonnes</option>" +
+                    "<option value='3'>Camembert</option>" +
+                    "<option selected value='4'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -727,10 +739,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption'>" +
-                    "<option value='Jauge'>Jauge</option>" +
-                    "<option value='Colonnes'>Colonnes</option>" +
-                    "<option value='Camembert'>Camembert</option>" +
-                    "<option selected value='Barre'>Barre</option></select></div></div>" +
+                    "<option value='1'>Jauge</option>" +
+                    "<option value='2'>Colonnes</option>" +
+                    "<option value='3'>Camembert</option>" +
+                    "<option selected value='4'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -790,10 +802,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption'>" +
-                    "<option value='Jauge'>Jauge</option>" +
-                    "<option value='Colonnes'>Colonnes</option>" +
-                    "<option value='Camembert'>Camembert</option>" +
-                    "<option selected value='Barre'>Barre</option></select></div></div>" +
+                    "<option value='1'>Jauge</option>" +
+                    "<option value='2'>Colonnes</option>" +
+                    "<option value='3'>Camembert</option>" +
+                    "<option selected value='4'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -823,10 +835,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId +" class='btn-sm graphOption'>" +
-                    "<option value='Jauge'>Jauge</option>" +
-                    "<option value='Colonnes'>Colonnes</option>" +
-                    "<option value='Camembert'>Camembert</option>" +
-                    "<option selected value='Barre'>Barre</option></select></div></div>" +
+                    "<option value='1'>Jauge</option>" +
+                    "<option value='2'>Colonnes</option>" +
+                    "<option value='3'>Camembert</option>" +
+                    "<option selected value='4'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +
@@ -858,10 +870,10 @@
                     "<div class='d-inline'>Type de graphique :</div>" +
                     "<div class='d-inline ml-2'>" +
                     "<select id=" + questionObj.graphiqueId + " class='btn-sm graphOption' disabled>" +
-                    "<option value='Jauge'>Jauge</option>" +
-                    "<option value='Colonnes'>Colonnes</option>" +
-                    "<option value='Camembert'>Camembert</option>" +
-                    "<option selected value='Barre'>Barre</option></select></div></div>" +
+                    "<option value='1'>Jauge</option>" +
+                    "<option value='2'>Colonnes</option>" +
+                    "<option value='3'>Camembert</option>" +
+                    "<option selected value='4'>Barre</option></select></div></div>" +
                     "<div class='row mt-2 justify-content-center'>" +
                     "<div class='d-inline'>Valeurs possibles :</div>" +
                     "<div class='d-inline ml-2'>" +

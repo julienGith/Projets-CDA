@@ -177,7 +177,10 @@ namespace OPS2020.Controllers
         {
             List<OffreFormation> offreFormations = new List<OffreFormation>();
             List<CampagneMail> CampagneMails = new List<CampagneMail>();
-            offreFormations = _context.OffreFormation.Include(o => o.CampagneMail).ThenInclude(o => o.PlanificationCampagneMail).Where(c => c.MatriculeCollaborateurAfpa == "96GB011").ToList();
+            offreFormations = _context.OffreFormation.Include(o => o.CampagneMail)
+                .ThenInclude(o => o.PlanificationCampagneMail)
+                .Where(c => c.MatriculeCollaborateurAfpa == "96GB011")
+                .ToList();
             offreFormations.Reverse();
             foreach (var item in offreFormations)
             {
