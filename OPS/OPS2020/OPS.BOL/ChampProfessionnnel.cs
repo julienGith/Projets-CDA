@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OPS.BOL
 {
-    public partial class ChampProfessionnnel : EntityBase
+    public partial class ChampProfessionnnel
     {
         public ChampProfessionnnel()
         {

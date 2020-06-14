@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OPS.BOL
 {
-    public partial class Beneficiaire : EntityBase
+    public partial class Beneficiaire
     {
         public Beneficiaire()
         {

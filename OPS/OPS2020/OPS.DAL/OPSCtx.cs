@@ -24,7 +24,6 @@ namespace OPS.DAL
         public virtual DbSet<CollaborateurAfpa> CollaborateurAfpa { get; set; }
         public virtual DbSet<Contrat> Contrat { get; set; }
         public virtual DbSet<DestinataireEnquete> DestinataireEnquete { get; set; }
-        public virtual DbSet<Dictionnaire> Dictionnaire { get; set; }
         public virtual DbSet<DomaineMetierRome> DomaineMetierRome { get; set; }
         public virtual DbSet<Entreprise> Entreprise { get; set; }
         public virtual DbSet<Etablissement> Etablissement { get; set; }
@@ -378,24 +377,6 @@ namespace OPS.DAL
                     .HasConstraintName("FK_DestinataireEnquete_Beneficiaire");
             });
 
-            modelBuilder.Entity<Dictionnaire>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("Dictionnaire");
-
-                entity.Property(e => e.Colonne).HasMaxLength(128);
-
-                entity.Property(e => e.Null)
-                    .HasMaxLength(3)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Table)
-                    .IsRequired()
-                    .HasMaxLength(128);
-
-                entity.Property(e => e.Type).HasMaxLength(128);
-            });
 
             modelBuilder.Entity<DomaineMetierRome>(entity =>
             {

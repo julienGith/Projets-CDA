@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OPS.BOL
 {
-    public partial class PlanificationCampagneMail : EntityBase
+    public partial class PlanificationCampagneMail
     {
         public PlanificationCampagneMail()
         {

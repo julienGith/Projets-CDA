@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OPS.BOL
 {
-    public partial class OffreFormation : EntityBase
+    public partial class OffreFormation
     {
         public OffreFormation()
         {

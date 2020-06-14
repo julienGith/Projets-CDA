@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OPS.BOL
 {
-    public partial class CollaborateurAfpa : EntityBase
+    public partial class CollaborateurAfpa
     {
         public CollaborateurAfpa()
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OPS.BOL
 {
-    public partial class DestinataireEnquete : EntityBase
+    public partial class DestinataireEnquete
     {
         public Guid IdSoumissionnaire { get; set; }
         public int IdPlanificationCampagneMail { get; set; }

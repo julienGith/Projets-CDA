@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OPS.BOL
 {
-    public partial class Contrat : EntityBase
+    public partial class Contrat
     {
         public Contrat()
         {
