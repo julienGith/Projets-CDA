@@ -130,7 +130,7 @@ namespace OPS2020.Controllers
         {
             QuestionnaireModel questionnaireModel = new QuestionnaireModel();
             Questionnaire questionnaire = new Questionnaire();
-            questionnaire = _context.Questionnaire.FirstOrDefault(q => q.IdQuestionnaire == int.Parse(query));
+            questionnaire = await _context.Questionnaire.FirstOrDefaultAsync(q => q.IdQuestionnaire == int.Parse(query));
             questionnaireModel.codeHtml = questionnaire.CodeHtml;
             questionnaireModel.codeProduitFormation = questionnaire.CodeProduitFormation;
             questionnaireModel.dataJson = questionnaire.DataJson;
@@ -156,7 +156,7 @@ namespace OPS2020.Controllers
         {
             QuestionnaireModel questionnaireModel = new QuestionnaireModel();
             Questionnaire questionnaire = new Questionnaire();
-            questionnaire = _context.Questionnaire.FirstOrDefault(q => q.IdQuestionnaire == int.Parse(query));
+            questionnaire = await _context.Questionnaire.FirstOrDefaultAsync(q => q.IdQuestionnaire == int.Parse(query));
             questionnaireModel.codeHtml = questionnaire.CodeHtml;
             return Json(new { Data = questionnaireModel.codeHtml });
         }
@@ -177,10 +177,10 @@ namespace OPS2020.Controllers
         {
             List<OffreFormation> offreFormations = new List<OffreFormation>();
             List<CampagneMail> CampagneMails = new List<CampagneMail>();
-            offreFormations = _context.OffreFormation.Include(o => o.CampagneMail)
+            offreFormations = await _context.OffreFormation.Include(o => o.CampagneMail)
                 .ThenInclude(o => o.PlanificationCampagneMail)
                 .Where(c => c.MatriculeCollaborateurAfpa == "96GB011")
-                .ToList();
+                .ToListAsync();
             offreFormations.Reverse();
             foreach (var item in offreFormations)
             {
@@ -291,8 +291,8 @@ namespace OPS2020.Controllers
             campagneMail.Description = gestionEnqueteModel.CampagneMailModel.Description;
             _context.CampagneMail.Add(campagneMail);
             _context.SaveChanges();
-            int idCampagneMail = _context.CampagneMail.Where(c => c.IdEtablissement == gestionEnqueteModel.OffreFormationModel.IdEtablissement && c.IdOffreFormation == gestionEnqueteModel.OffreFormationModel.IdOffreFormation)
-                .Select(c => c.IdCampagneMail).FirstOrDefault();
+            int idCampagneMail = await _context.CampagneMail.Where(c => c.IdEtablissement == gestionEnqueteModel.OffreFormationModel.IdEtablissement && c.IdOffreFormation == gestionEnqueteModel.OffreFormationModel.IdOffreFormation)
+                .Select(c => c.IdCampagneMail).FirstOrDefaultAsync();
             //Fin de formation
             PlanificationCampagneMail planificationCampagneMail1 = new PlanificationCampagneMail();
             if (DateTime.Today > gestionEnqueteModel.OffreFormationModel.DateFinOffreFormation)
